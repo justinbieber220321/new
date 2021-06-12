@@ -1,0 +1,61 @@
+﻿.img-thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.img-thumbnail:hover {
+    cursor: pointer;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.c-white {
+    color: white;
+}
+
+.btn-submit, .btn-rps {
+    background: #53B7E8;
+    border: none;
+    color: white;
+}
+
+.text-rps {
+    color: #53B7E8;
+}
+
+.bg-rps {
+    background: #53B7E8;
+}
+
+.btn-submit:hover, .btn-rps:hover {
+    color: white;
+}
+
+.alert {
+    padding-bottom: 0;
+}
+
+[data-theme-version="dark"] .deznav .metismenu > li:hover > a, [data-theme-version="dark"] .deznav .metismenu > li:focus > a,
+[data-theme-version="dark"] .deznav .metismenu > li.mm-active > a {
+    color: #53B7E8;
+}
+
+[data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu > li > a:before {
+    background: #53B7E8;
+}
+
+[data-theme-version="dark"] .deznav .metismenu ul a:hover, [data-theme-version="dark"] .deznav .metismenu ul a:focus,
+[data-theme-version="dark"] .deznav .metismenu ul a.mm-active {
+    color: #53B7E8;
+}
+
+.deznav .metismenu ul a:hover:before, .deznav .metismenu ul a:focus:before, .deznav .metismenu ul a.mm-active:before {
+    border-color: #53B7E8;
+}
+
+[data-theme-version="dark"] .deznav .metismenu > li:hover > a i, [data-theme-version="dark"] .deznav .metismenu > li:focus > a i, [data-theme-version="dark"] .deznav .metismenu > li.mm-active > a i {
+    color: #53B7E8;
+}

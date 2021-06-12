@@ -1,0 +1,20 @@
+.select2__user_ct_dethi {
+    width: 100%;
+}
+
+#select2__user_ct_dethi .select2-selection {
+    border-radius: 2px;
+    border: 1px solid #e9ecef;
+    height: auto;
+    line-height: initial;
+}
+.select2-selection__choice {
+    background-color: #2255a4 !important;
+    border-color: #2255a4 !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+.select2-selection__choice__remove {
+    color: #fff !important;
+}

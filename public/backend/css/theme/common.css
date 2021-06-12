@@ -1,0 +1,142 @@
+a, a:hover {
+    color: #3e5569;
+}
+
+img {
+    object-fit: cover;
+}
+
+.bold {
+    font-weight: bold !important;
+}
+
+/* PAGINATION */
+#pagination {
+    align-items: center;
+    display: flex;
+}
+
+#pagination ul.pagination {
+    margin-bottom: 0;
+}
+
+#pagination .page-item.active .page-link {
+    background-color: #27a9e3;
+    border-color: #27a9e3;
+}
+
+#pagination .page-item:not(.active) .page-link {
+    color: #27a9e3;
+}
+/* END PAGINATION */
+
+.card-body__head {
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.card-body__head > h5 {
+    margin: 5px 0 0;
+}
+
+.table td, .table th {
+    padding: 5px;
+}
+
+
+.one_dots {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.two_dots {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.three_dots {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+/* SELECT2 */
+.select2-container--default .select2-selection--single {
+    border-radius: 2px;
+    border: 1px solid #e9ecef;
+    height: 32px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 32px;
+}
+
+.my-select2 .select2 {
+    width: 100% !important;
+}
+
+#form-search .select2-container--default .select2-selection--single {
+    height: 34px;
+}
+    /* END SELECT2 */
+
+.custom-radio .custom-control-input:checked~.custom-control-label:before {
+    background-color: #27a9e3;
+}
+
+form .item_radio_select{
+    position: relative;
+    top: 5px;
+}
+
+.inline_auto {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#editor-quill {
+    height: auto;
+    min-height: 200px;
+}
+
+.page-breadcrumb {
+    padding-bottom: 20px;
+}
+
+.card-body .card-body__head {
+    background: #EFF2F5;
+    height: 40px;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 0 !important;
+}
+
+.card .card-title {
+    margin-bottom: 0;
+}
+
+.card-body__filter {
+    line-height: 40px;
+}
+
+.card .card-body__filter .card-title {
+    line-height: 40px;
+}
+
+.card .card-body {
+    padding-top: 5px !important;
+}
+
+form .form-row {
+    margin-bottom: 15px;
+}
+
+input[type=file] {
+    padding: 3px 5px;
+}

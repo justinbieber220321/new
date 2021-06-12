@@ -1,0 +1,2 @@
+<input name="toggle_status" type="checkbox" data-size="mini" class="btn-xs"
+       data-offstyle="danger" data-onstyle="cyan" disabled data-toggle="toggle" {{ $entity->isStatusOn() ? "checked" : '' }}>

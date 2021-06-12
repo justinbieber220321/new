@@ -1,0 +1,9 @@
+﻿.img-thumbnail:hover {
+    cursor: pointer;
+}
+
+.img-thumbnail {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}

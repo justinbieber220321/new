@@ -1,0 +1,113 @@
+﻿
+.select-lang.custom-select .select-selected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #0052B4;
+    width: 101px;
+    height: 30px;
+    padding: 0 0 2px 6px;
+    border-radius: 21.5px;
+    background: #fff url(../image/custom-select/ico_american_flag.png) 15% center/20px auto no-repeat;
+    position: relative;
+    bottom: 1px;
+}
+
+.select-lang.custom-select .select-selected.is-en {
+    background-image: url(../image/custom-select/ico_american_flag.png);
+}
+
+.select-lang.custom-select .select-selected.is-jp {
+    background-image: url(../image/custom-select/ico_japan_flag.png);
+}
+
+.select-lang.custom-select .select-selected.is-vn {
+    background-image: url(../image/custom-select/ico_vietnam_flag.png);
+}
+
+.select-lang.custom-select .select-selected:after {
+    content: "";
+    display: block;
+    width: 9px;
+    height: 6px;
+    background: #fff url(../image/custom-select/ico_dropdown.png) left center/contain no-repeat;
+    position: absolute;
+    top: 50%;
+    right: 15%;
+    transform: translateY(-50%);
+    transition: all 0.3s;
+}
+
+.select-lang.custom-select .select-items {
+    width: 100%;
+    border-radius: 15px;
+    background: #fff;
+    top: 100%;
+    left: 50%;
+}
+
+.select-lang.custom-select .select-items div {
+    background: #fff;
+    text-align: center;
+    color: #0052B4;
+    background: #fff url(../image/custom-select/ico_american_flag.png) 15% center/20px auto no-repeat;
+}
+
+.select-lang.custom-select .select-items div:hover {
+    background-color: #0052B4;
+    color: white;
+}
+
+.select-lang.custom-select .select-items .is-en {
+    background-image: url(../image/custom-select/ico_american_flag.png);
+}
+
+.select-lang.custom-select .select-items .is-jp {
+    background-image: url(../image/custom-select/ico_japan_flag.png);
+}
+
+.select-lang.custom-select .select-items .is-vn {
+    background-image: url(../image/custom-select/ico_vietnam_flag.png);
+}
+
+.select-coin.custom-select .select-selected {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    width: 233px;
+    height: 40px;
+    padding: 0 0 2px 46px;
+    border-radius: 20px;
+    background: #FFC700 url(../image/custom-select/ico_american_flag.png) 10px center/28px auto no-repeat;
+    position: relative;
+}
+
+.custom-select .select-hide {
+    display: none;
+}
+
+.custom-select select {
+    display: none;
+}
+
+.custom-select .select-items div {
+    color: #fff;
+    padding: 5px;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    user-select: none;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.custom-select {
+    position: relative;
+    bottom: 6px;
+    background: none !important;
+    border: none;
+}

@@ -1,0 +1,1 @@
+<button class="btn btn-submit btn-soft-secondary sw-btn-next btn-xs" type="submit"><i class="fa fa-paper-plane"></i> {{ transTheme('btn.submit') }}</button>
