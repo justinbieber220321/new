@@ -34,10 +34,6 @@
     color: white;
 }
 
-.alert {
-    padding-bottom: 0;
-}
-
 [data-theme-version="dark"] .deznav .metismenu > li:hover > a, [data-theme-version="dark"] .deznav .metismenu > li:focus > a,
 [data-theme-version="dark"] .deznav .metismenu > li.mm-active > a {
     color: #53B7E8;

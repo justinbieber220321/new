@@ -51,20 +51,39 @@ class AuthController extends FrontendController
     {
         DB::beginTransaction();
         try {
-            $email = request('email');
+            $email = trim(request('email'));
+            $dataApi = $this->_getDataFromApi();
 
-            $user = User::delFlagOn()->statusOn()->where('email', $email)->first();
-            if (empty($user)) {
+            $isExistsEmail = false;
+            $dataUser = [];
+            foreach ($dataApi as $item) {
+                if (arrayGet($item, 'email') == $email) {
+                    $isExistsEmail = true;
+                    $dataUser = $item;
+                    break;
+                }
+            }
+
+            if (!$isExistsEmail) {
                 return redirect()->back()->withErrors(transMessage('account_not_found'))->withInput(request()->all());
             }
 
+            $user = User::delFlagOn()->statusOn()->where('email', $email)->first();
+            if (empty($user)) {
+                $user = new User();
+                $user->user_id = arrayGet($dataUser, 'user_id');
+                $user->username = arrayGet($dataUser, 'username') ? arrayGet($dataUser, 'username') : extractNameFromEmail(arrayGet($dataUser, 'email'));
+                $user->email = arrayGet($dataUser, 'email');
+                $user->balance = arrayGet($dataUser, 'balance');
+                $user->parent_id = arrayGet($dataUser, 'parent_id');
+                $user->status = statusOn();
+            }
             $otpCode = genOtp();
-            $this->_sendMailOtp($user, $otpCode);
-
             $user->code_otp = $otpCode;
             $user->save();
-
             DB::commit();
+
+            $this->_sendMailOtp(arrayGet($dataUser, 'username'), arrayGet($dataUser, 'email'), $otpCode);
 
             $link = frontendRouter('login.confirm-opt') . "?id=$user->id&otp=" . bcrypt($otpCode);
             return redirect()->to($link);
@@ -167,10 +186,10 @@ class AuthController extends FrontendController
         return false;
     }
 
-    protected function _sendMailOtp($user, $otp)
+    protected function _sendMailOtp($userName, $userEmail, $otp)
     {
-        $name = $user->username;
-        $email = $user->email;
+        $name = $userName;
+        $email = $userEmail;
 
         $data = ['otp' => $otp];
 
@@ -319,5 +338,25 @@ class AuthController extends FrontendController
         }
 
         return extractNameFromEmail($user->email) . '_' . $userId;
+    }
+
+    protected function _getDataFromApi()
+    {
+        try {
+            $now = date('Y-m-d');
+            $date = date_create($now);
+            date_sub($date, date_interval_create_from_date_string("30 days"));
+            $past = date_format($date, "Y-m-d");
+            $endpoint = "https://login.nuxgame.com/api/stat/user_list?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$now";
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('GET', $endpoint);
+            $content = json_decode($response->getBody(), true);
+
+            return $content;
+        } catch (\Exception $e) {
+            logError($e);
+        }
+
+        return [];
     }
 }

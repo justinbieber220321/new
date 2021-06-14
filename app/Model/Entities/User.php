@@ -12,9 +12,8 @@ class User extends AuthTmp
     protected $table = 'user';
 
     protected $fillable = [
-        'id', 'username', 'email', 'phone', 'password', 'birthday', 'gender', 'address', 'short_description', 'avatar', 'parent_user_id',
-        'status', 'ins_date', 'upd_date', 'del_flag', 'affiliate',
-        'coin_address_rps', 'coin_address_xrp', 'coin_address_btc', 'coin_address_eth', 'coin_address_usdt'
+        'id', 'username', 'email', 'phone', 'password', 'birthday', 'gender', 'address', 'short_description', 'avatar', 'parent_id',
+        'status', 'ins_date', 'upd_date', 'del_flag', 'affiliate', 'balance'
     ];
 
     public function children()

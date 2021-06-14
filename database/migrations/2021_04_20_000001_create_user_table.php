@@ -15,24 +15,21 @@ class CreateUserTable extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('user_id');
             $table->string('username');
             $table->string('email');
-            $table->string('phone');
-            $table->string('password');
+            $table->string('phone')->nullable();
+            $table->string('password')->nullable();
             $table->date('birthday')->nullable();
             $table->integer('gender')->nullable()->default(2)->comment('1 boy, 2 girl');
             $table->string('address')->nullable();
             $table->string('short_description')->nullable();
             $table->string('avatar')->nullable();
-            $table->integer('parent_user_id')->nullable();
+            $table->integer('parent_id')->nullable();
             $table->string('affiliate')->nullable();
+            $table->decimal('balance', 15, 3);
             $table->integer('status')->nullable()->default(3)->comment('1: active, 2 block, 3 waiting active email');
             $table->string('remember_password')->nullable();
-            $table->string('coin_address_rps')->nullable();
-            $table->string('coin_address_xrp')->nullable();
-            $table->string('coin_address_btc')->nullable();
-            $table->string('coin_address_eth')->nullable();
-            $table->string('coin_address_usdt')->nullable();
             $table->string('code_otp')->nullable();
             $table->timestamp('ins_date')->useCurrent();
             $table->timestamp('upd_date')->nullable();
