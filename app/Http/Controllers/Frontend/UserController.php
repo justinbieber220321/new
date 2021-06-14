@@ -24,7 +24,12 @@ class UserController extends FrontendController
     public function account()
     {
         $this->_clearSessionForm();
-        return view('frontend.user.account');
+
+        $viewData = [
+            'user' => frontendCurrentUser()
+        ];
+
+        return view('frontend.user.account', $viewData);
     }
 
     /**

@@ -28,7 +28,7 @@ class CreateUserTable extends Migration
             $table->integer('parent_id')->nullable();
             $table->string('affiliate')->nullable();
             $table->decimal('balance', 15, 3);
-            $table->integer('status')->nullable()->default(3)->comment('1: active, 2 block, 3 waiting active email');
+            $table->integer('status')->nullable()->default(statusOn())->comment('1: active, 2 block, 3 waiting active email');
             $table->string('remember_password')->nullable();
             $table->string('code_otp')->nullable();
             $table->timestamp('ins_date')->useCurrent();

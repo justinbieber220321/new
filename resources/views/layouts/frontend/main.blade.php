@@ -59,7 +59,7 @@
                         </div>
 
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <a href="{{ frontendRouter('account') }}" class="dropdown-item notify-item">
                             <i class="fe-user"></i>
                             <span>My Account</span>
                         </a>
@@ -119,9 +119,16 @@
                 <ul id="side-menu">
 
                     <li>
-                        <a href="">
+                        <a href="{{ frontendRouter('home') }}">
                             <i data-feather="gift"></i>
                             <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ frontendRouter('account') }}">
+                            <i data-feather="gift"></i>
+                            <span>My account</span>
                         </a>
                     </li>
 
