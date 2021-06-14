@@ -119,9 +119,83 @@
                 <ul id="side-menu">
 
                     <li>
+                        <a href="https://whalecsn.com/">
+                            <i data-feather="gift"></i>
+                            <span>Live casino</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="{{ frontendRouter('home') }}">
                             <i data-feather="gift"></i>
                             <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#sidebarWallet" data-toggle="collapse">
+                            <i data-feather="gift"></i>
+                            <span> Wallet </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarWallet">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{ frontendRouter('deposit') }}">Deposit</a>
+                                </li>
+                                <li>
+                                    <a href="{{ frontendRouter('wallet-transfer') }}">Transfer Coin</a>
+                                </li>
+                                <li>
+                                    <a href="{{ frontendRouter('wallet-history') }}">Wallet History</a>
+                                </li>
+                                <li>
+                                    <a href="{{ frontendRouter('request-withdrawal') }}">Request Withdrawal</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#sidebarMarketingSystem" data-toggle="collapse">
+                            <i data-feather="gift"></i>
+                            <span>Marketing System</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarMarketingSystem">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{ frontendRouter('referrals') }}">Marketing System</a>
+                                </li>
+                                <li>
+                                    <a href="{{ frontendRouter('affiliate-tree') }}">Affiliate Tree</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#sidebarCasinoHistory" data-toggle="collapse">
+                            <i data-feather="gift"></i>
+                            <span>Casino history</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarCasinoHistory">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="/">Item 1</a>
+                                </li>
+                                <li>
+                                    <a href="/">Item 2</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="{{ frontendRouter('support') }}">
+                            <i data-feather="gift"></i>
+                            <span>Support</span>
                         </a>
                     </li>
 
@@ -130,24 +204,6 @@
                             <i data-feather="gift"></i>
                             <span>My account</span>
                         </a>
-                    </li>
-
-                    <li>
-                        <a href="#sidebarIcons" data-toggle="collapse">
-                            <i data-feather="gift"></i>
-                            <span> Icons </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarIcons">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="icons-two-tone.html">Two Tone Icons</a>
-                                </li>
-                                <li>
-                                    <a href="icons-feather.html">Feather Icons</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
 
                     <li>

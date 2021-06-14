@@ -10,4 +10,9 @@ class FrontendController extends BaseFrontendController
     {
         return view('frontend.user.account');
     }
+
+    public function support()
+    {
+        return view('frontend.support.index');
+    }
 }
