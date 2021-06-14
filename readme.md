@@ -7,7 +7,7 @@
 * Apache 
     - 2.4
 * PHP
-  - 7.0
+  - 7.4
 * Laravel
   - 5.8
 * Composer
@@ -47,17 +47,4 @@ vi .env
 ```bash
 php artisan migrate
 php artisan db:seed
-```
-
-* account
-```bash
-admin: 
-    /ad-admin/login: support+admin@system-rps.com/aA@dmin123
-frontend:
-    /login: support+rps1@system-rps.com/123456
-```
-
-* cronjob run at 1am every day
-```bash
-php artisan api:reward-invest
 ```

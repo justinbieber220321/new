@@ -811,7 +811,7 @@ if (!function_exists('userAllChildsIds')) {
         $all_ids = [];
         if ($user->childrenRecursive->count() > 0) {
             foreach ($user->childrenRecursive as $child) {
-                $all_ids[] = $child->id;
+                $all_ids[] = $child->user_id;
                 $all_ids = array_merge($all_ids, is_array(userAllChildsIds($child)) ? userAllChildsIds($child) : []);
             }
         }
