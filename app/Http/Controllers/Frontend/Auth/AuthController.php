@@ -52,24 +52,23 @@ class AuthController extends FrontendController
         DB::beginTransaction();
         try {
             $email = trim(request('email'));
-            $dataApi = $this->_getDataFromApi();
-
-            $isExistsEmail = false;
-            $dataUser = [];
-            foreach ($dataApi as $item) {
-                if (arrayGet($item, 'email') == $email) {
-                    $isExistsEmail = true;
-                    $dataUser = $item;
-                    break;
-                }
-            }
-
-            if (!$isExistsEmail) {
-                return redirect()->back()->withErrors(transMessage('account_not_found'))->withInput(request()->all());
-            }
-
             $user = User::delFlagOn()->statusOn()->where('email', $email)->first();
+            $dataUser = [];
             if (empty($user)) {
+                $dataApi = $this->_getDataFromApi();
+                $isExistsEmail = false;
+                foreach ($dataApi as $item) {
+                    if (arrayGet($item, 'email') == $email) {
+                        $isExistsEmail = true;
+                        $dataUser = $item;
+                        break;
+                    }
+                }
+
+                if (!$isExistsEmail) {
+                    return redirect()->back()->withErrors(transMessage('account_not_found'))->withInput(request()->all());
+                }
+
                 $user = new User();
                 $user->user_id = arrayGet($dataUser, 'user_id');
                 $user->username = arrayGet($dataUser, 'username') ? arrayGet($dataUser, 'username') : extractNameFromEmail(arrayGet($dataUser, 'email'));
@@ -78,6 +77,7 @@ class AuthController extends FrontendController
                 $user->parent_id = arrayGet($dataUser, 'parent_id');
                 $user->status = statusOn();
             }
+
             $otpCode = genOtp();
             $user->code_otp = $otpCode;
             $user->save();
