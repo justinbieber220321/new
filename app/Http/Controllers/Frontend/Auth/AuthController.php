@@ -139,10 +139,6 @@ class AuthController extends FrontendController
 
             $user->code_otp = '';
             $user->save();
-
-            // $this->_sendMailInfoLogin($user->email); // @todo confirm
-            // $this->_addNewCoinAddressAfterLogin(); // @todo confirm
-
             DB::commit();
 
             return redirect()->route(frontendRouterName('home'));
@@ -162,8 +158,7 @@ class AuthController extends FrontendController
 
     protected function _sendMailInfoLogin($email)
     {
-        //   $name = frontendCurrentUser()->username;
-        $name = "test";
+        $name = frontendCurrentUser()->username;
 
         $data = [
             'ip' => request()->ip(),
@@ -205,40 +200,6 @@ class AuthController extends FrontendController
         }
 
         return false;
-    }
-
-    /**
-     * auto insert to coin_address table when register new user
-     */
-    protected function _insertCoinAddress()
-    {
-        try {
-            $currentXrp = getConfig('coin_base.xrp');
-            $currentEth = getConfig('coin_base.eth');
-            $currentBtc = getConfig('coin_base.btc');
-
-            $btc1 = $this->getCoinService()->createAccountAddress('');
-            $eth1 = $this->getCoinService()->getAddress($currentEth);
-            $xrp1 = $this->getCoinService()->getAddress($currentXrp);
-
-            $btc2 = $this->getCoinService()->createAccountAddress('');
-            $eth2 = $this->getCoinService()->getAddress($currentEth);
-            $xrp2 = $this->getCoinService()->getAddress($currentXrp);
-
-            $params = [
-                ['address' => $btc1, 'currency' => $currentBtc],
-                ['address' => $eth1, 'currency' => $currentEth],
-                ['address' => $xrp1, 'currency' => $currentXrp],
-
-                ['address' => $btc2, 'currency' => $currentBtc],
-                ['address' => $eth2, 'currency' => $currentEth],
-                ['address' => $xrp2, 'currency' => $currentXrp],
-            ];
-
-            CoinAddress::insert($params);
-        } catch (\Exception $e) {
-            logError($e);
-        }
     }
 
     /**
@@ -290,36 +251,6 @@ class AuthController extends FrontendController
         }
     }
 
-    protected function _addNewCoinAddressAfterRegister(&$params)
-    {
-        try {
-            $ids = [];
-
-            $xrp = CoinAddress::where('currency', 'XRP')->first();
-            if (!empty($xrp)) {
-                $params['coin_address_xrp'] = $xrp->address;
-                array_push($ids, $xrp->id);
-            }
-
-            $btc = CoinAddress::where('currency', 'BTC')->first();
-            if (!empty($btc)) {
-                $params['coin_address_btc'] = $btc->address;
-                array_push($ids, $btc->id);
-            }
-
-            $eth = CoinAddress::where('currency', 'ETH')->first();
-            if (!empty($eth)) {
-                $params['coin_address_eth'] = $eth->address;
-                array_push($ids, $eth->id);
-            }
-
-            $params['coin_address_usdt'] = env('COINBASE_USDT_ADDRESS');
-            CoinAddress::whereIn('id', $ids)->delete();
-        } catch (\Exception $e) {
-            logError($e);
-        }
-    }
-
     /**
      * @param $params
      * @return string|void
@@ -343,16 +274,12 @@ class AuthController extends FrontendController
     protected function _getDataFromApi()
     {
         try {
-            $now = date('Y-m-d');
-            $date = date_create($now);
+            $dateTo = date('Y-m-d', strtotime('+1 day', time()));
+            $date = date_create(date('Y-m-d'));
             date_sub($date, date_interval_create_from_date_string("30 days"));
             $past = date_format($date, "Y-m-d");
-            $endpoint = "https://login.nuxgame.com/api/stat/user_list?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$now";
-            $client = new \GuzzleHttp\Client();
-            $response = $client->request('GET', $endpoint);
-            $content = json_decode($response->getBody(), true);
-
-            return $content;
+            $endpoint = "https://login.nuxgame.com/api/stat/user_list?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo";
+            return callApi($endpoint);
         } catch (\Exception $e) {
             logError($e);
         }

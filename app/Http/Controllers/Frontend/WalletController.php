@@ -44,10 +44,20 @@ class WalletController extends FrontendController
             $this->_storeDepositTable($params);
             $this->_storeWithdrawTable($params);
 
-            // todo call api
+            $amount = arrayGet($params, 'number');
+            $userId = frontendCurrentUser()->user_id;
+            $hash = md5($userId . $amount . "W36CvhErO1YR8vGd");
 
-            DB::commit(); // all good
-            return backSystemSuccess();
+            $apiDeposit = "https://login.nuxgame.com/api/stat/make_deposit?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
+            $apiWithdrawal = "https://login.nuxgame.com/api/stat/make_withdrawal?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
+
+            $r1 = callApi($apiDeposit);
+            $r2 = callApi($apiWithdrawal);
+
+            if (arrayGet($r1, 'status') && arrayGet($r2, 'status')) {
+                DB::commit(); // all good
+                return backSystemSuccess();
+            }
         } catch (\Exception $e) {
             logError($e);
             DB::rollBack();
@@ -79,7 +89,7 @@ class WalletController extends FrontendController
     protected function _storeWithdrawTable($params)
     {
         $withDrawEntity = new Withdraw();
-        $paramStoreWithdraw  = [
+        $paramStoreWithdraw = [
             'user_id' => frontendCurrentUserId(),
             'to' => arrayGet($params, 'user_id'),
             'message' => arrayGet($params, 'message'),
@@ -97,7 +107,7 @@ class WalletController extends FrontendController
     protected function _storeDepositTable($params)
     {
         $depositEntity = new Deposit();
-        $paramStoreDeposit  = [
+        $paramStoreDeposit = [
             'user_id' => arrayGet($params, 'user_id'),
             'from' => frontendCurrentUserId(),
             'message' => arrayGet($params, 'message'),

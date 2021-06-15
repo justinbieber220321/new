@@ -818,3 +818,14 @@ if (!function_exists('userAllChildsIds')) {
         return $all_ids;
     }
 }
+
+if (!function_exists('callApi')) {
+    function callApi($link)
+    {
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('GET', $link);
+        $content = json_decode($response->getBody(), true);
+
+        return $content;
+    }
+}

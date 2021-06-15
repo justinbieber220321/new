@@ -8,7 +8,7 @@
     <meta content="Coderthemes" name="author"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>{{ getEnvX('SITE_TITLE') }}</title>
-    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/logo1.png') }}">
     <link href="{{ asset('frontend/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('frontend/assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css"
           id="bs-default-stylesheet"/>
@@ -81,7 +81,10 @@
 
             <!-- LOGO -->
             <div class="logo-box">
-
+                <a href="{{ frontendRouter('home') }}" class="logo logo-light text-center">
+                    <span class="logo-sm"><img src="{{ asset('frontend/assets/images/logo1.png') }}"></span>
+                    <span class="logo-lg"><img src="{{ asset('frontend/assets/images/logo1.png') }}"></span>
+                </a>
             </div>
 
             <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
@@ -180,18 +183,18 @@
                         <a href="#sidebarCasinoHistory" data-toggle="collapse">
                             <i data-feather="gift"></i>
                             <span>Casino history</span>
-                            <span class="menu-arrow"></span>
+                            {{--<span class="menu-arrow"></span>--}}
                         </a>
-                        <div class="collapse" id="sidebarCasinoHistory">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="/">Item 1</a>
-                                </li>
-                                <li>
-                                    <a href="/">Item 2</a>
-                                </li>
-                            </ul>
-                        </div>
+                        {{--<div class="collapse" id="sidebarCasinoHistory">--}}
+                            {{--<ul class="nav-second-level">--}}
+                                {{--<li>--}}
+                                    {{--<a href="/">Item 1</a>--}}
+                                {{--</li>--}}
+                                {{--<li>--}}
+                                    {{--<a href="/">Item 2</a>--}}
+                                {{--</li>--}}
+                            {{--</ul>--}}
+                        {{--</div>--}}
                     </li>
 
                     <li>
