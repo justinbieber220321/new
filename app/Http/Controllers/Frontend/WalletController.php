@@ -17,16 +17,26 @@ class WalletController extends FrontendController
 
     public function requestDeposit()
     {
+        return view('frontend.wallet.deposit');
+    }
+
+    public function postDeposit()
+    {
+        echo "@todo post deposit";die;
+    }
+
+    public function walletTransfer()
+    {
         $listAffiliates = $this->getRepository()->getListForTransfer(frontendCurrentUserId());
 
         $viewData = [
             'listAffiliates' => $listAffiliates
         ];
 
-        return view('frontend.wallet.deposit', $viewData);
+        return view('frontend.wallet.transfer', $viewData);
     }
 
-    public function postDeposit()
+    public function postTransfer()
     {
         DB::beginTransaction();
         try {
@@ -64,11 +74,6 @@ class WalletController extends FrontendController
         }
 
         return backSystemError();
-    }
-
-    public function walletTransfer()
-    {
-        return view('frontend.wallet.transfer');
     }
 
     public function walletHistory()

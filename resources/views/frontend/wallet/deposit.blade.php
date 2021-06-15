@@ -1,6 +1,20 @@
 @extends('layouts.frontend.main')
 
+@push('style')
+
+@endpush
+
 @section('content')
+    <script>
+        function copyToClipboard(element) {
+            console.log('xxx');
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        }
+    </script>
 
     <div class="container-fluid">
         <div class="row">
@@ -17,39 +31,39 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
+                        <h1 class="header-title">Deposit Now</h1>
+
+                        <div class="row mt-3">
                             <div class="col-md-6">
-                                <form action="{{ frontendRouter('deposit.post') }}" method="POST">
-
-                                    @include('layouts.frontend.structures._notification')
-                                    @include('layouts.frontend.structures._error_validate')
-                                    @csrf
-
-                                    <div class="form-group">
-                                        <label>To *</label>
-                                        <div class="my-select2">
-                                            <select required class="my-select2__select2 select2-wrapper" name="user_id">
-                                                <option selected readonly value="">--- Please select ---</option>
-                                                @foreach($listAffiliates as $item)
-                                                    <option value="{{ arrayGet($item, 'id') }}">{{ arrayGet($item, 'email') }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                <div class="form-group">
+                                    <label>Please transfer</label>
+                                    <div class="d-flex">
+                                        <input type="text" disabled class="form-control" id="address-deposit" value="{{ env('TRX_ADDRESS_DEPOSIT') }}">
+                                        <button class="btn btn-crown btn-xs" onclick="copyToClipboard('#address-deposit')">Copy!</button> <!-- @todo copy -->
                                     </div>
-                                    <div class="form-group">
-                                        <label>Number (USDT) *</label>
-                                        <input type="number" class="form-control" name="number" value="{{ old('number') }}" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Message *</label>
-                                        <input type="text" class="form-control" value="{{ old('message') }}" name="message" required maxlength="64">
-                                    </div>
-
-                                    <button class="btn btn-crown" type="submit">Log In</button>
-                                </form>
+                                    <small>with tag (memo): {{ frontendCurrentUserId() }}</small>
+                                    <br>
+                                    <small class="text-danger">Please enter correct user_id. Otherwise the system will not record.</small>
+                                </div>
                             </div>
                         </div>
 
+                    </div>
+
+                    <div class="card-body">
+                        <h1 class="header-title">Check Deposit</h1>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>You have transferred the account but the system has not recorded it yet</label>
+                                    <form action="{{ frontendRouter('check-deposit.post') }}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-crown btn-xs">Check Now</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
