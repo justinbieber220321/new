@@ -123,6 +123,7 @@ return [
     'backend_check_password' => ':attribute 無効です',
     'limit_coin_number' => ':attribute 残りの残高より少なくする必要があります',
     'number_invest' => ':attribute 残りの残高より少なくする必要があります および最低500RPS',
+    'number_deposit' => '：属性は残りの残高よりも小さくする必要があります',
 
     /*
     |--------------------------------------------------------------------------

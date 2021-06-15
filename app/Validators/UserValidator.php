@@ -107,4 +107,15 @@ class UserValidator extends BaseValidator
 
         return $this->validate($rules, $params);
     }
+
+    public function frontendValidateDeposit($params = [])
+    {
+        $rules = [
+            'user_id' => 'bail|required',
+            'message' => 'bail|required|string|max:64',
+            'number' => 'bail|required|number_deposit:' . arrayGet($params, 'number'),
+        ];
+
+        return $this->validate($rules, $params);
+    }
 }

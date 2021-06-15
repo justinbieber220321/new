@@ -17,17 +17,17 @@
 }
 
 .btn-submit, .btn-rps {
-    background: #53B7E8;
+    background: #00acc1;
     border: none;
     color: white;
 }
 
 .text-rps {
-    color: #53B7E8;
+    color: #00acc1;
 }
 
 .bg-rps {
-    background: #53B7E8;
+    background: #00acc1;
 }
 
 .btn-submit:hover, .btn-rps:hover {
@@ -36,22 +36,32 @@
 
 [data-theme-version="dark"] .deznav .metismenu > li:hover > a, [data-theme-version="dark"] .deznav .metismenu > li:focus > a,
 [data-theme-version="dark"] .deznav .metismenu > li.mm-active > a {
-    color: #53B7E8;
+    color: #00acc1;
 }
 
 [data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu > li > a:before {
-    background: #53B7E8;
+    background: #00acc1;
 }
 
 [data-theme-version="dark"] .deznav .metismenu ul a:hover, [data-theme-version="dark"] .deznav .metismenu ul a:focus,
 [data-theme-version="dark"] .deznav .metismenu ul a.mm-active {
-    color: #53B7E8;
+    color: #00acc1;
 }
 
 .deznav .metismenu ul a:hover:before, .deznav .metismenu ul a:focus:before, .deznav .metismenu ul a.mm-active:before {
-    border-color: #53B7E8;
+    border-color: #00acc1;
 }
 
 [data-theme-version="dark"] .deznav .metismenu > li:hover > a i, [data-theme-version="dark"] .deznav .metismenu > li:focus > a i, [data-theme-version="dark"] .deznav .metismenu > li.mm-active > a i {
-    color: #53B7E8;
+    color: #00acc1;
+}
+
+.btn-crown {
+    background-color: #00acc1;
+    border-color: #00acc1;
+    color: white;
+}
+
+.btn-crown:hover {
+    color: white;
 }

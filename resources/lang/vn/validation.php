@@ -120,6 +120,7 @@ return [
     'backend_check_password' => 'Trường :attribute là không chính xác',
     'limit_coin_number' => 'Trường :attribute phải nhỏ hơn số dư còn lại',
     'number_invest' => 'Trường :attribute phải nhỏ hơn số dư còn lại và tối thiểu là 500 RPS',
+    'number_deposit' => 'Trường :attribute phải nhỏ hơn số dư còn lại',
 
     /*
     |--------------------------------------------------------------------------

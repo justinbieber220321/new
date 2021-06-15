@@ -45,5 +45,12 @@ class ValidatorServiceProvider   extends ServiceProvider
             $balance = getBalance(frontendCurrentUserId());
             return $balance >= $number && $number >= getConfig('min_invest_rps');
         });
+
+        // Validate the number to deposit: 0 < number < balance
+        $this->app['validator']->extend('number_deposit', function ($attribute, $value, $parameters) {
+            $number = arrayGet($parameters, '0');
+            $balance = 1000; // @todo
+            return $balance >= $number && $number > 0;
+        });
     }
 }
