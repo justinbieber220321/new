@@ -29,7 +29,7 @@
                                         <label>To *</label>
                                         <div class="my-select2">
                                             <select required class="my-select2__select2 select2-wrapper" name="user_id">
-                                                <option selected readonly value="">--- Please select ---</option>
+                                                <option selected readonly value="">--- Please select user id---</option>
                                                 @foreach($listAffiliates as $item)
                                                     <option value="{{ arrayGet($item, 'id') }}">{{ arrayGet($item, 'user_id') }}</option>
                                                 @endforeach

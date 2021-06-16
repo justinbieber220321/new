@@ -6,13 +6,17 @@ use App\Http\Controllers\Frontend\Base\FrontendController;
 use App\Model\Entities\Deposit;
 use App\Model\Entities\Withdraw;
 use App\Repositories\UserRepository;
+use App\Services\TRXService;
 use Illuminate\Support\Facades\DB;
 
 class WalletController extends FrontendController
 {
-    public function __construct(UserRepository $userRepository)
+    protected $_trxService;
+
+    public function __construct(UserRepository $userRepository, TRXService $TrxService)
     {
         $this->setRepository($userRepository);
+        $this->_trxService = $TrxService;
     }
 
     public function requestDeposit()
@@ -20,9 +24,68 @@ class WalletController extends FrontendController
         return view('frontend.wallet.deposit');
     }
 
-    public function postDeposit()
+    public function postCheckDeposit()
     {
-        echo "@todo post deposit";die;
+        try {
+            $listTransaction = $this->_trxService->getListTransactions();
+            $userId = frontendCurrentUser()->user_id; // = user id dang login thi moi cong them vao bang deposit
+            $currency = "USDT";
+
+            $listTransaction2 = [];
+            foreach ($listTransaction as $tran) {
+                $tranId = arrayGet($tran, 'transaction_id');
+                $depositEntity = Deposit::delFlagOn()->where('message', $tranId)->first();
+                if ($depositEntity) {
+                    continue;
+                }
+                array_push($listTransaction2, $tran);
+            }
+
+            $listTransaction3 = [];
+            foreach ($listTransaction2 as $tran2) {
+                $hash2 = arrayGet($tran2, 'transaction_id');
+                $result2 = callApi("https://apilist.tronscan.org/api/transaction-info?hash=$hash2");
+                if ($userId != arrayGet($result2, 'data')) {
+                    continue;
+                }
+                array_push($listTransaction3, $tran2);
+            }
+
+            foreach ($listTransaction3 as $tran3) {
+                DB::beginTransaction();
+                $amount = arrayGet($tran3, 'value') / 1000000;
+                try {
+                    // insert db
+                    $deposit = new Deposit();
+                    $deposit->user_id = $userId;
+                    $deposit->from = $userId;
+                    $deposit->currency = $currency;
+                    $deposit->message = $tranId;
+                    $deposit->number = $amount;
+                    $deposit->save();
+
+                    // call api
+                    $hash = md5($userId . $amount . "W36CvhErO1YR8vGd");
+                    $apiDeposit = "https://login.nuxgame.com/api/stat/make_deposit?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
+                    $r1 = callApi($apiDeposit);
+                    if (arrayGet($r1, 'status')) {
+                        DB::commit(); // all good
+                        return backSystemSuccess();
+                    }
+
+                    DB::rollBack();
+                } catch (\Exception $e1) {
+                    DB::rollBack();
+                    logError($e1);
+                }
+            }
+            return backSystemError();
+        } catch (\Exception $e) {
+            logError($e);
+        }
+
+        return backSystemError();
+
     }
 
     public function walletTransfer()

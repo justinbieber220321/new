@@ -1,5 +1,7 @@
 <?php
 
+echo strlen('TEQ1cctzJuTF3UNJUfEFUXqNgvYVW1Yhyg');
+
 Route::post('lang', ['as' => 'set-lang', 'uses' => 'Controller@setLang']);
 
 // ========== FRONTEND AREA ==========
@@ -19,7 +21,7 @@ Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'midd
         Route::post('account/update', ['as' => 'account.update.post', 'uses' => 'UserController@updateAccount']);
 
         Route::get('request-deposit', ['as' => 'deposit', 'uses' => 'WalletController@requestDeposit']);
-        Route::post('request-deposit', ['as' => 'deposit.post', 'uses' => 'WalletController@postDeposit']);
+        Route::post('request-deposit', ['as' => 'check-deposit.post', 'uses' => 'WalletController@postCheckDeposit']);
         Route::get('wallet-transfer', ['as' => 'wallet-transfer', 'uses' => 'WalletController@walletTransfer']);
         Route::post('wallet-transfer', ['as' => 'transfer.post', 'uses' => 'WalletController@postTransfer']);
         Route::get('wallet-history', ['as' => 'wallet-history', 'uses' => 'WalletController@walletHistory']);
@@ -29,8 +31,6 @@ Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'midd
         Route::get('affiliate-tree', ['as' => 'affiliate-tree', 'uses' => 'MarketingSystemController@affiliateTree']);
 
         Route::get('support', ['as' => 'support', 'uses' => 'FrontendController@support']);
-
-        Route::post('check-deposit', ['as' => 'check-deposit.post', 'uses' => 'TRXController@getBalanceUSDT']);
     });
 });
 

@@ -35,18 +35,6 @@
     <div class="navbar-custom">
         <div class="container-fluid">
             <ul class="list-unstyled topnav-menu float-right mb-0">
-
-                <li class="dropdown d-inline-block d-lg-none">
-                    <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <i class="fe-search noti-icon"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-lg dropdown-menu-right p-0">
-                        <form class="p-3">
-                            <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
-                        </form>
-                    </div>
-                </li>
-
                 <li class="dropdown notification-list topbar-dropdown">
                     <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <img src="{{ asset('theme/image/profile/default-user.png') }}" alt="" class="rounded-circle">
@@ -82,8 +70,8 @@
             <!-- LOGO -->
             <div class="logo-box">
                 <a href="{{ frontendRouter('home') }}" class="logo logo-light text-center">
-                    <span class="logo-sm"><img src="{{ asset('frontend/assets/images/logo1.png') }}"></span>
-                    <span class="logo-lg"><img src="{{ asset('frontend/assets/images/logo1.png') }}"></span>
+                    <span class="logo-sm"><img src="{{ asset('frontend/assets/images/logo1.png') }}" width="50px"></span>
+                    <span class="logo-lg"><img src="{{ asset('frontend/assets/images/logo1.png') }}" width="100px"></span>
                 </a>
             </div>
 

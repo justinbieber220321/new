@@ -6,7 +6,6 @@ use App\Http\Controllers\Frontend\Base\FrontendController;
 use App\Model\Entities\CoinAddress;
 use App\Model\Entities\User;
 use App\Repositories\UserRepository;
-use App\Services\CoinService;
 use Carbon\Carbon;
 use Browser;
 use Illuminate\Support\Facades\DB;
@@ -16,26 +15,9 @@ class AuthController extends FrontendController
 {
     public $coinService;
 
-    /**
-     * @return mixed
-     */
-    public function getCoinService()
-    {
-        return $this->coinService;
-    }
-
-    /**
-     * @param mixed $coinService
-     */
-    public function setCoinService($coinService)
-    {
-        $this->coinService = $coinService;
-    }
-
-    public function __construct(UserRepository $userRepository, CoinService $coinService)
+    public function __construct(UserRepository $userRepository)
     {
         $this->setRepository($userRepository);
-        $this->setCoinService($coinService);
     }
 
     public function showFormLogin()
