@@ -108,5 +108,11 @@ return [
     'coin-rps' => 4,
     'coin-usdt' => 5,
 
-    'user_id-admin' => 13608
+    'user_id-admin' => 13608,
+    'max-day-withdraw' => 2000,
+    'withdraw-type' => [
+        'transfer' => 1,
+        'fee' => 2,
+        'withdraw' => 3
+    ]
 ];

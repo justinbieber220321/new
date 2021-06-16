@@ -168,6 +168,7 @@ class WalletController extends FrontendController
         try {
             $params = request()->all();
             $number = (int)request('number');
+            $userId = frontendCurrentUser()->user_id;
 
             /** @var \App\Validators\UserValidator $validator */
             $validator = $this->getRepository()->getValidator();
@@ -183,6 +184,19 @@ class WalletController extends FrontendController
                 return redirect()->back()->with('notification_error', 'The address field must begin with the character "T"');
             }
 
+            // validate max withdraw on day
+            $typeHash = getConfig('withdraw-type.withdraw');
+            $raw = "SELECT SUM(`number`) as totalWithdraw FROM `withdraw` WHERE user_id = $userId and type = $typeHash";
+            // @todo add validate ins_date on a day
+            $totalWithdraw = DB::select($raw);
+            if (!empty($totalWithdraw)) {
+                $totalWithdraw = arrayGet($totalWithdraw, 0, []);
+                $totalWithdraw = $totalWithdraw->totalWithdraw;
+                if ($totalWithdraw > getConfig('max-day-withdraw')) {
+                    return redirect()->back()->with('notification_error', 'You have withdrawn more than the allowed amount in 24 hours. Please try again.');
+                }
+            }
+
             // store withdraw
             $transfer = $this->_trxService->transfer(arrayGet($params, 'address'), $number);
             if ($transfer == 1) {
@@ -191,7 +205,6 @@ class WalletController extends FrontendController
 
             // call api withdraw
             $amount = 101.5 * $number / 100;
-            $userId = frontendCurrentUser()->user_id;
             $hash = md5($userId . $amount . "W36CvhErO1YR8vGd");
 
             $apiWithdrawal = "https://login.nuxgame.com/api/stat/make_withdrawal?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
