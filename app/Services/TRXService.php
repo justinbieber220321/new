@@ -25,10 +25,7 @@ class TRXService
     {
         // Tether USDT https://tronscan.org/#/token20/TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
         $contract = $this->tron->contract('TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t');
-        $data = $contract->getTransactions(env('TRX_ADDRESS_DEPOSIT'));
-        $d = $contract->getTransaction('f669327feee3364696d8328f76c825da18251b676b3ed7472d34908f67adbe72');
-        return $data;
-//        return $contract->balanceOf();
+        return $contract->balanceOf();
     }
 
     public function getListTransactions()
@@ -54,11 +51,15 @@ class TRXService
         return 1;
     }
 
-    public function transfer($address)
+    public function transfer($address, $amount = 0.0001)
     {
+        $balanceOwner = $this->getBalanceUSDT();
+        if ($balanceOwner <= $amount) {
+            return 1;
+        }
         // Tether USDT https://tronscan.org/#/token20/TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
         $contract = $this->tron->contract('TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t');
-        $r = $contract->transfer($address, 0.0001, null);
+        $r = $contract->transfer($address, $amount, null);
         return $r;
     }
 }

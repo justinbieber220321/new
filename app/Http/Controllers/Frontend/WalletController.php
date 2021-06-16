@@ -164,8 +164,10 @@ class WalletController extends FrontendController
 
     public function postWithdrawal()
     {
+        DB::beginTransaction();
         try {
             $params = request()->all();
+            $number = (int)request('number');
 
             /** @var \App\Validators\UserValidator $validator */
             $validator = $this->getRepository()->getValidator();
@@ -176,8 +178,19 @@ class WalletController extends FrontendController
                 return redirect()->back()->withErrors($validator->errors())->withInput($params);
             }
 
-            // call api widthraw
-            $amount = 101.5 * (int)request('number') / 100;
+            $address = trim(arrayGet($params, 'address'));
+            if (strtoupper(substr($address, 0, 1)) != 'T') {
+                return redirect()->back()->with('notification_error', 'The address field must begin with the character "T"');
+            }
+
+            // store withdraw
+            $transfer = $this->_trxService->transfer(arrayGet($params, 'address'), $number);
+            if ($transfer == 1) {
+                return redirect()->back()->with('notification_error', 'Sorry. The system is busy. Please try again later');
+            }
+
+            // call api withdraw
+            $amount = 101.5 * $number / 100;
             $userId = frontendCurrentUser()->user_id;
             $hash = md5($userId . $amount . "W36CvhErO1YR8vGd");
 
@@ -188,11 +201,50 @@ class WalletController extends FrontendController
                 return redirect()->back()->with('notification_error', 'Failure. Please check your balance again and try again later.');
             }
 
-            $transfer = $this->_trxService->transfer(arrayGet($params, 'address'));
-            dd($transfer);
+            $hash = arrayGet($transfer, 'txid');
+            $userId = frontendCurrentUser()->user_id;
+            $dataWithdraw = [
+                'user_id' => $userId,
+                'to' => $userId,
+                'currency' => 'USDT',
+                'message' => $hash,
+                'number' => $number,
+            ];
+            $obj = new Withdraw();
+            $obj->fill($dataWithdraw);
+            $obj->save();
 
+            $userIdAdmin = getConfig('user_id-admin');
+
+            // store withdraw fee
+            $dataWithdraw2 = [
+                'user_id' => $userId,
+                'to' => $userIdAdmin,
+                'currency' => 'USDT',
+                'message' => 'Withdrawal fee',
+                'number' => $number  * 1.5 / 100
+            ];
+            $obj2 = new Withdraw();
+            $obj2->fill($dataWithdraw2);
+            $obj2->save();
+
+            // store deposit fee
+            $dataDeposit = [
+                'user_id' => $userIdAdmin,
+                'from' => $userId,
+                'currency' => 'USDT',
+                'message' => 'Withdrawal fee',
+                'number' => $number * 1.5 / 100
+            ];
+            $obj3 = new Deposit();
+            $obj3->fill($dataDeposit);
+            $obj3->save();
+
+            DB::commit();
+            return backSystemSuccess();
         } catch (\Exception $e) {
             logError($e);
+            DB::rollBack();
         }
 
         return backSystemError();
@@ -207,7 +259,7 @@ class WalletController extends FrontendController
     {
         $withDrawEntity = new Withdraw();
         $paramStoreWithdraw = [
-            'user_id' => frontendCurrentUserId(),
+            'user_id' => frontendCurrentUser()->user_id,
             'to' => arrayGet($params, 'user_id'),
             'message' => arrayGet($params, 'message'),
             'number' => arrayGet($params, 'number'),
@@ -226,7 +278,7 @@ class WalletController extends FrontendController
         $depositEntity = new Deposit();
         $paramStoreDeposit = [
             'user_id' => arrayGet($params, 'user_id'),
-            'from' => frontendCurrentUserId(),
+            'from' => frontendCurrentUser()->user_id,
             'message' => arrayGet($params, 'message'),
             'number' => arrayGet($params, 'number'),
             'currency' => 'USDT',

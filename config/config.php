@@ -107,4 +107,6 @@ return [
     'coin-xrp' => 3,
     'coin-rps' => 4,
     'coin-usdt' => 5,
+
+    'user_id-admin' => 13608
 ];
