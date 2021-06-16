@@ -24,6 +24,7 @@ Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'midd
         Route::post('wallet-transfer', ['as' => 'transfer.post', 'uses' => 'WalletController@postTransfer']);
         Route::get('wallet-history', ['as' => 'wallet-history', 'uses' => 'WalletController@walletHistory']);
         Route::get('request-withdrawal', ['as' => 'request-withdrawal', 'uses' => 'WalletController@requestWithdrawal']);
+        Route::post('request-withdrawal', ['as' => 'request-withdrawal.post', 'uses' => 'WalletController@postWithdrawal']);
 
         Route::get('referrals', ['as' => 'referrals', 'uses' => 'MarketingSystemController@referrals']);
         Route::get('affiliate-tree', ['as' => 'affiliate-tree', 'uses' => 'MarketingSystemController@affiliateTree']);

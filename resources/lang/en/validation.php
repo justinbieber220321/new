@@ -121,6 +121,7 @@ return [
     'limit_coin_number' => 'The :attribute must be less than the remaining balance',
     'number_invest' => 'The :attribute must be less than the remaining balance and a minimum of 500 RPS',
     'number_deposit' => 'The :attribute must be less than the remaining balance',
+    'number_withdrawal' => 'The :attribute must be less than the remaining balance and fee',
 
     /*
     |--------------------------------------------------------------------------

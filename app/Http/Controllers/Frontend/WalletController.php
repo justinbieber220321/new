@@ -151,7 +151,51 @@ class WalletController extends FrontendController
 
     public function requestWithdrawal()
     {
-        return view('frontend.wallet.withdrawal');
+        $max = 2000;
+        $balance = getBalanceRealtime();
+        $maxAmount = $max > $balance ? $balance : $max;
+
+        $viewData = [
+            'maxAmount' => $maxAmount
+        ];
+
+        return view('frontend.wallet.withdrawal', $viewData);
+    }
+
+    public function postWithdrawal()
+    {
+        try {
+            $params = request()->all();
+
+            /** @var \App\Validators\UserValidator $validator */
+            $validator = $this->getRepository()->getValidator();
+            $isValid = $validator->frontendValidateWithdrawal($params);
+
+            if (!$isValid) {
+                $this->setFormData($params);
+                return redirect()->back()->withErrors($validator->errors())->withInput($params);
+            }
+
+            // call api widthraw
+            $amount = 101.5 * (int)request('number') / 100;
+            $userId = frontendCurrentUser()->user_id;
+            $hash = md5($userId . $amount . "W36CvhErO1YR8vGd");
+
+            $apiWithdrawal = "https://login.nuxgame.com/api/stat/make_withdrawal?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
+            $r = callApi($apiWithdrawal);
+
+            if (!arrayGet($r, 'status')) {
+                return redirect()->back()->with('notification_error', 'Failure. Please check your balance again and try again later.');
+            }
+
+            $transfer = $this->_trxService->transfer(arrayGet($params, 'address'));
+            dd($transfer);
+
+        } catch (\Exception $e) {
+            logError($e);
+        }
+
+        return backSystemError();
     }
 
     /* ========== FUNCTION PROTECTED AREA ========== */

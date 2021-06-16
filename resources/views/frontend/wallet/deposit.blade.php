@@ -6,13 +6,16 @@
 
 @section('content')
     <script>
-        function copyToClipboard(element) {
-            console.log('xxx');
-            var $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val($(element).text()).select();
+        function copyToClipboard() {
+            /* Get the text field */
+            var copyText = document.getElementById("address-deposit");
+
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+            /* Copy the text inside the text field */
             document.execCommand("copy");
-            $temp.remove();
         }
     </script>
 
@@ -38,8 +41,8 @@
                                 <div class="form-group">
                                     <label>Please transfer</label>
                                     <div class="d-flex">
-                                        <input type="text" disabled class="form-control" id="address-deposit" value="{{ env('TRX_ADDRESS_DEPOSIT') }}">
-                                        <button class="btn btn-crown btn-xs" onclick="copyToClipboard('#address-deposit')">Copy!</button> <!-- @todo copy -->
+                                        <input type="text" readonly class="form-control" id="address-deposit" value="{{ env('TRX_ADDRESS_DEPOSIT') }}">
+                                        <button class="btn btn-crown btn-xs" onclick="copyToClipboard()">Copy!</button>
                                     </div>
                                     <small>with tag (note): {{ frontendCurrentUser()->user_id }}</small>
                                     <br>

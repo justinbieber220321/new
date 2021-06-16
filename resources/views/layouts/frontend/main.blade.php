@@ -152,7 +152,7 @@
                     <li>
                         <a href="#sidebarMarketingSystem" data-toggle="collapse">
                             <i data-feather="gift"></i>
-                            <span>Marketing System</span>
+                            <span>Marketing system</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarMarketingSystem">
@@ -186,16 +186,16 @@
                     </li>
 
                     <li>
-                        <a href="{{ frontendRouter('support') }}">
+                        <a href="{{ frontendRouter('account') }}">
                             <i data-feather="gift"></i>
-                            <span>Support</span>
+                            <span>My account</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ frontendRouter('account') }}">
+                        <a href="{{ frontendRouter('support') }}">
                             <i data-feather="gift"></i>
-                            <span>My account</span>
+                            <span>Support</span>
                         </a>
                     </li>
 
@@ -218,10 +218,6 @@
     </div>
     <!-- Left Sidebar End -->
 
-    <!-- ============================================================== -->
-    <!-- Start Page Content here -->
-    <!-- ============================================================== -->
-
     <div class="content-page">
         <div class="content">
 
@@ -229,25 +225,7 @@
 
         </div> <!-- content -->
 
-        <!-- Footer Start -->
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
-                        <script>document.write(new Date().getFullYear())</script> &copy; UBold theme by <a href="">Crown</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- end Footer -->
-
     </div>
-
-    <!-- ============================================================== -->
-    <!-- End Page content -->
-    <!-- ============================================================== -->
-
-
 </div>
 <!-- END wrapper -->
 

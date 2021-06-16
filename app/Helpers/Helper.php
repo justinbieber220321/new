@@ -829,3 +829,35 @@ if (!function_exists('callApi')) {
         return $content;
     }
 }
+
+/**
+ * Get balance real time from api
+ */
+if (!function_exists('getBalanceRealtime')) {
+    function getBalanceRealtime()
+    {
+        if (!frontendIsLogin()) {
+            return 0;
+        }
+
+        $dateTo = date('Y-m-d', strtotime('+1 day', time()));
+        $date = date_create(date('Y-m-d'));
+        date_sub($date, date_interval_create_from_date_string("365 days"));
+        $past = date_format($date, "Y-m-d");
+        $endpoint = "https://login.nuxgame.com/api/stat/user_list?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo";
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('GET', $endpoint);
+        $dataApi = json_decode($response->getBody(), true);
+        $dataUser = [];
+        $email = frontendCurrentUser()->email;
+        foreach ($dataApi as $item) {
+            if (arrayGet($item, 'email') == $email) {
+                $dataUser = $item;
+                break;
+            }
+        }
+        $balance = arrayGet($dataUser, 'balance', 0);
+
+        return $balance;
+    }
+}

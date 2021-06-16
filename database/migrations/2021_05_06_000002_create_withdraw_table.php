@@ -18,7 +18,7 @@ class CreateWithdrawTable extends Migration
             $table->integer('user_id');
             $table->integer('to');
             $table->string('currency');
-            $table->string('link')->nullable();
+            $table->string('address_to')->nullable();
             $table->string('message')->nullable();
             $table->decimal('number', 15, 3);
             $table->timestamp('ins_date')->useCurrent();

@@ -54,12 +54,11 @@ class TRXService
         return 1;
     }
 
-    public function transfer()
+    public function transfer($address)
     {
-        // địa chỉ cố định/ fix cứng
-        $contract = $this->tron->contract('TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t');  // Tether USDT https://tronscan.org/#/token20/TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
-
-        // dòng này thay đổi
-        return $contract->transfer('TEQ1cctzJuTF3UNJUfEFUXqNgvYVW1Yhyg', 0.1, null);
+        // Tether USDT https://tronscan.org/#/token20/TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
+        $contract = $this->tron->contract('TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t');
+        $r = $contract->transfer($address, 0.0001, null);
+        return $r;
     }
 }

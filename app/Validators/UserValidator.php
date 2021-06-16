@@ -118,4 +118,14 @@ class UserValidator extends BaseValidator
 
         return $this->validate($rules, $params);
     }
+
+    public function frontendValidateWithdrawal($params = [])
+    {
+        $rules = [
+            'address' => 'bail|required|string|min:34|max:34',
+            'number' => 'bail|required|number_withdrawal:' . arrayGet($params, 'number'),
+        ];
+
+        return $this->validate($rules, $params);
+    }
 }
