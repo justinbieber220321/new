@@ -51,6 +51,11 @@ class WalletController extends FrontendController
                 array_push($listTransaction3, $tran2);
             }
 
+            if (empty($listTransaction) || empty($listTransaction2) || empty($listTransaction3)) {
+                DB::rollBack();
+                return redirect()->back()->with('notification_error', 'No transaction exists');
+            }
+
             foreach ($listTransaction3 as $tran3) {
                 DB::beginTransaction();
                 $amount = arrayGet($tran3, 'value') / 1000000;
@@ -60,7 +65,7 @@ class WalletController extends FrontendController
                     $deposit->user_id = $userId;
                     $deposit->from = $userId;
                     $deposit->currency = $currency;
-                    $deposit->message = $tranId;
+                    $deposit->message = arrayGet($tran3, 'transaction_id');
                     $deposit->number = $amount;
                     $deposit->save();
 

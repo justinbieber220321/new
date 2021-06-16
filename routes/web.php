@@ -1,7 +1,5 @@
 <?php
 
-echo strlen('TEQ1cctzJuTF3UNJUfEFUXqNgvYVW1Yhyg');
-
 Route::post('lang', ['as' => 'set-lang', 'uses' => 'Controller@setLang']);
 
 // ========== FRONTEND AREA ==========
