@@ -23,6 +23,8 @@ Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'midd
         Route::get('wallet-transfer', ['as' => 'wallet-transfer', 'uses' => 'WalletController@walletTransfer']);
         Route::post('wallet-transfer', ['as' => 'transfer.post', 'uses' => 'WalletController@postTransfer']);
         Route::get('wallet-history', ['as' => 'wallet-history', 'uses' => 'WalletController@walletHistory']);
+        Route::get('wallet-history-deposit', ['as' => 'wallet-history-deposit', 'uses' => 'WalletController@walletHistoryDeposit']);
+        Route::get('wallet-history-withdraw', ['as' => 'wallet-history-withdraw', 'uses' => 'WalletController@walletHistoryWithdraw']);
         Route::get('request-withdrawal', ['as' => 'request-withdrawal', 'uses' => 'WalletController@requestWithdrawal']);
         Route::post('request-withdrawal', ['as' => 'request-withdrawal.post', 'uses' => 'WalletController@postWithdrawal']);
 

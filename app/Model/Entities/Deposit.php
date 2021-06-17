@@ -14,8 +14,8 @@ class Deposit extends AuthTmp
 
     public $timestamps = false;
 
-    public function userDeposit()
+    public function userDepositFrom()
     {
-        return $this->belongsTo(User::class, 'from', 'id');
+        return $this->belongsTo(User::class, 'from', 'user_id');
     }
 }

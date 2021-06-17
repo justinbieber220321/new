@@ -14,8 +14,8 @@ class Withdraw extends AuthTmp
 
     public $timestamps = false;
 
-    public function userWithdraw()
+    public function userWithdrawToUser()
     {
-        return $this->belongsTo(User::class, 'to', 'id');
+        return $this->belongsTo(User::class, 'to', 'user_id');
     }
 }
