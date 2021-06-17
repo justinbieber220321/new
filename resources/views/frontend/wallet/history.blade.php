@@ -47,9 +47,11 @@
                             </table>
                         </div>
 
-                        <p class="">
-                            <a href="{{ frontendRouter('wallet-history-deposit') }}" class="color-crown">Xem thêm</a>
-                        </p>
+                        @if ($countDeposit > getFrontendPagination())
+                            <p class="">
+                                <a href="{{ frontendRouter('wallet-history-deposit') }}" class="color-crown">Xem thêm</a>
+                            </p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -96,9 +98,11 @@
                             </table>
                         </div>
 
-                        <p>
-                            <a href="{{ frontendRouter('wallet-history-withdraw') }}" class="color-crown">Xem thêm</a>
-                        </p>
+                        @if ($countWithdraw > getFrontendPagination())
+                            <p>
+                                <a href="{{ frontendRouter('wallet-history-withdraw') }}" class="color-crown">Xem thêm</a>
+                            </p>
+                        @endif
                     </div>
                 </div>
             </div>

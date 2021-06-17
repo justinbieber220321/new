@@ -146,17 +146,26 @@ class WalletController extends FrontendController
 
     public function walletHistory()
     {
-        $limit = 5;
+        $limit = getFrontendPagination();
 
-        $listWithdraw = Withdraw::with('userWithdrawToUser')->delFlagOn()
-            ->where('user_id', frontendCurrentUser()->user_id)->orderBy('id', 'desc')->limit($limit)->get();
+        $listWithdrawBuilder = Withdraw::with('userWithdrawToUser')->delFlagOn()
+            ->where('user_id', frontendCurrentUser()->user_id)->orderBy('id', 'desc');
 
-        $listDeposit = Deposit::with('userDepositFrom')->delFlagOn()
-            ->where('user_id', frontendCurrentUser()->user_id)->orderBy('id', 'desc')->limit($limit)->get();
+        $listDepositBuilder = Deposit::with('userDepositFrom')->delFlagOn()
+            ->where('user_id', frontendCurrentUser()->user_id)->orderBy('id', 'desc');
+
+
+        $listWithdraw = $listWithdrawBuilder->limit($limit)->get();
+        $listDeposit = $listDepositBuilder->limit($limit)->get();
+
+        $countWithdraw = $listWithdrawBuilder->count();
+        $countDeposit = $listDepositBuilder->count();
 
         $viewData = [
+            'listDeposit' => $listDeposit,
+            'countDeposit' => $countDeposit,
             'listWithdraw' => $listWithdraw,
-            'listDeposit' => $listDeposit
+            'countWithdraw' => $countWithdraw,
         ];
 
         return view('frontend.wallet.history', $viewData);

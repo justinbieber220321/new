@@ -29,7 +29,7 @@ return [
 
     'pagination' => [
         'backend' => 20,
-        'frontend' => 20,
+        'frontend' => 10,
     ],
 
     'key_form_data_old' => '_formDataOld',
