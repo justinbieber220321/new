@@ -8,7 +8,7 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                     </div>
-                    <h4 class="page-title">Transfer Confirm</h4>
+                    <h4 class="page-title">Withdrawal Confirm</h4>
                 </div>
             </div>
         </div>
@@ -18,20 +18,19 @@
                 <div class="card">
                     <div class="card-body">
                         <p>
-                            Please enter the OTP code we sent to your email to make the transfer
-                            <br> Note: the code is valid only within {{ getConfig('time_limit_otp_code') }} minutes. <br> The transaction will expire at: {{ arrayGet($dataTransfer, 'end_time')  }}
+                            Please enter the OTP code we sent to your email to make the withdrawal
+                            <br> Note: the code is valid only within {{ getConfig('time_limit_otp_code') }} minutes. <br> The transaction will expire at: {{ arrayGet($dataWithdrawConfirm, 'end_time')  }}
                         </p>
                         <div class="row">
                             <div class="col-md-6">
-                                <form action="{{ frontendRouter('transfer-confirm.post') }}" method="POST">
+                                <form action="{{ frontendRouter('withdrawal-confirm.post') }}" method="POST">
 
                                     @include('layouts.frontend.structures._notification')
                                     @include('layouts.frontend.structures._error_validate')
                                     @csrf
 
-                                    <input type="hidden" name="user_id" class="form-control" value="{{ arrayGet($dataTransfer, 'user_id') }}">
-                                    <input type="hidden" name="number" class="form-control" value="{{ arrayGet($dataTransfer, 'number') }}">
-                                    <input type="hidden" name="message" class="form-control" value="{{ arrayGet($dataTransfer, 'message') }}">
+                                    <input type="hidden" name="address" class="form-control" value="{{ arrayGet($dataWithdrawConfirm, 'address') }}">
+                                    <input type="hidden" name="number" class="form-control" value="{{ arrayGet($dataWithdrawConfirm, 'number') }}">
 
                                     <div class="form-group">
                                         <label>OTP *</label>

@@ -321,12 +321,12 @@
                                 </tr>
                                 <tr>
                                     <td class="content-block">
-                                        <h3>{{ getSiteName() }} code for transfer</h3>
+                                        <h3>{{ getSiteName() }} code otp</h3>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="content-block">
-                                        Your transfer code is: <strong>{{ $otpRandom }}</strong>. <br>
+                                        Your otp code is: <strong>{{ $otpRandom }}</strong>. <br>
                                         The code is valid only once and has a usage time within 3 minutes for each transaction.
                                     </td>
                                 </tr>

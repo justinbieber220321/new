@@ -34,14 +34,12 @@
 
                                 <div class="form-group">
                                     <label>TRC 20 Address *</label>
-                                    {{--<input type="text" maxlength="34" minlength="34" class="form-control" name="address" value="{{ old('address') }}" required>--}}
-                                    <input type="text" class="form-control" name="address" value="{{ old('address') }}" required>
+                                    <input type="text" maxlength="34" minlength="34" class="form-control" name="address" value="{{ old('address') }}" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Amount *</label>
-                                    {{--<input type="number" class="form-control" value="{{ old('number') }}" name="amount" required min="0" max="{{ $maxAmount }}">--}}
-                                    <input type="number" autocomplete="off" class="form-control" value="{{ old('number') }}" name="number" required min="0">
+                                    <input type="number" class="form-control" value="{{ old('number') }}" name="number" required min="1" max="{{ $maxAmount }}">
                                 </div>
 
                                 <p>Fee: <span id="fee">0 </span> USDT</p>

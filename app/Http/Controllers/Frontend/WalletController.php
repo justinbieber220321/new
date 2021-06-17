@@ -113,7 +113,6 @@ class WalletController extends FrontendController
 
     public function postTransfer()
     {
-        DB::beginTransaction();
         try {
             $params = request()->all();
 
@@ -126,33 +125,15 @@ class WalletController extends FrontendController
                 return redirect()->back()->withErrors($validator->errors())->withInput($params);
             }
 
-            // _handle transaction table: insert or update
-            $otpExpireTime = Carbon::now()->addMinutes(getConfig('time_limit_otp_code'));
-            $otpExpireTime = $otpExpireTime->toDateTimeString();
-            $otp = genOtp();
-
-            $trans = $this->_transactionRepository->findByUserId(frontendCurrentUser()->user_id);
-            if (empty($trans)) {
-                // Insert new transaction
-                $trans = new Transaction();
-                $transData = [
-                    'user_id' => frontendCurrentUser()->user_id,
-                    'code_otp' => $otp,
-                    'end_time' => $otpExpireTime
-                ];
-                $trans->fill($transData);
-                $trans->save();
-            } else {
-                // Update
-                $trans->code_otp = $otp;
-                $trans->end_time = $otpExpireTime;
-                $trans->save();
+            $tran = $this->_handleTransactionOtp();
+            if (!$tran) {
+                return redirect()->back()->with('notification_error', 'Handle transaction otp code error')->withInput($params);
             }
 
             // Send mail for current user with otp code to confirm transfer
             $email = frontendCurrentUser()->email;
             try {
-                Mail::send('frontend.email_template.transfer-random-otp', ['otpRandom' => $otp], function ($message) use ($email) {
+                Mail::send('frontend.email_template.transfer-random-otp', ['otpRandom' => $tran->code_otp], function ($message) use ($email) {
                     $message->to($email)->subject(transMessage('transfer_code_success', ['site-name' => getSiteName()]));
                 });
             } catch (\Exception $e) {
@@ -161,13 +142,11 @@ class WalletController extends FrontendController
                 return backRouteError(frontendRouterName('transfer'));
             }
 
-            $params['end_time'] = $trans->end_time;
+            $params['end_time'] = $tran->end_time;
             session(['for_transfer' => $params]);
-            DB::commit();
             return redirect()->route(frontendRouterName('transfer-confirm'))->with(['entity' => $params]);
         } catch (\Exception $e) {
             logError($e);
-            DB::rollBack();
         }
 
         return backSystemError();
@@ -202,7 +181,7 @@ class WalletController extends FrontendController
 
             $userTransaction = $this->_transactionRepository->findByUserId(frontendCurrentUser()->user_id);
             if (empty($userTransaction)) {
-                return backRouteError(frontendRouterName('wallet-transfer'));
+                return redirect()->back()->with('notification_error', 'No transaction exists')->withInput($params);
             }
 
             /** @var \App\Validators\UserValidator $validator */
@@ -238,7 +217,7 @@ class WalletController extends FrontendController
 
             if (arrayGet($r1, 'status') && arrayGet($r2, 'status')) {
                 DB::commit(); // all good
-                return backRouteSuccess(frontendRouterName('wallet-transfer'));
+                return backRouteSuccess(frontendRouterName('transfer'));
             }
         } catch (\Exception $e) {
             logError($e);
@@ -301,6 +280,7 @@ class WalletController extends FrontendController
 
     public function requestWithdrawal()
     {
+        $this->_clearSessionFormTransfer();
         $max = 2000;
         $balance = getBalanceRealtime();
         $maxAmount = $max > $balance ? $balance : $max;
@@ -314,11 +294,98 @@ class WalletController extends FrontendController
 
     public function postWithdrawal()
     {
+        try {
+            $params = request()->all();
+            $userId = frontendCurrentUser()->user_id;
+
+            /** @var \App\Validators\UserValidator $validator */
+            $validator = $this->getRepository()->getValidator();
+            $isValid = $validator->frontendValidateWithdrawal($params);
+
+            if (!$isValid) {
+                $this->setFormData($params);
+                return redirect()->back()->withErrors($validator->errors())->withInput($params);
+            }
+
+            $address = trim(arrayGet($params, 'address'));
+            if (strtoupper(substr($address, 0, 1)) != 'T') {
+                return redirect()->back()->with('notification_error', 'The address field must begin with the character "T"')->withInput($params);
+            }
+
+            // validate max withdraw on day
+            $typeHash = getConfig('withdraw-type.withdraw');
+            $raw = "SELECT SUM(`number`) as totalWithdraw FROM `withdraw` WHERE user_id = $userId and type = $typeHash 
+                    and ins_date <= now() and ins_date > date_SUB(now(), INTERVAL 24 HOUR)";
+
+            $totalWithdraw = DB::select($raw);
+            if (!empty($totalWithdraw)) {
+                $totalWithdraw = arrayGet($totalWithdraw, 0, []);
+                $totalWithdraw = (int)$totalWithdraw->totalWithdraw;
+                if ($totalWithdraw > getConfig('max-day-withdraw')) {
+                    return redirect()->back()->withInput($params)
+                        ->with('notification_error', 'You have withdrawn more than the allowed amount in 24 hours. Please try again.');
+                }
+            }
+
+            $tran = $this->_handleTransactionOtp();
+            if (!$tran) {
+                return redirect()->back()->with('notification_error', 'Handle transaction otp code error')->withInput($params);
+            }
+
+            // Send mail for current user with otp code to confirm withdraw
+            $email = frontendCurrentUser()->email;
+            try {
+                Mail::send('frontend.email_template.transfer-random-otp', ['otpRandom' => $tran->code_otp], function ($message) use ($email) {
+                    $message->to($email)->subject(transMessage('transfer_code_success', ['site-name' => getSiteName()]));
+                });
+            } catch (\Exception $e) {
+                logError($e);
+                DB::rollBack();
+                return backRouteError(frontendRouterName('transfer'));
+            }
+
+            $params['end_time'] = $tran->end_time;
+            session(['for_withdraw_confirm' => $params]);
+            return redirect()->route(frontendRouterName('withdrawal-confirm'));
+        } catch (\Exception $e) {
+            logError($e);
+        }
+        
+        return backSystemError();
+    }
+
+    public function getWithdrawalConfirm()
+    {
+        try {
+            if (!session()->has('for_withdraw_confirm')) {
+                 return redirect()->route(frontendRouterName('transfer'));
+            }
+
+            $dataWithdrawConfirm = session()->get('for_withdraw_confirm');
+            $viewData = [
+                'dataWithdrawConfirm' => $dataWithdrawConfirm
+            ];
+
+            return view('frontend.wallet.withdrawal-confirm', $viewData);
+        } catch (\Exception $e) {
+            logError($e);
+        }
+
+        return backSystemError();
+    }
+
+    public function postWithdrawalConfirm()
+    {
         DB::beginTransaction();
         try {
             $params = request()->all();
             $number = (int)request('number');
             $userId = frontendCurrentUser()->user_id;
+
+            $userTransaction = $this->_transactionRepository->findByUserId(frontendCurrentUser()->user_id);
+            if (empty($userTransaction)) {
+                return redirect()->back()->with('notification_error', 'No transaction exists')->withInput($params);
+            }
 
             /** @var \App\Validators\UserValidator $validator */
             $validator = $this->getRepository()->getValidator();
@@ -348,7 +415,17 @@ class WalletController extends FrontendController
                 }
             }
 
-            // store withdraw
+            // check code otp
+            if (request('random_str_otp') != $userTransaction->code_otp) {
+                return redirect()->back()->with('notification_error', transMessage('transfer_failed_with_error_code_otp'))->withInput($params);
+            }
+
+            // check time for otp code
+            if (now()->greaterThan($userTransaction->end_time)) {
+                return redirect()->back()->with('notification_error', transMessage('transfer_timeout'))->withInput($params);
+            }
+
+            // @todo confirm sep hung, cho xuong cuoi cung cua function hay de o day
             $transfer = $this->_trxService->transfer(arrayGet($params, 'address'), $number);
             if ($transfer == 1) {
                 return redirect()->back()->with('notification_error', 'Sorry. The system is busy. Please try again later');
@@ -373,6 +450,8 @@ class WalletController extends FrontendController
                 'currency' => 'USDT',
                 'message' => $hash,
                 'number' => $number,
+                'address_to' => $address,
+                'type' => getConfig('withdraw-type.withdraw'),
             ];
             $obj = new Withdraw();
             $obj->fill($dataWithdraw);
@@ -386,7 +465,8 @@ class WalletController extends FrontendController
                 'to' => $userIdAdmin,
                 'currency' => 'USDT',
                 'message' => 'Withdrawal fee',
-                'number' => $number  * 1.5 / 100
+                'number' => $number  * 1.5 / 100,
+                'type' => getConfig('withdraw-type.fee'),
             ];
             $obj2 = new Withdraw();
             $obj2->fill($dataWithdraw2);
@@ -404,8 +484,10 @@ class WalletController extends FrontendController
             $obj3->fill($dataDeposit);
             $obj3->save();
 
+            $userTransaction->delete();
+
             DB::commit();
-            return backSystemSuccess();
+            return backRouteSuccess(frontendRouterName('transfer'));
         } catch (\Exception $e) {
             logError($e);
             DB::rollBack();
@@ -456,5 +538,47 @@ class WalletController extends FrontendController
         if (session('for_transfer')) {
             session()->forget('for_transfer');
         }
+
+        if (session('for_withdraw_confirm')) {
+            session()->forget('for_withdraw_confirm');
+        }
+    }
+
+    /**
+     * @return Transaction|bool
+     * Handle transaction table: insert or update
+     */
+    protected function _handleTransactionOtp()
+    {
+        try {
+            $otpExpireTime = Carbon::now()->addMinutes(getConfig('time_limit_otp_code'));
+            $otpExpireTime = $otpExpireTime->toDateTimeString();
+            $otp = genOtp();
+
+            $tran = $this->_transactionRepository->findByUserId(frontendCurrentUser()->user_id);
+            if (empty($tran)) {
+                // Insert new transaction
+                $tran = new Transaction();
+                $transData = [
+                    'user_id' => frontendCurrentUser()->user_id,
+                    'code_otp' => $otp,
+                    'end_time' => $otpExpireTime
+                ];
+                $tran->fill($transData);
+                $tran->save();
+            } else {
+                // Update
+                $tran->code_otp = $otp;
+                $tran->end_time = $otpExpireTime;
+                $tran->save();
+            }
+
+            return $tran;
+        } catch (\Exception $e) {
+            logError($e);
+            return false;
+        }
+
+        return false;
     }
 }

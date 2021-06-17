@@ -20,15 +20,17 @@ Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'midd
 
         Route::get('deposit', ['as' => 'deposit', 'uses' => 'WalletController@requestDeposit']);
         Route::post('deposit', ['as' => 'check-deposit.post', 'uses' => 'WalletController@postCheckDeposit']);
-        Route::get('transfer', ['as' => 'wallet-transfer', 'uses' => 'WalletController@walletTransfer']);
+        Route::get('transfer', ['as' => 'transfer', 'uses' => 'WalletController@walletTransfer']);
         Route::post('transfer', ['as' => 'transfer.post', 'uses' => 'WalletController@postTransfer']);
         Route::get('transfer/confirm', ['as' => 'transfer-confirm', 'uses' => 'WalletController@getTransferConfirm']);
         Route::post('transfer/confirm', ['as' => 'transfer-confirm.post', 'uses' => 'WalletController@postTransferConfirm']);
         Route::get('wallet-history', ['as' => 'wallet-history', 'uses' => 'WalletController@walletHistory']);
         Route::get('history-deposit', ['as' => 'wallet-history-deposit', 'uses' => 'WalletController@walletHistoryDeposit']);
         Route::get('history-withdraw', ['as' => 'wallet-history-withdraw', 'uses' => 'WalletController@walletHistoryWithdraw']);
-        Route::get('withdrawal', ['as' => 'request-withdrawal', 'uses' => 'WalletController@requestWithdrawal']);
+        Route::get('withdrawal', ['as' => 'withdrawal', 'uses' => 'WalletController@requestWithdrawal']);
         Route::post('withdrawal', ['as' => 'request-withdrawal.post', 'uses' => 'WalletController@postWithdrawal']);
+        Route::get('withdrawal/confirm', ['as' => 'withdrawal-confirm', 'uses' => 'WalletController@getWithdrawalConfirm']);
+        Route::post('withdrawal/confirm', ['as' => 'withdrawal-confirm.post', 'uses' => 'WalletController@postWithdrawalConfirm']);
 
         Route::get('referrals', ['as' => 'referrals', 'uses' => 'MarketingSystemController@referrals']);
         Route::get('affiliate-tree', ['as' => 'affiliate-tree', 'uses' => 'MarketingSystemController@affiliateTree']);

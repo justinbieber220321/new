@@ -702,7 +702,7 @@ if (!function_exists('checkHash')) {
 if (!function_exists('genOtp')) {
     function genOtp()
     {
-        return rand(1000, 99999);
+        return rand(10000000, 99999999);
     }
 }
 

@@ -62,7 +62,7 @@ return [
     'lang' => ['vn', 'jp', 'en'],
     'otp-login' => ['on' => 1, 'off' => 2],
     'key_encode' => 'Acb@123456!#$',
-    'time_limit_otp_code' => 3, // minutes
+    'time_limit_otp_code' => 2, // minutes
     'package' => [
         '6m' => ['type' => 6, 'name' => '6m'], // m: month
         '9m' => ['type' => 9, 'name' => '9m'],

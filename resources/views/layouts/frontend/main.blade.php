@@ -136,13 +136,13 @@
                                     <a href="{{ frontendRouter('deposit') }}">Deposit</a>
                                 </li>
                                 <li>
-                                    <a href="{{ frontendRouter('wallet-transfer') }}">Transfer Coin</a>
+                                    <a href="{{ frontendRouter('transfer') }}">Transfer Coin</a>
                                 </li>
                                 <li>
                                     <a href="{{ frontendRouter('wallet-history') }}">Wallet History</a>
                                 </li>
                                 <li>
-                                    <a href="{{ frontendRouter('request-withdrawal') }}">Request Withdrawal</a>
+                                    <a href="{{ frontendRouter('withdrawal') }}">Request Withdrawal</a>
                                 </li>
                             </ul>
                         </div>

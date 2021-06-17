@@ -9,7 +9,7 @@ class Withdraw extends AuthTmp
     protected $table = 'withdraw';
 
     protected $fillable = [
-        'id', 'user_id', 'to', 'currency', 'link', 'message', 'number', 'created_at', 'del_flag'
+        'id', 'user_id', 'to', 'currency', 'link', 'message', 'number', 'created_at', 'del_flag', 'type', 'address_to'
     ];
 
     public $timestamps = false;
