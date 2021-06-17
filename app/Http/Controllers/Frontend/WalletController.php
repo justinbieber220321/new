@@ -186,12 +186,13 @@ class WalletController extends FrontendController
 
             // validate max withdraw on day
             $typeHash = getConfig('withdraw-type.withdraw');
-            $raw = "SELECT SUM(`number`) as totalWithdraw FROM `withdraw` WHERE user_id = $userId and type = $typeHash";
-            // @todo add validate ins_date on a day
+            $raw = "SELECT SUM(`number`) as totalWithdraw FROM `withdraw` WHERE user_id = $userId and type = $typeHash 
+                    and ins_date <= now() and ins_date > date_SUB(now(), INTERVAL 24 HOUR)";
+
             $totalWithdraw = DB::select($raw);
             if (!empty($totalWithdraw)) {
                 $totalWithdraw = arrayGet($totalWithdraw, 0, []);
-                $totalWithdraw = $totalWithdraw->totalWithdraw;
+                $totalWithdraw = (int)$totalWithdraw->totalWithdraw;
                 if ($totalWithdraw > getConfig('max-day-withdraw')) {
                     return redirect()->back()->with('notification_error', 'You have withdrawn more than the allowed amount in 24 hours. Please try again.');
                 }
