@@ -32,7 +32,7 @@ return [
 
     'placeholder_' => 'Điền :field',
     'code_otp_invalid' => 'Mã OTP không chính xác',
-    'transfer_code_success' => ':site-name mã otp để chuyển khoản',
+    'transfer_code_success' => ':site-name mã OTP',
     'transfer_failed' => 'Chuyển khoản thất bại',
     'transfer_success' => 'Chuyển khoản thành công',
     'transfer_failed_with_error_code_otp' => 'Mã OTP không chính xác',

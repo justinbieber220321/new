@@ -4,19 +4,25 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Frontend\Base\FrontendController;
 use App\Model\Entities\Deposit;
+use App\Model\Entities\Transaction;
 use App\Model\Entities\Withdraw;
+use App\Repositories\TransactionRepository;
 use App\Repositories\UserRepository;
 use App\Services\TRXService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class WalletController extends FrontendController
 {
     protected $_trxService;
+    protected $_transactionRepository;
 
-    public function __construct(UserRepository $userRepository, TRXService $TrxService)
+    public function __construct(UserRepository $userRepository, TRXService $TrxService, TransactionRepository $transactionRepository)
     {
         $this->setRepository($userRepository);
         $this->_trxService = $TrxService;
+        $this->_transactionRepository = $transactionRepository;
     }
 
     public function requestDeposit()
@@ -95,6 +101,7 @@ class WalletController extends FrontendController
 
     public function walletTransfer()
     {
+        $this->_clearSessionFormTransfer();
         $listAffiliates = $this->getRepository()->getListForTransfer(frontendCurrentUserId());
 
         $viewData = [
@@ -119,8 +126,105 @@ class WalletController extends FrontendController
                 return redirect()->back()->withErrors($validator->errors())->withInput($params);
             }
 
+            // _handle transaction table: insert or update
+            $otpExpireTime = Carbon::now()->addMinutes(getConfig('time_limit_otp_code'));
+            $otpExpireTime = $otpExpireTime->toDateTimeString();
+            $otp = genOtp();
+
+            $trans = $this->_transactionRepository->findByUserId(frontendCurrentUser()->user_id);
+            if (empty($trans)) {
+                // Insert new transaction
+                $trans = new Transaction();
+                $transData = [
+                    'user_id' => frontendCurrentUser()->user_id,
+                    'code_otp' => $otp,
+                    'end_time' => $otpExpireTime
+                ];
+                $trans->fill($transData);
+                $trans->save();
+            } else {
+                // Update
+                $trans->code_otp = $otp;
+                $trans->end_time = $otpExpireTime;
+                $trans->save();
+            }
+
+            // Send mail for current user with otp code to confirm transfer
+            $email = frontendCurrentUser()->email;
+            try {
+                Mail::send('frontend.email_template.transfer-random-otp', ['otpRandom' => $otp], function ($message) use ($email) {
+                    $message->to($email)->subject(transMessage('transfer_code_success', ['site-name' => getSiteName()]));
+                });
+            } catch (\Exception $e) {
+                logError($e);
+                DB::rollBack();
+                return backRouteError(frontendRouterName('transfer'));
+            }
+
+            $params['end_time'] = $trans->end_time;
+            session(['for_transfer' => $params]);
+            DB::commit();
+            return redirect()->route(frontendRouterName('transfer-confirm'))->with(['entity' => $params]);
+        } catch (\Exception $e) {
+            logError($e);
+            DB::rollBack();
+        }
+
+        return backSystemError();
+    }
+
+    public function getTransferConfirm()
+    {
+        try {
+            if (!session()->has('for_transfer')) {
+                 return redirect()->route(frontendRouterName('transfer'));
+            }
+
+            $dataTransfer = session()->get('for_transfer');
+            $viewData = [
+                'dataTransfer' => $dataTransfer
+            ];
+
+            return view('frontend.wallet.transfer-confirm', $viewData);
+        } catch (\Exception $e) {
+            logError($e);
+
+        }
+
+        return backSystemError();
+    }
+
+    public function postTransferConfirm()
+    {
+        DB::beginTransaction();
+        try {
+            $params = request()->all();
+
+            $userTransaction = $this->_transactionRepository->findByUserId(frontendCurrentUser()->user_id);
+            if (empty($userTransaction)) {
+                return backRouteError(frontendRouterName('wallet-transfer'));
+            }
+
+            /** @var \App\Validators\UserValidator $validator */
+            $validator = $this->getRepository()->getValidator();
+            $isValid = $validator->frontendValidateDeposit($params);
+
+            if (!$isValid) {
+                $this->setFormData($params);
+                return redirect()->back()->withErrors($validator->errors())->withInput($params);
+            }
+
+            if (request('random_str_otp') != $userTransaction->code_otp) {
+                return redirect()->back()->with('notification_error', transMessage('transfer_failed_with_error_code_otp'))->withInput($params);
+            }
+
+            if (now()->greaterThan($userTransaction->end_time)) {
+                return redirect()->back()->with('notification_error', transMessage('transfer_timeout'))->withInput($params);
+            }
+
             $this->_storeDepositTable($params);
             $this->_storeWithdrawTable($params);
+            $userTransaction->delete();
 
             $amount = arrayGet($params, 'number');
             $userId = frontendCurrentUser()->user_id;
@@ -134,7 +238,7 @@ class WalletController extends FrontendController
 
             if (arrayGet($r1, 'status') && arrayGet($r2, 'status')) {
                 DB::commit(); // all good
-                return backSystemSuccess();
+                return backRouteSuccess(frontendRouterName('wallet-transfer'));
             }
         } catch (\Exception $e) {
             logError($e);
@@ -345,5 +449,12 @@ class WalletController extends FrontendController
         ];
         $depositEntity->fill($paramStoreDeposit);
         $depositEntity->save();
+    }
+
+    protected function _clearSessionFormTransfer()
+    {
+        if (session('for_transfer')) {
+            session()->forget('for_transfer');
+        }
     }
 }

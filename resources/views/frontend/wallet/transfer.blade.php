@@ -45,7 +45,7 @@
                                         <input type="text" class="form-control" value="{{ old('message') }}" name="message" required maxlength="64">
                                     </div>
 
-                                    <button class="btn btn-crown" type="submit">Log In</button>
+                                    <button class="btn btn-crown" type="submit">Submit</button>
                                 </form>
                             </div>
                         </div>

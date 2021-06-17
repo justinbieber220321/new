@@ -32,7 +32,7 @@ return [
 
     'placeholder_' => 'Please enter :field',
     'code_otp_invalid' => 'OTP code is incorrect',
-    'transfer_code_success' => ':site-name code OTP for transfer',
+    'transfer_code_success' => ':site-name code OTP',
     'transfer_failed' => 'Transfer failed',
     'transfer_success' => 'Transfer successful',
     'transfer_failed_with_error_code_otp' => 'The code OTP you entered is incorrect',
