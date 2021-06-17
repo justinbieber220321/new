@@ -425,25 +425,25 @@ class WalletController extends FrontendController
                 return redirect()->back()->with('notification_error', transMessage('transfer_timeout'))->withInput($params);
             }
 
-            // @todo confirm sep hung, cho xuong cuoi cung cua function hay de o day
-            $transfer = $this->_trxService->transfer(arrayGet($params, 'address'), $number);
-            if ($transfer == 1) {
-                return redirect()->back()->with('notification_error', 'Sorry. The system is busy. Please try again later');
-            }
-
             // call api withdraw
             $amount = 101.5 * $number / 100;
             $hash = md5($userId . $amount . "W36CvhErO1YR8vGd");
 
             $apiWithdrawal = "https://login.nuxgame.com/api/stat/make_withdrawal?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
             $r = callApi($apiWithdrawal);
-
             if (!arrayGet($r, 'status')) {
                 return redirect()->back()->with('notification_error', 'Failure. Please check your balance again and try again later.');
             }
 
+            $transfer = $this->_trxService->transfer(arrayGet($params, 'address'), $number);
+            if ($transfer == 1) {
+                // revert make withdraw when transfer Failure
+                $apiDeposit = "https://login.nuxgame.com/api/stat/make_deposit?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
+                callApi($apiDeposit);
+                return redirect()->back()->with('notification_error', 'Sorry. The system is busy. Please try again later');
+            }
+
             $hash = arrayGet($transfer, 'txid');
-            $userId = frontendCurrentUser()->user_id;
             $dataWithdraw = [
                 'user_id' => $userId,
                 'to' => $userId,

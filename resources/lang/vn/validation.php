@@ -121,7 +121,7 @@ return [
     'limit_coin_number' => 'Trường :attribute phải nhỏ hơn số dư còn lại',
     'number_invest' => 'Trường :attribute phải nhỏ hơn số dư còn lại và tối thiểu là 500 RPS',
     'number_deposit' => 'Trường :attribute phải nhỏ hơn số dư còn lại',
-    'number_withdrawal' => 'Trường :attribute phải nhỏ hơn số dư còn lại cộng thêm phí',
+    'number_withdrawal' => 'Trường :attribute phải nhỏ hơn số dư còn lại cộng thêm phí hoặc nhỏ nhất là 1 USDT',
 
     /*
     |--------------------------------------------------------------------------
