@@ -111,7 +111,7 @@
                 <ul id="side-menu">
 
                     <li>
-                        <a href="https://whalecsn.com/">
+                        <a href="https://play.whalerich.com/">
                             <i data-feather="gift"></i>
                             <span>Live casino</span>
                         </a>
