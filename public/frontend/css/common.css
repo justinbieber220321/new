@@ -73,3 +73,7 @@
 a {
     color: #00acc1;
 }
+
+#icon-copy:hover {
+    cursor: pointer;
+}

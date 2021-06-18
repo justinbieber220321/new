@@ -33,12 +33,15 @@ Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'midd
         Route::post('withdrawal/confirm', ['as' => 'withdrawal-confirm.post', 'uses' => 'WalletController@postWithdrawalConfirm']);
 
         Route::get('referrals', ['as' => 'referrals', 'uses' => 'MarketingSystemController@referrals']);
-        Route::get('affiliate-tree', ['as' => 'affiliate-tree', 'uses' => 'MarketingSystemController@affiliateTree']);
+        Route::get('affiliate-tree/{userId?}', ['as' => 'affiliate-tree', 'uses' => 'MarketingSystemController@affiliateTree']);
 
 //        Route::get('casino-report', ['as' => 'casino-report', 'uses' => 'CasinoHistoryController@getCasinoReport']);
 //        Route::get('bet-history', ['as' => 'bet-history', 'uses' => 'CasinoHistoryController@getBetHistory']);
 
         Route::get('support', ['as' => 'support', 'uses' => 'FrontendController@support']);
+
+        Route::get('admin-setting', ['as' => 'admin-setting', 'uses' => 'AdminController@setting']);
+        Route::post('admin-setting', ['as' => 'admin-setting.post', 'uses' => 'AdminController@postSetting']);
     });
 });
 

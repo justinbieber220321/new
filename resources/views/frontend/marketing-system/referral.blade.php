@@ -19,7 +19,8 @@
                     <div class="card-box mb-0">
                         <h4 class="header-title mb-3">
                             Link referral:
-                            <a href="javascript:void(0)">{{ env('LINK_REFERRAL') . frontendCurrentUser()->user_id }}</a>
+                            <a href="javascript:void(0)" id="text-copy">{{ env('LINK_REFERRAL') . frontendCurrentUser()->user_id }}</a>
+                            &nbsp;&nbsp;<i class="mdi mdi-content-copy " id="icon-copy" title="Copy!"></i>
                         </h4>
                     </div>
                 </div>
@@ -37,13 +38,14 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1">$<span data-plugin="counterup">{{ getBalanceRealtime() }}</span></h3>
+                                <h3 class="text-dark mt-1">$<span
+                                            data-plugin="counterup">{{ getBalanceRealtime() }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">Balance</p>
                             </div>
                         </div>
-                    </div> 
-                </div> 
-            </div> 
+                    </div>
+                </div>
+            </div>
 
             <div class="col-md-6 ">
                 <div class="widget-rounded-circle card-box">
@@ -62,9 +64,9 @@
                                 <p class="text-muted mb-1 text-truncate">Total Network</p>
                             </div>
                         </div>
-                    </div> 
-                </div> 
-            </div> 
+                    </div>
+                </div>
+            </div>
 
             <div class="col-md-6 ">
                 <div class="widget-rounded-circle card-box">
@@ -80,9 +82,9 @@
                                 <p class="text-muted mb-1 text-truncate">My bet</p>
                             </div>
                         </div>
-                    </div> 
-                </div> 
-            </div> 
+                    </div>
+                </div>
+            </div>
 
             <div class="col-md-6 ">
                 <div class="widget-rounded-circle card-box">
@@ -98,9 +100,9 @@
                                 <p class="text-muted mb-1 text-truncate">Team bet</p>
                             </div>
                         </div>
-                    </div> 
-                </div> 
-            </div> 
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

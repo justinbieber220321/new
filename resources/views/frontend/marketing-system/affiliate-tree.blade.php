@@ -64,30 +64,49 @@
                 <div class="card-box text-center">
                     <div class="affiliate-item">
                         <p class="item d-inline-block">
-                            <span>{{ frontendCurrentUser()->username ? frontendCurrentUser()->username : frontendCurrentUser()->email  }}</span>
-                            <span>My bet: 10 Usdt </span>
-                            <span>Team bet: 100 Usdt</span>
+                            <span>
+                                <a href="{{ frontendRouter('affiliate-tree') }}">
+                                    {{ frontendCurrentUser()->username ? frontendCurrentUser()->username : frontendCurrentUser()->email  }}
+                                </a>
+                            </span>
+                            <span>My bet: 0 USDT </span>
+                            <span>Team bet: 0 USDT</span>
                         </p>
                     </div>
 
-                    <div class="list-dot">
-                        <small>.</small>
-                        <small>.</small>
-                        <small>.</small>
-                    </div>
+                    @if ($isNotRoot)
+                        <div class="list-dot">
+                            <small>.</small>
+                            <small>.</small>
+                            <small>.</small>
+                        </div>
+                    @endif
 
-                    @php $c = 3; @endphp
-                    <div class="affiliate-item affiliate-item-f1 mt-3  {{ $c >=5 ? 'justify-content-between' : 'justify-content-center' }} ">
-                        {{--@foreach($f1 as $item)--}}
-                        @for($i=0; $i<$c; $i++)
-                            <p class="itemF1">
-                                <span>sadsdaffds</span>
-                                <span>My bet: 10 Usdt </span>
-                                <span>Team bet: 100 Usdt</span>
+                    @if ($f1)
+                        <div class="affiliate-item mt-3">
+                            <p class="item d-inline-block">
+                                <span>
+                                    <a href="">
+                                        {{ $f1->username ? $f1->username : $f1->email }}
+                                    </a>
+                                </span>
+                                <span>My bet: 0 USDT </span>
+                                <span>Team bet: 0 USDT</span>
                             </p>
-                        @endfor
-                        {{--@endforeach--}}
-                    </div>
+                        </div>
+                    @endif
+
+                    @if ($fn)
+                        <div class="affiliate-item affiliate-item-f1 mt-3  {{ $countFn >= 5 ? 'justify-content-between' : 'justify-content-center' }} ">
+                            @foreach($fn as $item)
+                                <p class="itemF1">
+                                    <span><a href="{{ frontendRouter('affiliate-tree', ['userId' => $item->id]) }}">{{ $item->username ? $item->username : $item->email }}</a></span>
+                                    <span>My bet: 0 USDT </span>
+                                    <span>Team bet: 0 USDT</span>
+                                </p>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

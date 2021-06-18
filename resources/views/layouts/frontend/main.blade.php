@@ -199,6 +199,13 @@
                     </li>
 
                     <li>
+                        <a href="{{ frontendRouter('admin-setting') }}">
+                            <i data-feather="gift"></i>
+                            <span>Admin-Setting</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="{{ frontendRouter('logout') }}">
                             <i data-feather="gift"></i>
                             <span>Logout</span>
@@ -227,9 +234,6 @@
     </div>
 </div>
 <!-- END wrapper -->
-
-<!-- Right bar overlay-->
-<div class="rightbar-overlay"></div>
 
 <script src="{{ asset('frontend/vendor/jquery3.5/jquery.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/vendor.min.js') }}"></script>

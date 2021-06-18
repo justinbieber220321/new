@@ -22,13 +22,31 @@ class MarketingSystemController extends FrontendController
         return view('frontend.marketing-system.referral', $viewData);
     }
 
-    public function affiliateTree()
+    public function affiliateTree($userId = null)
     {
-        $user = frontendCurrentUser();
-        $f1 = User::delFlagOn()->statusOn()->where('parent_id', $user->user_id)->get();
+        $isNotRoot = false;
+        $f1 = [];
+
+        $root = User::delFlagOn()->statuson()->where('user_id', frontendCurrentUser()->user_id)->first();
+
+        if (!is_null($userId)) {
+            $isNotRoot = true;
+            $f1 = User::delFlagOn()->statuson()->where('user_id', $userId)->first();
+            $fn = User::delFlagOn()->statusOn()->where('parent_id', $userId)->get();
+            $countFn = User::delFlagOn()->statusOn()->where('parent_id', $userId)->count();
+        } else {
+            $fn = User::delFlagOn()->statusOn()->where('parent_id', frontendCurrentUser()->user_id)->get();
+            $countFn = User::delFlagOn()->statusOn()->where('parent_id', frontendCurrentUser()->user_id)->count();
+        }
+
+
 
         $viewData = [
-            'f1' => $f1
+            'isNotRoot' => $isNotRoot,
+            'root' => $root,
+            'fn' => empty($fn) ? [] : $fn,
+            'f1' => empty($f1) ? [] : $f1,
+            'countFn' => $countFn,
         ];
 
         return view('frontend.marketing-system.affiliate-tree', $viewData);

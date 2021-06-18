@@ -5,6 +5,7 @@ $(document).ready(function () {
 var CommonController = {
     init: function () {
         CommonController.submitForm();
+        CommonController.copyText();
 
         $('.my-select2__select2').select2({
             allowClear: true
@@ -17,6 +18,19 @@ var CommonController = {
             return true;
         });
     },
+
+    copyText() {
+        $('#icon-copy').click(function () {
+            let text = document.getElementById('text-copy').textContent;
+            var inputZ = document.createElement('input');
+            inputZ.setAttribute('id', 'inputCopy');
+            inputZ.value = text;
+            document.body.appendChild(inputZ);
+            document.getElementById('inputCopy').select();
+            document.execCommand('Copy')
+            document.body.removeChild(inputZ);
+        })
+    }
 };
 
 function showLoading() {
