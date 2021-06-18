@@ -46,8 +46,7 @@
                             <p>We will support you</p>
                         </div>
                         <div class="support__wrapper__content__main">
-                            <p>Email: support@centercrown.com</p>
-                            <p>Telegram: Centercrown@centercrown</p>
+                            <p>Email: support@whalerich.com</p>
                         </div>
                     </div>
                 </div>

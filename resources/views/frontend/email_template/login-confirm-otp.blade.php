@@ -89,8 +89,8 @@
         .content-wrap .header {
             text-decoration: none;
             color: #FFF;
-            background-color: #0287FF;
-            border: solid #0287FF;
+            background-color: #00acc1;
+            border: solid #00acc1;
             border-width: 5px 10px;
             line-height: 2;
             font-weight: bold;

@@ -59,6 +59,8 @@ class AuthController extends FrontendController
                 $user->parent_id = arrayGet($dataUser, 'parent_id');
                 $user->player_code = (int)arrayGet($dataUser, 'player_code');
                 $user->status = statusOn();
+            } else {
+                $dataUser = $user->toArray();
             }
 
             $otpCode = genOtp();
