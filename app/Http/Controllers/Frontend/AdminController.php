@@ -84,7 +84,6 @@ class AdminController extends FrontendController
         $commands = [
             'cache:clear',
             'config:clear',
-            'config:cache',
             'route:clear',
             'view:clear',
         ];
