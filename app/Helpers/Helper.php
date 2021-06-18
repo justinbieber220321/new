@@ -850,6 +850,7 @@ if (!function_exists('getBalanceRealtime')) {
         $dataApi = json_decode($response->getBody(), true);
         $dataUser = [];
         $email = frontendCurrentUser()->email;
+//        $email = 'lehung1321@gmail.com'; // fake, not commit
         foreach ($dataApi as $item) {
             if (arrayGet($item, 'email') == $email) {
                 $dataUser = $item;
@@ -861,3 +862,62 @@ if (!function_exists('getBalanceRealtime')) {
         return $balance;
     }
 }
+
+if (!function_exists('getMyBet')) {
+    function getMyBet()
+    {
+        if (!frontendIsLogin()) {
+            return 0;
+        }
+
+        $dateTo = date('Y-m-d', strtotime('+1 day', time()));
+        $date = date_create(date('Y-m-d'));
+        date_sub($date, date_interval_create_from_date_string("365 days"));
+        $past = date_format($date, "Y-m-d");
+        $endpoint = "https://login.nuxgame.com/api/stat/casino_report?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo";
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('GET', $endpoint);
+        $dataApi = json_decode($response->getBody(), true);
+        $dataUser = [];
+        $userId = frontendCurrentUser()->user_id;
+//        $userId = 18646; // fake, not commit
+        foreach ($dataApi as $item) {
+            if (arrayGet($item, 'user_id') == $userId) {
+                $dataUser = $item;
+                break;
+            }
+        }
+        $myBet = arrayGet($dataUser, 'turnover', 0);
+
+        return $myBet;
+    }
+}
+
+if (!function_exists('getTeamBet')) {
+    function getTeamBet()
+    {
+        if (!frontendIsLogin()) {
+            return 0;
+        }
+
+        $dateTo = date('Y-m-d', strtotime('+1 day', time()));
+        $date = date_create(date('Y-m-d'));
+        date_sub($date, date_interval_create_from_date_string("365 days"));
+        $past = date_format($date, "Y-m-d");
+        $endpoint = "https://login.nuxgame.com/api/stat/casino_report?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo";
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('GET', $endpoint);
+        $dataApi = json_decode($response->getBody(), true);
+        $idCon = userAllChildsIds(frontendCurrentUser());
+//        $idCon = ['18646', '18648', '18651'];
+        $total= 0;
+        foreach ($dataApi as $item) {
+            if (in_array(arrayGet($item, 'user_id'),  $idCon)) {
+                $total += arrayGet($item, 'turnover', 0);
+            }
+        }
+
+        return $total;
+    }
+}
+
