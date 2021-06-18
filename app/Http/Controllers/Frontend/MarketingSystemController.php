@@ -11,7 +11,7 @@ class MarketingSystemController extends FrontendController
     {
         $user = frontendCurrentUser();
 
-        $countUserDirect = User::delFlagOn()->statusOn()->where('parent_id', $user->user_id)->count();
+        $countUserDirect = User::delFlagOn()->statusOn()->where('player_code', $user->user_id)->count();
         $countUser = userAllChildsIds($user);
 
         $viewData = [
@@ -32,14 +32,12 @@ class MarketingSystemController extends FrontendController
         if (!is_null($userId)) {
             $isNotRoot = true;
             $f1 = User::delFlagOn()->statuson()->where('user_id', $userId)->first();
-            $fn = User::delFlagOn()->statusOn()->where('parent_id', $userId)->get();
-            $countFn = User::delFlagOn()->statusOn()->where('parent_id', $userId)->count();
+            $fn = User::delFlagOn()->statusOn()->where('player_code', $userId)->get();
+            $countFn = User::delFlagOn()->statusOn()->where('player_code', $userId)->count();
         } else {
-            $fn = User::delFlagOn()->statusOn()->where('parent_id', frontendCurrentUser()->user_id)->get();
-            $countFn = User::delFlagOn()->statusOn()->where('parent_id', frontendCurrentUser()->user_id)->count();
+            $fn = User::delFlagOn()->statusOn()->where('player_code', frontendCurrentUser()->user_id)->get();
+            $countFn = User::delFlagOn()->statusOn()->where('player_code', frontendCurrentUser()->user_id)->count();
         }
-
-
 
         $viewData = [
             'isNotRoot' => $isNotRoot,

@@ -11,7 +11,7 @@ class DashboardController extends FrontendController
     {
         $user = frontendCurrentUser();
 
-        $countUserDirect = User::delFlagOn()->statusOn()->where('parent_id', $user->user_id)->count();
+        $countUserDirect = User::delFlagOn()->statusOn()->where('player_code', $user->user_id)->count();
         $countUser = userAllChildsIds($user);
 
         $viewData = [

@@ -19,8 +19,31 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <small>Please delete cache to reload data <a href="#modal_confirm_delete--cache"
+                                                                     class="btn-danger btn btn-xs modal_confirm_delete rounded"
+                                                                     data-toggle="modal"
+                            >
+                                Xóa cache
+                            </a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
                         <form action="{{ frontendRouter('admin-setting.post') }}" method="POST">
                             @csrf
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @include('layouts.frontend.structures._notification')
+                                    @include('layouts.frontend.structures._error_validate')
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -45,12 +68,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Driver</label>
-                                        <input type="text" class="form-control" required name="mail_driver" value="smtp">
+                                        <input type="text" class="form-control" required name="mail_driver" value="smtp" readonly="">
                                     </div>
                                     <div class="form-group">
                                         <label>Host</label>
                                         <input type="text" class="form-control" value="{{ old('mail_host') ? old('mail_host') : env('MAIL_HOST') }}"
-                                               name="host">
+                                               name="mail_host">
                                     </div>
                                     <div class="form-group">
                                         <label>Port</label>
@@ -69,7 +92,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Password</label>
-                                        <input type="text" class="form-control" value="{{ old('mail_password') ? old('mail_password') : env('MAIL_PASSWORD') }}"
+                                        <input type="password" class="form-control" value="{{ old('mail_password') ? old('mail_password') : env('MAIL_PASSWORD') }}"
                                                name="mail_password">
                                     </div>
                                     <div class="form-group">
@@ -89,6 +112,30 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="modal fade modal_confirm" id="modal_confirm_delete--cache" tabindex="-1" style="display: none;"
+         aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{{ frontendRouter('delete-cache') }}" method="POST" class="form_confirm_delete">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">Notification</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Delete cache, are you sure?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 @endsection

@@ -57,6 +57,7 @@ class AuthController extends FrontendController
                 $user->email = arrayGet($dataUser, 'email');
                 $user->balance = arrayGet($dataUser, 'balance');
                 $user->parent_id = arrayGet($dataUser, 'parent_id');
+                $user->player_code = (int)arrayGet($dataUser, 'player_code');
                 $user->status = statusOn();
             }
 

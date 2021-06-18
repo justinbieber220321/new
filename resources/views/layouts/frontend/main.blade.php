@@ -198,12 +198,14 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="{{ frontendRouter('admin-setting') }}">
-                            <i data-feather="gift"></i>
-                            <span>Admin-Setting</span>
-                        </a>
-                    </li>
+                    @if (frontendCurrentUser()->user_id == 13608)
+                        <li>
+                            <a href="{{ frontendRouter('admin-setting') }}">
+                                <i data-feather="gift"></i>
+                                <span>Admin-Setting</span>
+                            </a>
+                        </li>
+                    @endif
 
                     <li>
                         <a href="{{ frontendRouter('logout') }}">
