@@ -206,11 +206,13 @@ class WalletController extends FrontendController
             $userTransaction->delete();
 
             $amount = arrayGet($params, 'number');
-            $userId = frontendCurrentUser()->user_id;
-            $hash = md5($userId . $amount . "W36CvhErO1YR8vGd");
+            $userIdDeposit = arrayGet($params, 'user_id');
+            $userIdWithdraw = frontendCurrentUser()->user_id;
+            $hashDeposit = md5($userIdDeposit . $amount . "W36CvhErO1YR8vGd");
+            $hashWithdraw = md5($userIdWithdraw . $amount . "W36CvhErO1YR8vGd");
 
-            $apiDeposit = "https://login.nuxgame.com/api/stat/make_deposit?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
-            $apiWithdrawal = "https://login.nuxgame.com/api/stat/make_withdrawal?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
+            $apiDeposit = "https://login.nuxgame.com/api/stat/make_deposit?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userIdDeposit&amount=$amount&hash=$hashDeposit";
+            $apiWithdrawal = "https://login.nuxgame.com/api/stat/make_withdrawal?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userIdWithdraw&amount=$amount&hash=$hashWithdraw";
 
             $r1 = callApi($apiDeposit);
             $r2 = callApi($apiWithdrawal);
