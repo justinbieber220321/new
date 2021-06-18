@@ -327,7 +327,7 @@
                                 <tr>
                                     <td class="content-block">
                                         Your otp code is: <strong>{{ $otpRandom }}</strong>. <br>
-                                        The code is valid only once and has a usage time within 3 minutes for each transaction.
+                                        The code is valid only once and has a usage time within {{ getConfig('time_limit_otp_code') }} minutes for each transaction.
                                     </td>
                                 </tr>
                             </table>

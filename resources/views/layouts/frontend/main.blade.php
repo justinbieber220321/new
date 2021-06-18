@@ -166,23 +166,23 @@
                         </div>
                     </li>
 
-                    <li>
-                        <a href="#sidebarCasinoHistory" data-toggle="collapse">
-                            <i data-feather="gift"></i>
-                            <span>Casino history</span>
+                    {{--<li>--}}
+                        {{--<a href="#sidebarCasinoHistory" data-toggle="collapse">--}}
+                            {{--<i data-feather="gift"></i>--}}
+                            {{--<span>Casino history</span>--}}
                             {{--<span class="menu-arrow"></span>--}}
-                        </a>
+                        {{--</a>--}}
                         {{--<div class="collapse" id="sidebarCasinoHistory">--}}
                             {{--<ul class="nav-second-level">--}}
                                 {{--<li>--}}
-                                    {{--<a href="/">Item 1</a>--}}
+                                    {{--<a href="{{ frontendRouter('casino-report') }}">Casino Report</a>--}}
                                 {{--</li>--}}
                                 {{--<li>--}}
-                                    {{--<a href="/">Item 2</a>--}}
+                                    {{--<a href="{{ frontendRouter('bet-history') }}">Bet History</a>--}}
                                 {{--</li>--}}
                             {{--</ul>--}}
                         {{--</div>--}}
-                    </li>
+                    {{--</li>--}}
 
                     <li>
                         <a href="{{ frontendRouter('account') }}">

@@ -35,6 +35,9 @@ Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'midd
         Route::get('referrals', ['as' => 'referrals', 'uses' => 'MarketingSystemController@referrals']);
         Route::get('affiliate-tree', ['as' => 'affiliate-tree', 'uses' => 'MarketingSystemController@affiliateTree']);
 
+//        Route::get('casino-report', ['as' => 'casino-report', 'uses' => 'CasinoHistoryController@getCasinoReport']);
+//        Route::get('bet-history', ['as' => 'bet-history', 'uses' => 'CasinoHistoryController@getBetHistory']);
+
         Route::get('support', ['as' => 'support', 'uses' => 'FrontendController@support']);
     });
 });
