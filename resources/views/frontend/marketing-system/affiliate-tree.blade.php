@@ -11,7 +11,7 @@
 
         .affiliate-item .item span {
             display: block;
-            width: 150px;
+            width: 200px;
         }
 
         .affiliate-item-f1 {
@@ -28,7 +28,7 @@
 
         .affiliate-item-f1 .itemF1 span {
             display: block;
-            width: 150px;
+            width: 200px;
         }
 
         .list-dot small {
@@ -69,8 +69,8 @@
                                     {{ frontendCurrentUser()->username ? frontendCurrentUser()->username : frontendCurrentUser()->email  }}
                                 </a>
                             </span>
-                            <span>My bet: 0 USDT </span>
-                            <span>Team bet: 0 USDT</span>
+                            <span>My bet: {{ getMyBet() }} USDT </span>
+                            <span>Team bet: {{ getTeamBet() }} USDT</span>
                         </p>
                     </div>
 
@@ -90,8 +90,8 @@
                                         {{ $f1->username ? $f1->username : $f1->email }}
                                     </a>
                                 </span>
-                                <span>My bet: 0 USDT </span>
-                                <span>Team bet: 0 USDT</span>
+                                <span>My bet: {{ getMyBet($f1) }} USDT </span>
+                                <span>Team bet: {{ getTeamBet($f1) }} USDT</span>
                             </p>
                         </div>
                     @endif
@@ -101,8 +101,8 @@
                             @foreach($fn as $item)
                                 <p class="itemF1">
                                     <span><a href="{{ frontendRouter('affiliate-tree', ['userId' => $item->id]) }}">{{ $item->username ? $item->username : $item->email }}</a></span>
-                                    <span>My bet: 0 USDT </span>
-                                    <span>Team bet: 0 USDT</span>
+                                    <span>My bet: {{ getMyBet($item) }} USDT </span>
+                                    <span>Team bet: {{ getTeamBet($item) }} USDT</span>
                                 </p>
                             @endforeach
                         </div>

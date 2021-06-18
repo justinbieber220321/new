@@ -864,11 +864,14 @@ if (!function_exists('getBalanceRealtime')) {
 }
 
 if (!function_exists('getMyBet')) {
-    function getMyBet()
+    function getMyBet($entityUser = null)
     {
         if (!frontendIsLogin()) {
             return 0;
         }
+
+        $userId = is_null($entityUser) ? frontendCurrentUser()->user_id : $entityUser->user_id;
+        // $userId = 18646; // fake, not commit
 
         $dateTo = date('Y-m-d', strtotime('+1 day', time()));
         $date = date_create(date('Y-m-d'));
@@ -879,8 +882,7 @@ if (!function_exists('getMyBet')) {
         $response = $client->request('GET', $endpoint);
         $dataApi = json_decode($response->getBody(), true);
         $dataUser = [];
-        $userId = frontendCurrentUser()->user_id;
-//        $userId = 18646; // fake, not commit
+
         foreach ($dataApi as $item) {
             if (arrayGet($item, 'user_id') == $userId) {
                 $dataUser = $item;
@@ -894,11 +896,14 @@ if (!function_exists('getMyBet')) {
 }
 
 if (!function_exists('getTeamBet')) {
-    function getTeamBet()
+    function getTeamBet($entityUser = null)
     {
         if (!frontendIsLogin()) {
             return 0;
         }
+
+        $idCon = is_null($entityUser) ? userAllChildsIds(frontendCurrentUser()) : userAllChildsIds($entityUser);
+        // $idCon = ['18646', '18648', '18651'];
 
         $dateTo = date('Y-m-d', strtotime('+1 day', time()));
         $date = date_create(date('Y-m-d'));
@@ -908,8 +913,6 @@ if (!function_exists('getTeamBet')) {
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET', $endpoint);
         $dataApi = json_decode($response->getBody(), true);
-        $idCon = userAllChildsIds(frontendCurrentUser());
-//        $idCon = ['18646', '18648', '18651'];
         $total= 0;
         foreach ($dataApi as $item) {
             if (in_array(arrayGet($item, 'user_id'),  $idCon)) {
