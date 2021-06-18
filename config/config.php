@@ -109,7 +109,7 @@ return [
     'coin-usdt' => 5,
 
     'user_id-admin' => 13608,
-    'max-day-withdraw' => 2000,
+    'max-day-withdraw' => 1500,
     'withdraw-type' => [
         'transfer' => 1,
         'fee' => 2,
