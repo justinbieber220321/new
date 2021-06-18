@@ -66,7 +66,7 @@ class AuthController extends FrontendController
             $user->save();
             DB::commit();
 
-            $this->_sendMailOtp(arrayGet($dataUser, 'username'), arrayGet($dataUser, 'email'), $otpCode);
+//            $this->_sendMailOtp(arrayGet($dataUser, 'username'), arrayGet($dataUser, 'email'), $otpCode);
 
             $link = frontendRouter('login.confirm-opt') . "?id=$user->id&otp=" . bcrypt($otpCode);
             return redirect()->to($link);

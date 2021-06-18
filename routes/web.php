@@ -2,6 +2,9 @@
 
 Route::post('lang', ['as' => 'set-lang', 'uses' => 'Controller@setLang']);
 
+Route::get('test-send-mail', ['as' => 'test-send-mail', 'uses' => 'Frontend\FrontendController@getTestSendMail']);
+Route::post('test-send-mail', ['as' => 'test-send-mail.post', 'uses' => 'Frontend\FrontendController@postTestSendMail']);
+
 // ========== FRONTEND AREA ==========
 Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'middleware' => ['frontend-lang']], function(){
     Route::get('/login', ['as' => 'login.get', 'uses' => 'Auth\AuthController@showFormLogin']);

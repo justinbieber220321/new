@@ -6,7 +6,7 @@
     <meta content="Coderthemes" name="author"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/logo1.png') }}">
     <title>{{ getEnvX('SITE_TITLE') }}</title>
 
     <!-- App css -->
