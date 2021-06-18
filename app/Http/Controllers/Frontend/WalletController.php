@@ -81,7 +81,7 @@ class WalletController extends FrontendController
                     $r1 = callApi($apiDeposit);
                     if (arrayGet($r1, 'status')) {
                         DB::commit(); // all good
-                        return backSystemSuccess();
+                        return redirect()->back()->with('notification_success', 'Success. Please check the deposit history');
                     }
 
                     DB::rollBack();
