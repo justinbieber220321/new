@@ -23,7 +23,7 @@
                                                                      class="btn-danger btn btn-xs modal_confirm_delete rounded"
                                                                      data-toggle="modal"
                             >
-                                Xóa cache
+                                Delete cache
                             </a></small>
                     </div>
                 </div>
