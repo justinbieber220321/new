@@ -118,6 +118,13 @@
                     </li>
 
                     <li>
+                        <a href="https://insurrance.whalerich.com/">
+                            <i data-feather="gift"></i>
+                            <span>Insurrance</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="{{ frontendRouter('home') }}">
                             <i data-feather="gift"></i>
                             <span>Dashboard</span>
