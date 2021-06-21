@@ -48,7 +48,7 @@ class ValidatorServiceProvider   extends ServiceProvider
 
         // Validate the number to deposit: 0 < number < balance
         $this->app['validator']->extend('number_deposit', function ($attribute, $value, $parameters) {
-            $number = arrayGet($parameters, '0');
+            $number = (int)arrayGet($parameters, '0');
             $balance = getBalanceRealtime();
             return $balance >= $number && $number > 0;
         });

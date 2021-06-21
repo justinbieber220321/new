@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFieldToWithdrawTable extends Migration
+class AddFieldToDepositTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddFieldToWithdrawTable extends Migration
      */
     public function up()
     {
-        Schema::table('withdraw', function (Blueprint $table) {
-            $table->integer('type')->after('number')->nullable()->default(getConfig('withdraw_type_default', 1))->comment('1: transfer, 2: fee, 3: withdraw (hash)');
+        Schema::table('deposit', function (Blueprint $table) {
+            $table->integer('type')->after('number')->nullable()->default(getConfig('deposit_type_default', 1))->comment('1: transfer, 3: deposit (hash)');
         });
     }
 
@@ -25,7 +25,7 @@ class AddFieldToWithdrawTable extends Migration
      */
     public function down()
     {
-        Schema::table('withdraw', function($table) {
+        Schema::table('deposit', function($table) {
             $table->dropColumn('type');
         });
     }

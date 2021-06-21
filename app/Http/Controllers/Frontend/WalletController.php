@@ -35,7 +35,7 @@ class WalletController extends FrontendController
         try {
             $listTransaction = $this->_trxService->getListTransactions();
             $userId = frontendCurrentUser()->user_id; // = user id dang login thi moi cong them vao bang deposit
-            $currency = "USDT";
+            $currency = getConfig('coin-default');
 
             $listTransaction2 = [];
             foreach ($listTransaction as $tran) {
@@ -62,6 +62,7 @@ class WalletController extends FrontendController
                 return redirect()->back()->with('notification_error', 'No transaction exists');
             }
 
+            $depositTypeHash = getConfig('deposit-type.hash', 3);
             foreach ($listTransaction3 as $tran3) {
                 DB::beginTransaction();
                 $amount = arrayGet($tran3, 'value') / 1000000;
@@ -73,6 +74,7 @@ class WalletController extends FrontendController
                     $deposit->currency = $currency;
                     $deposit->message = arrayGet($tran3, 'transaction_id');
                     $deposit->number = $amount;
+                    $deposit->type = $depositTypeHash;
                     $deposit->save();
 
                     // call api
@@ -201,8 +203,22 @@ class WalletController extends FrontendController
                 return redirect()->back()->with('notification_error', transMessage('transfer_timeout'))->withInput($params);
             }
 
-            $this->_storeDepositTable($params);
-            $this->_storeWithdrawTable($params);
+            // Store deposit table
+            $depositEntity = new Deposit();
+            $depositEntity->user_id = arrayGet($params, 'user_id');
+            $depositEntity->from = frontendCurrentUser()->user_id;
+            $depositEntity->message = arrayGet($params, 'message');
+            $depositEntity->number = arrayGet($params, 'number');
+            $depositEntity->save();
+
+            // Store withdraw table
+            $withDrawEntity = new Withdraw();
+            $withDrawEntity->user_id = frontendCurrentUser()->user_id;
+            $withDrawEntity->to = arrayGet($params, 'user_id');
+            $withDrawEntity->message = arrayGet($params, 'message');
+            $withDrawEntity->number = arrayGet($params, 'number');
+            $withDrawEntity->save();
+
             $userTransaction->delete();
 
             $amount = arrayGet($params, 'number');
@@ -283,7 +299,7 @@ class WalletController extends FrontendController
     public function requestWithdrawal()
     {
         $this->_clearSessionFormTransfer();
-        $max = 2000;
+        $max = getConfig('max-day-withdraw');
         $balance = getBalanceRealtime();
         $maxAmount = $max > $balance ? $balance : $max;
 
@@ -327,6 +343,10 @@ class WalletController extends FrontendController
                     return redirect()->back()->withInput($params)
                         ->with('notification_error', 'You have withdrawn more than the allowed amount in 24 hours. Please try again.');
                 }
+            }
+
+            if (!$this->_checkTotalDeposit15Days((int)arrayGet($params, 'number'))) {
+                return redirect()->back()->withInput($params)->with('notification_error', 'Invalid withdrawal amount');
             }
 
             $tran = $this->_handleTransactionOtp();
@@ -427,6 +447,10 @@ class WalletController extends FrontendController
                 return redirect()->back()->with('notification_error', transMessage('transfer_timeout'))->withInput($params);
             }
 
+            if (!$this->_checkTotalDeposit15Days((int)arrayGet($params, 'number'))) {
+                return redirect()->back()->withInput($params)->with('notification_error', 'Invalid withdrawal amount');
+            }
+
             // call api withdraw
             $amount = 101.5 * $number / 100;
             $hash = md5($userId . $amount . "W36CvhErO1YR8vGd");
@@ -449,7 +473,6 @@ class WalletController extends FrontendController
             $dataWithdraw = [
                 'user_id' => $userId,
                 'to' => $userId,
-                'currency' => 'USDT',
                 'message' => $hash,
                 'number' => $number,
                 'address_to' => $address,
@@ -465,7 +488,6 @@ class WalletController extends FrontendController
             $dataWithdraw2 = [
                 'user_id' => $userId,
                 'to' => $userIdAdmin,
-                'currency' => 'USDT',
                 'message' => 'Withdrawal fee',
                 'number' => $number  * 1.5 / 100,
                 'type' => getConfig('withdraw-type.fee'),
@@ -478,7 +500,6 @@ class WalletController extends FrontendController
             $dataDeposit = [
                 'user_id' => $userIdAdmin,
                 'from' => $userId,
-                'currency' => 'USDT',
                 'message' => 'Withdrawal fee',
                 'number' => $number * 1.5 / 100
             ];
@@ -489,50 +510,13 @@ class WalletController extends FrontendController
             $userTransaction->delete();
 
             DB::commit();
-            return backRouteSuccess(frontendRouterName('transfer'));
+            return backRouteSuccess(frontendRouterName('withdrawal'));
         } catch (\Exception $e) {
             logError($e);
             DB::rollBack();
         }
 
         return backSystemError();
-    }
-
-    /* ========== FUNCTION PROTECTED AREA ========== */
-    /**
-     * @param $params
-     * Store withdraw table when transfer success
-     */
-    protected function _storeWithdrawTable($params)
-    {
-        $withDrawEntity = new Withdraw();
-        $paramStoreWithdraw = [
-            'user_id' => frontendCurrentUser()->user_id,
-            'to' => arrayGet($params, 'user_id'),
-            'message' => arrayGet($params, 'message'),
-            'number' => arrayGet($params, 'number'),
-            'currency' => 'USDT',
-        ];
-        $withDrawEntity->fill($paramStoreWithdraw);
-        $withDrawEntity->save();
-    }
-
-    /**
-     * @param $params
-     * Store deposit table when transfer success
-     */
-    protected function _storeDepositTable($params)
-    {
-        $depositEntity = new Deposit();
-        $paramStoreDeposit = [
-            'user_id' => arrayGet($params, 'user_id'),
-            'from' => frontendCurrentUser()->user_id,
-            'message' => arrayGet($params, 'message'),
-            'number' => arrayGet($params, 'number'),
-            'currency' => 'USDT',
-        ];
-        $depositEntity->fill($paramStoreDeposit);
-        $depositEntity->save();
     }
 
     protected function _clearSessionFormTransfer()
@@ -582,5 +566,31 @@ class WalletController extends FrontendController
         }
 
         return false;
+    }
+
+    protected function _checkTotalDeposit15Days($inputWithdraw)
+    {
+        $sql = "select * from user where ins_date > date_SUB(now(), INTERVAL 15 DAY) and id = " . frontendCurrentUser()->id;
+        $myAccountCreatedAt = DB::select($sql);
+        if (!arrayGet($myAccountCreatedAt, 0)) {
+            return true;
+        }
+
+        // select total withdraw hash
+        $totalWithdrawHash = Withdraw::selectRaw('SUM(number) AS totalWithdrawHash')
+            ->where('type', getConfig('withdraw-type.withdraw'))
+            ->where('user_id', frontendCurrentUser()->user_id)
+            ->whereRaw('ins_date > date_SUB(now(), INTERVAL 15 DAY)')->first();
+        $totalWithdrawHash = empty($totalWithdrawHash) ? 0 : $totalWithdrawHash->totalWithdrawHash;
+
+        // select total deposit hash
+        $totalDepositHash = Deposit::selectRaw('SUM(number) AS totalDepositHash')
+            ->where('type', getConfig('deposit-type.hash'))
+            ->where('from', frontendCurrentUser()->user_id)
+            ->whereRaw('ins_date > date_SUB(now(), INTERVAL 15 DAY)')->first();
+        $totalDepositHash = empty($totalDepositHash) ? 0 : $totalDepositHash->totalDepositHash;
+
+        $totalWithdrawHash += $inputWithdraw;
+        return $totalWithdrawHash <= $totalDepositHash;
     }
 }

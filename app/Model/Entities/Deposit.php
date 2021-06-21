@@ -9,7 +9,7 @@ class Deposit extends AuthTmp
     protected $table = 'deposit';
 
     protected $fillable = [
-        'id', 'user_id', 'from', 'currency', 'link', 'message', 'number', 'created_at', 'del_flag'
+        'id', 'user_id', 'from', 'currency', 'link', 'message', 'number', 'created_at', 'del_flag', 'type'
     ];
 
     public $timestamps = false;

@@ -108,11 +108,20 @@ return [
     'coin-rps' => 4,
     'coin-usdt' => 5,
 
+    'coin-default' => 'USDT',
+
     'user_id-admin' => 13608,
     'max-day-withdraw' => 1500,
     'withdraw-type' => [
         'transfer' => 1,
         'fee' => 2,
-        'withdraw' => 3
-    ]
+        'withdraw' => 3 // for hash
+    ],
+    'deposit-type' => [
+        'transfer' => 1,
+        'hash' => 3
+    ],
+
+    'deposit_type_default' => 1,
+    'withdraw_type_default' => 1,
 ];
