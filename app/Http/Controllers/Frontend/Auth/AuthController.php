@@ -33,14 +33,14 @@ class AuthController extends FrontendController
     {
         DB::beginTransaction();
         try {
-            $email = trim(request('email'));
+            $email = strtolower(trim(request('email')));
             $user = User::delFlagOn()->statusOn()->where('email', $email)->first();
             $dataUser = [];
             if (empty($user)) {
                 $dataApi = $this->_getDataFromApi();
                 $isExistsEmail = false;
                 foreach ($dataApi as $item) {
-                    if (arrayGet($item, 'email') == $email) {
+                    if (strtolower(trim(arrayGet($item, 'email'))) == $email) {
                         $isExistsEmail = true;
                         $dataUser = $item;
                         break;
@@ -54,7 +54,7 @@ class AuthController extends FrontendController
                 $user = new User();
                 $user->user_id = arrayGet($dataUser, 'user_id');
                 $user->username = arrayGet($dataUser, 'username') ? arrayGet($dataUser, 'username') : extractNameFromEmail(arrayGet($dataUser, 'email'));
-                $user->email = arrayGet($dataUser, 'email');
+                $user->email = $email;
                 $user->balance = arrayGet($dataUser, 'balance');
                 $user->parent_id = arrayGet($dataUser, 'parent_id');
                 $user->player_code = (int)arrayGet($dataUser, 'player_code');
