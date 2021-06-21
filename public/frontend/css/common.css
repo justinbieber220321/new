@@ -17,17 +17,17 @@
 }
 
 .btn-submit, .btn-rps {
-    background: #00acc1;
+    background: #B600F1;
     border: none;
     color: white;
 }
 
 .text-rps {
-    color: #00acc1;
+    color: #B600F1;
 }
 
 .bg-rps {
-    background: #00acc1;
+    background: #B600F1;
 }
 
 .btn-submit:hover, .btn-rps:hover {
@@ -36,34 +36,34 @@
 
 [data-theme-version="dark"] .deznav .metismenu > li:hover > a, [data-theme-version="dark"] .deznav .metismenu > li:focus > a,
 [data-theme-version="dark"] .deznav .metismenu > li.mm-active > a {
-    color: #00acc1;
+    color: #B600F1;
 }
 
 [data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu > li > a:before {
-    background: #00acc1;
+    background: #B600F1;
 }
 
 [data-theme-version="dark"] .deznav .metismenu ul a:hover, [data-theme-version="dark"] .deznav .metismenu ul a:focus,
 [data-theme-version="dark"] .deznav .metismenu ul a.mm-active {
-    color: #00acc1;
+    color: #B600F1;
 }
 
 .deznav .metismenu ul a:hover:before, .deznav .metismenu ul a:focus:before, .deznav .metismenu ul a.mm-active:before {
-    border-color: #00acc1;
+    border-color: #B600F1;
 }
 
 [data-theme-version="dark"] .deznav .metismenu > li:hover > a i, [data-theme-version="dark"] .deznav .metismenu > li:focus > a i, [data-theme-version="dark"] .deznav .metismenu > li.mm-active > a i {
-    color: #00acc1;
+    color: #B600F1;
 }
 
 .btn-crown {
-    background-color: #00acc1;
-    border-color: #00acc1;
+    background-color: #B600F1;
+    border-color: #B600F1;
     color: white;
 }
 
 .color-crown {
-    color: #00acc1;
+    color: #B600F1;
 }
 
 .btn-crown:hover {
@@ -71,9 +71,65 @@
 }
 
 a {
-    color: #00acc1;
+    color: #B600F1;
 }
 
 #icon-copy:hover {
     cursor: pointer;
 }
+
+/* ========== THEME ==========*/
+.content-page {
+    background: #29003C;
+    min-height: 100vh;
+}
+
+.navbar-custom {
+    background-color: #1A0027;
+}
+
+.simplebar-offset {
+    background-color: #1A0027;
+}
+
+body[data-sidebar-color=dark] .logo-box {
+    background-color: #1A0027;
+}
+
+.left-side-menu {
+    padding: 0;
+}
+
+.card, .card-box {
+    background-color: #250037;
+}
+
+.card-box {
+    padding-bottom: 0;
+}
+
+.page-title-box .page-title {
+    color: #B600F1;
+}
+
+.card-box .header-title {
+    color: #B600F1;
+}
+
+.form-control:disabled, .form-control[readonly], .form-control {
+    background-color: #1A0027;
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #1A0027;
+    border: 1px solid #424e5a;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #B600F1;
+}
+
+.navbar-custom .topnav-menu .nav-link {
+    color: #B600F1;
+}
+/* ========== END THEME ==========*/

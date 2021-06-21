@@ -59,15 +59,15 @@
     }
 
     #pagination .page-item.active .page-link {
-        background-color: #00acc1;
-        border-color: #00acc1;
+        background-color: #B600F1;
+        border-color: #B600F1;
     }
 
     .page-item.active .page-link {
         z-index: 1;
         color: #fff;
-        background-color: #00acc1;
-        border-color: #00acc1;
+        background-color: #B600F1;
+        border-color: #B600F1;
     }
 
 </style>

@@ -4,7 +4,7 @@
     <style>
         .affiliate-item .item {
             padding: 10px 15px;
-            border: 1px solid #00acc1;
+            border: 1px solid #B600F1;
             display: inline-block;
             margin-right: 15px;
         }
@@ -22,7 +22,7 @@
 
         .affiliate-item-f1 .itemF1 {
             margin: 8px;
-            border: 1px solid #00acc1;
+            border: 1px solid #B600F1;
             padding: 10px 15px;
         }
 
@@ -32,7 +32,7 @@
         }
 
         .list-dot small {
-            color: #00acc1;
+            color: #B600F1;
             display: block;
             font-size: 10px;
             font-weight: bold;
