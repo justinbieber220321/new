@@ -1,1 +1,33 @@
-﻿
+﻿.btn-submit {
+    background: linear-gradient(86.17deg, #8A27FE 3.69%, #FE2CBC 63.31%, #FE665F 95.27%);
+    border: none;
+}
+
+.text-h1 {
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.text-h3 {
+    font-size: 18px;
+    color: #CD76FF;
+    font-weight: bold;
+}
+
+.form-control:disabled, .form-control[readonly], .form-control {
+    background-color: white;
+}
+
+.card, .card-box {
+    background: #31004799;
+}
+
+body.authentication-bg {
+    background-color: #1A0027;
+}
+
+.bg-pattern .card-body  {
+    padding: 15px 15px 0 15px;
+}

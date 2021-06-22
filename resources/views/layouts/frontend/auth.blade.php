@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/vendor/select2/css/select2.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('frontend/css/common.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/auth.css') }}">
 
 </head>
 

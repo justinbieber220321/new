@@ -4,19 +4,21 @@
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6 col-xl-5">
             <div class="card bg-pattern">
-                <div class="card-body p-4">
+                <div class="card-body">
 
-                    <div class="text-center w-75 m-auto">
-                        <h3>{{ strtoupper(getSiteName()) }}</h3>
-                        <p class="text-muted mb-4 mt-3">OTP code verification</p>
-                        <h5>The link you used is not valid. <br> Please try again.</h5>
+                    <div class="text-center m-auto">
+                        <h3>
+                            <img src="{{ asset('frontend/assets/images/logo1.png') }}" alt="">
+                        </h3>
+                        <p class="text-h3 mb-2 mt-1">OTP code verification</p>
+                        <h5 style="color: #B600F1">The link you used is not valid. Please try again.</h5>
                     </div>
                 </div>
             </div>
 
-            <div class="row mt-3">
+            <div class="row">
                 <div class="col-12 text-center">
-                    <p class="text-white-50">Back to <a href="{{ frontendRouter('login.get') }}" class="text-white ml-1"><b>Login</b></a></p>
+                    <p class="text-white-50">Back to <a href="{{ frontendRouter('login.get') }}" class="ml-1"><b>Login</b></a></p>
                 </div>
             </div>
         </div>
