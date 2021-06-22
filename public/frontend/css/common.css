@@ -88,8 +88,16 @@ a {
     background-color: #1A0027;
 }
 
-.simplebar-offset {
-    background-color: #1A0027;
+.left-side-menu {
+    /*background: unset !important;*/
+}
+
+.left-side-menu1 {
+    background: #1A0027 !important;
+}
+
+body {
+    background-color: transparent;
 }
 
 body[data-sidebar-color=dark] .logo-box {
@@ -131,5 +139,9 @@ body[data-sidebar-color=dark] .logo-box {
 
 .navbar-custom .topnav-menu .nav-link {
     color: #B600F1;
+}
+
+body[data-sidebar-color=dark] .left-side-menu {
+    background-color: #1A0027;
 }
 /* ========== END THEME ==========*/

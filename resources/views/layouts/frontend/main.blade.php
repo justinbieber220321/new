@@ -99,7 +99,7 @@
     <!-- end Topbar -->
 
     <!-- ========== Left Sidebar Start ========== -->
-    <div class="left-side-menu">
+    <div class="left-side-menu left-side-menu1">
 
         <div class="h-100" data-simplebar>
 
