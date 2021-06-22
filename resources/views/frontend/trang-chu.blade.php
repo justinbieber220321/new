@@ -19,19 +19,19 @@
                 <div class="tabs-wrapper">
                     <ul class="live-tabs js-tabs">
                         <li class="tab-item is-current" data-tab="tab-first">
-                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/PragmaticNew.png') }}" alt="Pragmatic Play"></div>
+                            <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/PragmaticNew.png') }}" alt="Pragmatic Play"></div>
                             <h3 class="item-title">Pragmatic Play</h3>
                         </li>
                         <li class="tab-item" data-tab="tab-second">
-                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/nuxgen_ezugi.png') }}" alt="Ezugi"></div>
+                            <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/nuxgen_ezugi.png') }}" alt="Ezugi"></div>
                             <h3 class="item-title">Ezugi</h3>
                         </li>
                         <li class="tab-item" data-tab="tab-third">
-                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/evolution.jpg') }}" alt="Evolution"></div>
+                            <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/evolution.jpg') }}" alt="Evolution"></div>
                             <h3 class="item-title">Evolution</h3>
                         </li>
                         <li class="tab-item" data-tab="tab-fourth">
-                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/tvbet.jpg') }}" alt="TV Bet"></div>
+                            <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/tvbet.jpg') }}" alt="TV Bet"></div>
                             <h3 class="item-title">TV Bet</h3>
                         </li>
                     </ul>
