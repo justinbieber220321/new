@@ -48,17 +48,11 @@ class FrontendController extends BaseFrontendController
 
     public function showTrangChu()
     {
-        if (frontendIsLogin()) {
-            return redirect()->route(frontendRouterName('home'));
-        }
         return view('frontend.trang-chu');
     }
 
     public function showTrangAffiliate()
     {
-        if (frontendIsLogin()) {
-            return redirect()->route(frontendRouterName('home'));
-        }
         return view('frontend.affiliate');
     }
 }

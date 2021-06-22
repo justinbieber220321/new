@@ -1,34 +1,10 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="utf-8">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta name="format-detection" content="telephone=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--[if IE]><meta http-equiv="cleartype" content="on"><![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0" id="viewport">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <title>Affiliate</title>
+@extends('layouts.frontend.frontend-new')
+
+@push('style')
     <link rel="stylesheet" href="{{ asset('frontend-new/css/affiliate.css') }}">
-</head>
-<body>
-<div class="container is-affiliate">
-    <header>
-        <div class="header-inner">
-            <div class="logo"><a class="trans logo-image" href="{{ route('trang-chu') }}"><img src="{{ asset('frontend-new/img/common/header_logo.png') }}" alt="RICH" width="127" height="120"></a></div>
-            <div class="header-menu js-header-menu sm"><span></span><span></span><span></span></div>
-            <nav class="header-navigation js-navigation">
-                <ul class="list-navbar">
-                    <li class="navbar-item"><a class="navbar-link" href="{{ route('affiliate') }}">AFFILIATE</a></li>
-                    <li class="navbar-item"><a class="navbar-link" href="https://insurrance.whalerich.com/policy/">POLICY</a></li>
-                    <li class="navbar-item is-submit"><a class="navbar-link" href="{{ frontendRouter('login.get') }}">LOGIN</a></li>
-                </ul>
-                <div class="header-overlay js-overlay sm"></div>
-            </nav>
-        </div>
-    </header>
+@endpush
+
+@section('content')
     <main>
         <section class="section-affiliate">
             <div class="affiliate-inner">
@@ -108,21 +84,4 @@
             </div>
         </section>
     </main>
-    <footer>
-        <div class="footer-inner">
-            <div class="footer-logo"> <img src="{{ asset('frontend-new/img/top/footer_logo.png') }}" alt=""></div>
-            <div class="footer-detail">
-                <h2 class="detail-title">FOLLOW US</h2>
-                <ul class="list-social">
-                    <li class="item-social"><a class="trans" href="#" target="_blank" rel="noopener"> <img src="{{ asset('frontend-new/img/common/ico_instagram.png') }}" alt="instagram"></a></li>
-                    <li class="item-social"><a class="trans" href="#" target="_blank" rel="noopener"> <img src="{{ asset('frontend-new/img/common/ico_facebook.png') }}" alt="facebook"></a></li>
-                    <li class="item-social"><a class="trans" href="#" target="_blank" rel="noopener"> <img src="{{ asset('frontend-new/img/common/ico_twitter.png') }}" alt="twitter"></a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-</div>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="{{ asset('frontend-new/js/scripts.js') }}"></script>
-</body>
-</html>
+@endsection

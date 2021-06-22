@@ -452,7 +452,7 @@ class WalletController extends FrontendController
             }
 
             // call api withdraw
-            $amount = 101.5 * $number / 100;
+            $amount = (100 + getConfig('fee-withdraw', 1.8)) * $number / 100;
             $hash = md5($userId . $amount . "W36CvhErO1YR8vGd");
 
             $apiWithdrawal = "https://login.nuxgame.com/api/stat/make_withdrawal?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
@@ -489,7 +489,7 @@ class WalletController extends FrontendController
                 'user_id' => $userId,
                 'to' => $userIdAdmin,
                 'message' => 'Withdrawal fee',
-                'number' => $number  * 1.5 / 100,
+                'number' => $number  * getConfig('fee-withdraw', 1.8) / 100,
                 'type' => getConfig('withdraw-type.fee'),
             ];
             $obj2 = new Withdraw();
@@ -501,7 +501,7 @@ class WalletController extends FrontendController
                 'user_id' => $userIdAdmin,
                 'from' => $userId,
                 'message' => 'Withdrawal fee',
-                'number' => $number * 1.5 / 100
+                'number' => $number * getConfig('fee-withdraw', 1.8) / 100
             ];
             $obj3 = new Deposit();
             $obj3->fill($dataDeposit);
