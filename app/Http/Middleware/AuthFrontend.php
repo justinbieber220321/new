@@ -9,7 +9,7 @@ class AuthFrontend
     public function handle($request, Closure $next)
     {
         if (!frontendIsLogin()) {
-            return redirect()->route(frontendRouterName('login.get'));
+            return redirect()->route('trang-chu');
         }
         return $next($request);
     }

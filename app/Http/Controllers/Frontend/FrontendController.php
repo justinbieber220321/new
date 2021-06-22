@@ -45,4 +45,14 @@ class FrontendController extends BaseFrontendController
             return backSystemError(transMessage('system_error'));
         }
     }
+
+    public function showTrangChu()
+    {
+        return view('frontend.trang-chu');
+    }
+
+    public function showTrangAffiliate()
+    {
+        return view('frontend.affiliate');
+    }
 }

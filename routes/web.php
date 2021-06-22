@@ -5,6 +5,9 @@ Route::post('lang', ['as' => 'set-lang', 'uses' => 'Controller@setLang']);
 Route::get('test-send-mail', ['as' => 'test-send-mail', 'uses' => 'Frontend\FrontendController@getTestSendMail']);
 Route::post('test-send-mail', ['as' => 'test-send-mail.post', 'uses' => 'Frontend\FrontendController@postTestSendMail']);
 
+Route::get('/', ['as' => 'trang-chu', 'uses' => 'Frontend\FrontendController@showTrangChu']);
+Route::get('/affiliate', ['as' => 'affiliate', 'uses' => 'Frontend\FrontendController@showTrangAffiliate']);
+
 // ========== FRONTEND AREA ==========
 Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'middleware' => ['frontend-lang']], function(){
     Route::get('/login', ['as' => 'login.get', 'uses' => 'Auth\AuthController@showFormLogin']);
@@ -15,7 +18,7 @@ Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'midd
     Route::get('/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@logout']);
 
     Route::group(['middleware' => ['authFrontend']], function(){
-        Route::get('/', ['as' => 'home', 'uses' => 'DashboardController@index'])->middleware('authFrontend');
+        Route::get('/dashboard', ['as' => 'home', 'uses' => 'DashboardController@index'])->middleware('authFrontend');
 
         Route::get('account', ['as' => 'account', 'uses' => 'UserController@account']);
         Route::get('account/update', ['as' => 'account.update.get', 'uses' => 'UserController@getUpdateAccount']);
