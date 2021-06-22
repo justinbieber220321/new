@@ -100,8 +100,16 @@
                         <div class="affiliate-item affiliate-item-f1 mt-3  {{ $countFn >= 5 ? 'justify-content-between' : 'justify-content-center' }} ">
                             @foreach($fn as $item)
                                 <p class="itemF1">
-                                    <span><a href="{{ frontendRouter('affiliate-tree', ['userId' => $item->id]) }}">{{ $item->username ? $item->username : $item->email }}</a></span>
-                                    <span>My bet: {{ getMyBet($item) }} USDT </span>
+                                    <span>
+                                        @if (count($item->children) > 0)
+                                            <a href="{{ frontendRouter('affiliate-tree', ['userId' => $item->id])  }}">
+                                                {{ $item->username ? $item->username : $item->email }}</a>
+                                        @else
+                                            <a href="javascript:void(0)">
+                                                {{ $item->username ? $item->username : $item->email }}</a>
+                                        @endif
+                                    </span>
+                                    <span>My bet: {{ getMyBet($item) }} USDT</span>
                                     <span>Team bet: {{ getTeamBet($item) }} USDT</span>
                                 </p>
                             @endforeach
