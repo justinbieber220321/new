@@ -4,6 +4,14 @@
     <link rel="stylesheet" href="{{ asset('frontend-new/css/top.css') }}">
 @endpush
 
+@push('script')
+    <script>
+        $(document).ready( function() {
+            alert("This site is casino game. Please confirm that you are over 18 years old, and your country allows the game. Don't play more than 180s/day");
+        });
+    </script>
+@endpush
+
 @section('content')
     <main>
         <div class="block-top-keyvisual">
