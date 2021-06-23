@@ -18,6 +18,10 @@
     .container {
         max-width: 100%;
     }
+
+    footer {
+        background-size: contain;
+    }
 </style>
 
 <body>

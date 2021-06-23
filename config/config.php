@@ -125,5 +125,5 @@ return [
     'deposit_type_default' => 1,
     'withdraw_type_default' => 1,
 
-    'fee-withdraw' => 1,8
+    'fee-withdraw' => 1,5
 ];
