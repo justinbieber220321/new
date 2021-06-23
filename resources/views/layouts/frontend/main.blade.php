@@ -110,8 +110,16 @@
 
                 <ul id="side-menu">
 
+		    <li>
+
+			<a href="https://whalerich.com/">
+                            <i data-feather="gift"></i>
+                            <span>Home</span>
+                        </a>
+
+		    </li>
                     <li>
-                        <a href="https://play.whalerich.com/live-casino">
+                        <a href="https://play.whalerich.com/">
                             <i data-feather="gift"></i>
                             <span>Live casino</span>
                         </a>

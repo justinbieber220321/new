@@ -10,7 +10,7 @@
                         <h3>
                             <img src="{{ asset('frontend/assets/images/logo1.png') }}" alt="">
                         </h3>
-                        <p class="text-h1 mb-2 mt-1">Login</p>
+                        <p class="text-h1 mb-2 mt-1" style="font-size: 20px;">otp authentication</p>
                     </div>
 
                     <form action="{{ frontendRouter('login.post') }}" method="POST">
