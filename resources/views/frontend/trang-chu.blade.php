@@ -22,17 +22,23 @@
                             <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/PragmaticNew.png') }}" alt="Pragmatic Play"></div>
                             <h3 class="item-title">Pragmatic Play</h3>
                         </li>
-                        <li class="tab-item" data-tab="tab-second">
-                            <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/nuxgen_ezugi.png') }}" alt="Ezugi"></div>
-                            <h3 class="item-title">Ezugi</h3>
+                        <li class="tab-item">
+                            <a href="https://play.whalerich.com/live-casino/ezugi" target="_blank">
+                                <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/nuxgen_ezugi.png') }}" alt="Ezugi"></div>
+                                <h3 class="item-title">Ezugi</h3>
+                            </a>
                         </li>
-                        <li class="tab-item" data-tab="tab-third">
-                            <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/evolution.jpg') }}" alt="Evolution"></div>
-                            <h3 class="item-title">Evolution</h3>
+                        <li class="tab-item">
+                            <a href="https://play.whalerich.com/live-casino/evolution" target="_blank">
+                                <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/evolution.jpg') }}" alt="Evolution"></div>
+                                <h3 class="item-title">Evolution</h3>
+                            </a>
                         </li>
-                        <li class="tab-item" data-tab="tab-fourth">
-                            <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/tvbet.jpg') }}" alt="TV Bet"></div>
-                            <h3 class="item-title">TV Bet</h3>
+                        <li class="tab-item">
+                            <a href="https://play.whalerich.com/live-casino/tvbet" target="_blank">
+                                <div class="item-image text-center"><img src="{{ asset('frontend-new/img/top/tvbet.jpg') }}" alt="TV Bet"></div>
+                                <h3 class="item-title">TV Bet</h3>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -41,35 +47,67 @@
                         <div class="tabs-inner cards-wrapper">
                             <ul class="list-cards">
                                 <li>
-                                    <a class="trans" href="https://play.whalerich.com/slots/853">
+                                    <a class="trans" href="https://play.whalerich.com/slots/853" target="_blank">
                                         <div class="item-image">
-                                            <img src="{{ asset('frontend-new/img/top/801.png') }}" alt="Live - Mega Weel">
+                                            <img src="{{ asset('frontend-new/img/top/801.png') }}" alt="Live - Mega Wheel">
                                             <span class="item-label">Pragmatic Play</span></div>
                                         <h3 class="item-title">Live - Mega Wheel</h3>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="trans" href="https://play.whalerich.com/slots/853">
+                                    <a class="trans" href="https://play.whalerich.com/slots/861" target="_blank">
                                         <div class="item-image">
-                                            <img src="{{ asset('frontend-new/img/top/203.png') }}" alt="Live - Mega Weel">
+                                            <img src="{{ asset('frontend-new/img/top/203.png') }}" alt="Live - Speed Roulette">
                                             <span class="item-label">Pragmatic</span></div>
                                         <h3 class="item-title">Live - Speed Roulette</h3>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="trans" href="https://play.whalerich.com/slots/863">
+                                    <a class="trans" href="https://play.whalerich.com/slots/863" target="_blank">
                                         <div class="item-image">
-                                            <img src="{{ asset('frontend-new/img/top/101.png') }}" alt="Live - Mega Weel">
+                                            <img src="{{ asset('frontend-new/img/top/101.png') }}" alt="Live - Lobby">
                                             <span class="item-label">Pragmatic</span></div>
                                         <h3 class="item-title">Live - Lobby</h3>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="trans" href="https://play.whalerich.com/slots/859">
+                                    <a class="trans" href="https://play.whalerich.com/slots/859" target="_blank">
                                         <div class="item-image">
-                                            <img src="{{ asset('frontend-new/img/top/859.png') }}" alt="Live - Mega Weel">
+                                            <img src="{{ asset('frontend-new/img/top/859.png') }}" alt="Live - Roulette A">
                                             <span class="item-label">Pragmatic</span></div>
                                         <h3 class="item-title">Live - Roulette A</h3>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="trans" href="https://play.whalerich.com/slots/852" target="_blank">
+                                        <div class="item-image">
+                                            <img src="{{ asset('frontend-new/img/top/852.png') }}" alt="Live - Mega Sic Bo">
+                                            <span class="item-label">Pragmatic</span></div>
+                                        <h3 class="item-title">Live - Mega Sic Bo</h3>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="trans" href="https://play.whalerich.com/slots/858" target="_blank">
+                                        <div class="item-image">
+                                            <img src="{{ asset('frontend-new/img/top/858.png') }}" alt="Live - Mega Roulette">
+                                            <span class="item-label">Pragmatic</span></div>
+                                        <h3 class="item-title">Live - Mega Roulette</h3>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="trans" href="https://play.whalerich.com/slots/864" target="_blank">
+                                        <div class="item-image">
+                                            <img src="{{ asset('frontend-new/img/top/864.png') }}" alt="Live - Lobby BJ">
+                                            <span class="item-label">Pragmatic</span></div>
+                                        <h3 class="item-title">Live - Lobby BJ</h3>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="trans" href="https://play.whalerich.com/slots/857" target="_blank">
+                                        <div class="item-image">
+                                            <img src="{{ asset('frontend-new/img/top/857.png') }}" alt="Live - Baccarat A">
+                                            <span class="item-label">Pragmatic</span></div>
+                                        <h3 class="item-title">Live - Baccarat A</h3>
                                     </a>
                                 </li>
                             </ul>
