@@ -924,3 +924,53 @@ if (!function_exists('getTeamBet')) {
     }
 }
 
+if (!function_exists('getInfoBet')) {
+    function getInfoBet()
+    {
+        if (!frontendIsLogin()) {
+            return 0;
+        }
+
+        $userId = frontendCurrentUser()->user_id;
+//        $userId = '18646';
+        $idCon = userAllChildsIds(frontendCurrentUser());
+//        $idCon = ['18648', '18651', '18654'];
+
+        $dateTo = date('Y-m-d', strtotime('+1 day', time()));
+        $date = date_create(date('Y-m-d'));
+        date_sub($date, date_interval_create_from_date_string("365 days"));
+        $past = date_format($date, "Y-m-d");
+        $endpoint = "https://login.nuxgame.com/api/stat/casino_report?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo";
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('GET', $endpoint);
+        $dataApi = json_decode($response->getBody(), true);
+        $myWin = 0;
+        $teamWin = 0;
+        $myGgr = 0;
+        $teamGgr = 0;
+
+        foreach ($dataApi as $item) {
+            if (arrayGet($item, 'user_id') == $userId) {
+                $myWin = arrayGet($item, 'wins');
+                $myGgr = arrayGet($item, 'ggr');
+            }
+        }
+
+        foreach ($dataApi as $item) {
+            if (in_array(arrayGet($item, 'user_id'),  $idCon)) {
+                $teamWin += arrayGet($item, 'wins', 0);
+                $teamGgr += arrayGet($item, 'ggr', 0);
+            }
+        }
+
+        $result = [
+            'myWin' => $myWin,
+            'teamWin' => $teamWin,
+            'myGgr' => $myGgr,
+            'teamGgr' => $teamGgr,
+        ];
+
+        return $result;
+    }
+}
+
