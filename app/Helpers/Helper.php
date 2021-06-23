@@ -925,15 +925,15 @@ if (!function_exists('getTeamBet')) {
 }
 
 if (!function_exists('getInfoBet')) {
-    function getInfoBet()
+    function getInfoBet($entityUser)
     {
         if (!frontendIsLogin()) {
             return 0;
         }
 
-        $userId = frontendCurrentUser()->user_id;
+        $userId = $entityUser->user_id;
 //        $userId = '18646';
-        $idCon = userAllChildsIds(frontendCurrentUser());
+        $idCon = userAllChildsIds($entityUser);
 //        $idCon = ['18648', '18651', '18654'];
 
         $dateTo = date('Y-m-d', strtotime('+1 day', time()));

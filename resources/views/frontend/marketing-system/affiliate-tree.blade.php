@@ -71,12 +71,6 @@
                             </span>
                             <span>My bet: {{ getMyBet() }} USDT </span>
                             <span>Team bet: {{ getTeamBet() }} USDT</span>
-                            @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
-                                <span>My win: {{ formatPriceCurrency(arrayGet(getInfoBet(), 'myWin')) }} USDT </span>
-                                <span>Team win: {{ formatPriceCurrency(arrayGet(getInfoBet(), 'teamWin')) }} USDT </span>
-                                <span>My ggr: {{ formatPriceCurrency(arrayGet(getInfoBet(), 'myGgr')) }} USDT </span>
-                                <span>Team ggr: {{ formatPriceCurrency(arrayGet(getInfoBet(), 'teamGgr')) }} USDT </span>
-                            @endif
                         </p>
                     </div>
 
@@ -98,6 +92,12 @@
                                 </span>
                                 <span>My bet: {{ formatPriceCurrency(getMyBet($f1)) }} USDT </span>
                                 <span>Team bet: {{ formatPriceCurrency(getTeamBet($f1)) }} USDT</span>
+                                @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
+                                    <span>My win: {{ formatPriceCurrency(arrayGet(getInfoBet($f1), 'myWin')) }} USDT </span>
+                                    <span>Team win: {{ formatPriceCurrency(arrayGet(getInfoBet($f1), 'teamWin')) }} USDT </span>
+                                    <span>My ggr: {{ formatPriceCurrency(arrayGet(getInfoBet($f1), 'myGgr')) }} USDT </span>
+                                    <span>Team ggr: {{ formatPriceCurrency(arrayGet(getInfoBet($f1), 'teamGgr')) }} USDT </span>
+                                @endif
                             </p>
                         </div>
                     @endif
@@ -117,6 +117,12 @@
                                     </span>
                                     <span>My bet: {{ formatPriceCurrency(getMyBet($item)) }} USDT</span>
                                     <span>Team bet: {{ formatPriceCurrency(getTeamBet($item)) }} USDT</span>
+                                    @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
+                                        <span>My win: {{ formatPriceCurrency(arrayGet(getInfoBet($item), 'myWin')) }} USDT </span>
+                                        <span>Team win: {{ formatPriceCurrency(arrayGet(getInfoBet($item), 'teamWin')) }} USDT </span>
+                                        <span>My ggr: {{ formatPriceCurrency(arrayGet(getInfoBet($item), 'myGgr')) }} USDT </span>
+                                        <span>Team ggr: {{ formatPriceCurrency(arrayGet(getInfoBet($item), 'teamGgr')) }} USDT </span>
+                                    @endif
                                 </p>
                             @endforeach
                         </div>
