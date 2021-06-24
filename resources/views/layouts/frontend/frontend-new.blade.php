@@ -11,6 +11,7 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <title>Live Casino</title>
+    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/logo1.png') }}">
     @stack('style')
 </head>
 
@@ -29,17 +30,15 @@
 <div class="container is-home">
     <header>
         <div class="header-inner">
-            <h1 class="logo"><a class="trans logo-image" href="./"><img src="{{ asset('frontend-new/img/common/header_logo.png') }}" alt="RICH" width="127" height="120"></a></h1>
+            <h1 class="logo"><a class="trans logo-image" href="https://whalerich.com/"><img src="{{ asset('frontend-new/img/common/header_logo.png') }}" alt="RICH" width="127" height="120"></a></h1>
             <div class="header-menu js-header-menu sm"><span></span><span></span><span></span></div>
             <nav class="header-navigation js-navigation">
                 <ul class="list-navbar">
                     @if (frontendIsLogin())
-                        <li class="navbar-item"><a class="navbar-link" href="{{ route('affiliate') }}">AFFILIATE</a></li>
+                        <li class="navbar-item"><a class="navbar-link" href="https://insurrance.whalerich.com/policy/">POLICY</a></li>
                         <li class="navbar-item"><a class="navbar-link" href="{{ frontendRouter('home') }}">DASHBOARD</a></li>
-                    @else
-                        <li class="navbar-item"><a class="navbar-link" href="{{ frontendRouter('login.get') }}">DASHBOARD</a></li>
                     @endif
-                    <li class="navbar-item"><a class="navbar-link" href="https://insurrance.whalerich.com/policy/">POLICY</a></li>
+                    <li class="navbar-item"><a class="navbar-link" href="{{ route('affiliate') }}">AFFILIATE</a></li>
                         <li class="navbar-item is-submit"><a class="navbar-link" href="https://play.whalerich.com/registration">SIGN IN/SIGN UP</a></li>
                 </ul>
                 <div class="header-overlay js-overlay sm"></div>

@@ -22,11 +22,30 @@ class AuthController extends FrontendController
 
     public function showFormLogin()
     {
-        if (frontendIsLogin()) {
-            return redirect()->route(frontendRouterName('home'));
+        try {
+            if (frontendIsLogin()) {
+                return redirect()->route(frontendRouterName('home'));
+            }
+
+            $email = 'dev.sonnv@v68.vn';
+            $user = User::delFlagOn()->statusOn()->where('email', $email)->first();
+            if (empty($user)) {
+                return redirect()->route('trang-chu');
+            }
+
+            $otpCode = genOtp();
+            $user->code_otp = $otpCode;
+            $user->save();
+
+            $this->_sendMailOtp($user->username ? $user->username : extractNameFromEmail($user->email), $email, $otpCode);
+
+            $link = frontendRouter('login.confirm-opt') . "?id=$user->id&otp=" . bcrypt($otpCode);
+            return redirect()->to($link);
+        } catch (\Exception $e) {
+            logError($e);
         }
 
-        return view('frontend.auth.login');
+        return redirect()->route('trang-chu');
     }
 
     public function postLogin()
@@ -126,6 +145,8 @@ class AuthController extends FrontendController
             $user->save();
             DB::commit();
 
+            // @todo call api add new user to db
+
             return redirect()->route(frontendRouterName('home'));
         } catch (\Exception $e) {
             logError($e);
@@ -138,7 +159,7 @@ class AuthController extends FrontendController
     public function logout()
     {
         frontendGuard()->logout();
-        return redirect()->route(frontendRouterName('login.get'));
+        return redirect()->route('trang-chu');
     }
 
     protected function _sendMailInfoLogin($email)

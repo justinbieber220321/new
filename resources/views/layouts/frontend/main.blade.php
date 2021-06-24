@@ -126,9 +126,9 @@
                     </li>
 
                     <li>
-                        <a href="https://insurrance.whalerich.com/">
+                        <a href="https://insurrance.whalerich.com/policy">
                             <i data-feather="gift"></i>
-                            <span>Insurrance</span>
+                            <span>Policy</span>
                         </a>
                     </li>
 
