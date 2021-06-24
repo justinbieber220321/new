@@ -2,6 +2,12 @@
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('frontend-new/css/top.css') }}">
+
+    <style>
+        .section-top-providers .list-providers li {
+            width: auto;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -141,44 +147,80 @@
                 <h2 class="common-title is-game">CASINO GAMES </h2>
                 <div class="cards-wrapper">
                     <ul class="list-cards">
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_01.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_01.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_02.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_01.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_03.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_04.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_01.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_05.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_03.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_04.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_01.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
-                        <li><a class="trans" href="#">
-                                <div class="item-image"><img src="{{ asset('frontend-new/img/top/game_img_05.jpg') }}" alt="Live - Mega Weel"><span class="item-label">Pragmatic Play</span></div>
-                                <h3 class="item-title">Live - Mega Weel</h3></a></li>
+                        <li>
+                            <a class="trans" href="https://play.whalerich.com/slots/1050">
+                                <div class="item-image">
+                                    <img src="{{ asset('frontend-new/img/top/1050.jpg') }}" alt="Temujin Treasures">
+                                    <span class="item-label">Pragmatic</span>
+                                </div>
+                                <h3 class="item-title">Temujin Treasures</h3>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="trans" href="https://play.whalerich.com/slots/1049">
+                                <div class="item-image">
+                                    <img src="{{ asset('frontend-new/img/top/1049.png') }}" alt="Juicy Fruits">
+                                    <span class="item-label">Pragmatic</span>
+                                </div>
+                                <h3 class="item-title">Juicy Fruits</h3>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="trans" href="https://play.whalerich.com/slots/1048">
+                                <div class="item-image">
+                                    <img src="{{ asset('frontend-new/img/top/1048.png') }}" alt="Fishin Reels">
+                                    <span class="item-label">Pragmatic</span>
+                                </div>
+                                <h3 class="item-title">Fishin Reels</h3>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="trans" href="https://play.whalerich.com/slots/979">
+                                <div class="item-image">
+                                    <img src="{{ asset('frontend-new/img/top/979.png') }}" alt="Sweet Bonanza">
+                                    <span class="item-label">Pragmatic</span>
+                                </div>
+                                <h3 class="item-title">Sweet Bonanza</h3>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="trans" href="https://play.whalerich.com/slots/924">
+                                <div class="item-image">
+                                    <img src="{{ asset('frontend-new/img/top/924.png') }}" alt="Hot to Burn Hold and Spin">
+                                    <span class="item-label">Pragmatic</span>
+                                </div>
+                                <h3 class="item-title">Hot to Burn Hold and Spin</h3>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="trans" href="https://play.whalerich.com/slots/1037">
+                                <div class="item-image">
+                                    <img src="{{ asset('frontend-new/img/top/1037.png') }}" alt="Wolf Gold">
+                                    <span class="item-label">Pragmatic</span>
+                                </div>
+                                <h3 class="item-title">Wolf Gold</h3>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="trans" href="https://play.whalerich.com/slots/1013">
+                                <div class="item-image">
+                                    <img src="{{ asset('frontend-new/img/top/1013.png') }}" alt="Wolf Gold 1 Million">
+                                    <span class="item-label">Pragmatic</span>
+                                </div>
+                                <h3 class="item-title">Wolf Gold 1 Million</h3>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="trans" href="https://play.whalerich.com/slots/836">
+                                <div class="item-image">
+                                    <img src="{{ asset('frontend-new/img/top/836.png') }}" alt="Cash Tank">
+                                    <span class="item-label">Pragmatic</span>
+                                </div>
+                                <h3 class="item-title">Cash Tank</h3>
+                            </a>
+                        </li>
                     </ul>
-                    <div class="btn-show-more"><a class="trans" href="#">Show More</a></div>
+                    <div class="btn-show-more"><a class="trans" href="https://play.whalerich.com/">Show More</a></div>
                 </div>
             </div>
         </section>
@@ -186,12 +228,32 @@
             <div class="wrapper">
                 <h2 class="common-title is-providers">GAMES PROVIDERS</h2>
                 <ul class="list-providers">
-                    <li class="item"> <a class="trans" href="#">
-                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/providers_img_01.jpg') }}" alt="GAMES PROVIDERS"></div></a></li>
-                    <li class="item"> <a class="trans" href="#">
-                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/providers_img_01.jpg') }}" alt="GAMES PROVIDERS"></div></a></li>
-                    <li class="item"> <a class="trans" href="#">
-                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/providers_img_01.jpg') }}" alt="GAMES PROVIDERS"></div></a></li>
+                    <li class="item"><a class="trans" href="https://play.whalerich.com/live-casino/evolution">
+                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/evolution.png') }}"
+                                                         alt=""></div>
+                        </a></li>
+                    <li class="item"><a class="trans" href="https://play.whalerich.com/live-casino/ezugi">
+                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/ezugi.png') }}"
+                                                         alt=""></div>
+                        </a></li>
+                    <li class="item"><a class="trans" href="https://play.whalerich.com/virtual-sport">
+                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/golden-race.png') }}"
+                                                         alt=""></div>
+                        </a></li>
+                    <li class="item"><a class="trans" href="https://play.whalerich.com/slots?provider=Habanero">
+                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/habanero.png') }}"
+                                                         alt=""></div>
+                        </a></li>
+                    <li class="item"><a class="trans"
+                                        href="https://play.whalerich.com/slots?provider=Pragmatic&category=Live">
+                            <div class="item-image"><img src="{{ asset('frontend-new/img/top/pragmatic.png') }}"
+                                                         alt=""></div>
+                        </a></li>
+                    <li class="item"><a class="trans" href="https://play.whalerich.com/slots?provider=Tom%20Horn">
+                            <div class="item-image"><img width="131px"
+                                                         src="{{ asset('frontend-new/img/top/topmhorn.png') }}"
+                                                         alt=""></div>
+                        </a></li>
                 </ul>
             </div>
         </section>
