@@ -41,7 +41,7 @@
                                 <div class="form-group">
                                     <label>Please transfer USDT TRC 20</label>
                                     <div class="d-flex">
-                                        <input type="text" readonly class="form-control" id="address-deposit" value="{{ env('TRX_ADDRESS_DEPOSIT') }}">
+                                        <input type="text" readonly class="form-control" id="address-deposit" value="{{ frontendCurrentUser()->address }}">
                                         <button class="btn btn-crown btn-xs" onclick="copyToClipboard()">Copy!</button>
                                     </div>
                                 </div>

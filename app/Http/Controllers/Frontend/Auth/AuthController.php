@@ -6,7 +6,6 @@ use App\Http\Controllers\Frontend\Base\FrontendController;
 use App\Model\Entities\CoinAddress;
 use App\Model\Entities\User;
 use App\Repositories\UserRepository;
-use App\Services\TRXService;
 use Carbon\Carbon;
 use Browser;
 use Illuminate\Support\Facades\DB;
@@ -15,12 +14,10 @@ use Illuminate\Support\Facades\Mail;
 class AuthController extends FrontendController
 {
     public $coinService;
-    public $TRXService;
 
-    public function __construct(UserRepository $userRepository, TRXService $TRXService)
+    public function __construct(UserRepository $userRepository)
     {
         $this->setRepository($userRepository);
-        $this->TRXService = $TRXService;
     }
 
     public function showFormLogin()
@@ -52,21 +49,6 @@ class AuthController extends FrontendController
                 $user->player_code = (int)arrayGet($item, 'player_code');
                 $user->status = statusOn();
                 $user->save();
-            }
-
-            // add address to coin_address table
-            $countAddressNotUsed = CoinAddress::where('status', getConfig('coin_address_status_not_used'))->count();
-            if ($countAddressNotUsed <= 1) {
-                $dataAddressStore = [];
-                for ($i = 0; $i <= 100; $i++) {
-                    $address = $this->TRXService->getListAddress();
-                    if ($address) {
-                        $tmp['private_key'] = $address->getPrivateKey();
-                        $tmp['address'] = $address->getAddress(true);
-                        array_push($dataAddressStore, $tmp);
-                    }
-                }
-                CoinAddress::insert($dataAddressStore);
             }
 
             $email = request('email');
