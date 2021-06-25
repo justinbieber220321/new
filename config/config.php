@@ -125,5 +125,7 @@ return [
     'deposit_type_default' => 1,
     'withdraw_type_default' => 1,
 
-    'fee-withdraw' => 1,5
+    'fee-withdraw' => 1,5,
+    'coin_address_status_used' => 1,
+    'coin_address_status_not_used' => 2,
 ];

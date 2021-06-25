@@ -62,4 +62,9 @@ class TRXService
         $r = $contract->transfer($address, $amount, null);
         return $r;
     }
+
+    public function getListAddress()
+    {
+        return $this->tron->generateAddress();
+    }
 }

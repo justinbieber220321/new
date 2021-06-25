@@ -39,14 +39,11 @@
                         <div class="row mt-3">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Please transfer</label>
+                                    <label>Please transfer USDT TRC 20</label>
                                     <div class="d-flex">
                                         <input type="text" readonly class="form-control" id="address-deposit" value="{{ env('TRX_ADDRESS_DEPOSIT') }}">
                                         <button class="btn btn-crown btn-xs" onclick="copyToClipboard()">Copy!</button>
                                     </div>
-                                    <small>with tag (note): {{ frontendCurrentUser()->user_id }}</small>
-                                    <br>
-                                    <small class="text-danger">Please enter correct user_id. Otherwise the system will not record.</small>
                                 </div>
                             </div>
                         </div>

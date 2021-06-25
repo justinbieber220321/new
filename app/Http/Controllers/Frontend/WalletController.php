@@ -570,7 +570,7 @@ class WalletController extends FrontendController
 
     protected function _checkTotalDeposit15Days($inputWithdraw)
     {
-        $sql = "select * from user where ins_date > date_SUB(now(), INTERVAL 15 DAY) and id = " . frontendCurrentUser()->id;
+        $sql = "select * from user where ins_date > date_SUB(now(), INTERVAL 7 DAY) and id = " . frontendCurrentUser()->id;
         $myAccountCreatedAt = DB::select($sql);
         if (!arrayGet($myAccountCreatedAt, 0)) {
             return true;

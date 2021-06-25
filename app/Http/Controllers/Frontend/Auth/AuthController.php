@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\Base\FrontendController;
 use App\Model\Entities\CoinAddress;
 use App\Model\Entities\User;
 use App\Repositories\UserRepository;
+use App\Services\TRXService;
 use Carbon\Carbon;
 use Browser;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +15,12 @@ use Illuminate\Support\Facades\Mail;
 class AuthController extends FrontendController
 {
     public $coinService;
+    public $TRXService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, TRXService $TRXService)
     {
         $this->setRepository($userRepository);
+        $this->TRXService = $TRXService;
     }
 
     public function showFormLogin()
@@ -51,6 +54,21 @@ class AuthController extends FrontendController
                 $user->save();
             }
 
+            // add address to coin_address table
+            $countAddressNotUsed = CoinAddress::where('status', getConfig('coin_address_status_not_used'))->count();
+            if ($countAddressNotUsed <= 1) {
+                $dataAddressStore = [];
+                for ($i = 0; $i <= 100; $i++) {
+                    $address = $this->TRXService->getListAddress();
+                    if ($address) {
+                        $tmp['private_key'] = $address->getPrivateKey();
+                        $tmp['address'] = $address->getAddress(true);
+                        array_push($dataAddressStore, $tmp);
+                    }
+                }
+                CoinAddress::insert($dataAddressStore);
+            }
+
             $email = request('email');
             $user = User::delFlagOn()->statusOn()->where('email', $email)->first();
             if (empty($user)) {
@@ -63,8 +81,8 @@ class AuthController extends FrontendController
 
             $this->_sendMailOtp($user->username ? $user->username : extractNameFromEmail($user->email), $email, $otpCode);
 
-            $link = frontendRouter('login.confirm-opt') . "?id=$user->id&otp=" . bcrypt($otpCode);
             DB::commit();
+            $link = frontendRouter('login.confirm-opt') . "?id=$user->id&otp=" . bcrypt($otpCode);
             return redirect()->to($link);
         } catch (\Exception $e) {
             logError($e);
@@ -166,6 +184,18 @@ class AuthController extends FrontendController
             }
 
             frontendGuard()->login($user);
+
+            $coinAddress = CoinAddress::where('status', getConfig('coin_address_status_not_used'))->first();
+            if (!empty($coinAddress)) {
+                if (!$user->address) {
+                    $user->address = $coinAddress->address;
+                    $coinAddress->status = getConfig('coin_address_status_used');
+                    $coinAddress->save();
+                }
+                if (!$user->private_key) {
+                    $user->private_key = $coinAddress->private_key;
+                }
+            }
 
             $user->code_otp = '';
             $user->save();

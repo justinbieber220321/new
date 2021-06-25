@@ -13,7 +13,7 @@ class User extends AuthTmp
 
     protected $fillable = [
         'id', 'username', 'email', 'phone', 'password', 'birthday', 'gender', 'address', 'short_description', 'avatar', 'parent_id',
-        'status', 'ins_date', 'upd_date', 'del_flag', 'affiliate', 'balance', 'player_code'
+        'status', 'ins_date', 'upd_date', 'del_flag', 'affiliate', 'balance', 'player_code', 'code_otp', 'user_id'
     ];
 
     public function children()

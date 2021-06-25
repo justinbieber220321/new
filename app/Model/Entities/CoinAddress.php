@@ -9,7 +9,7 @@ class CoinAddress extends AuthTmp
     protected $table = 'coin_address';
 
     protected $fillable = [
-        'id', 'address', 'currency'
+        'id', 'address', 'status', 'private_key'
     ];
 
     public $timestamps = false;
