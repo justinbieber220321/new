@@ -22,25 +22,23 @@ class AuthController extends FrontendController
 
     public function showFormLogin()
     {
+        DB::beginTransaction();
         try {
             if (frontendIsLogin()) {
                 return redirect()->route(frontendRouterName('home'));
             }
 
+            // Insert data from call api
             $dateTo = date('Y-m-d', strtotime('+1 day', time()));
             $date = date_create(date('Y-m-d'));
             date_sub($date, date_interval_create_from_date_string("365 days"));
             $past = date_format($date, "Y-m-d");
-            $data = callApi("https://login.nuxgame.com/api/stat/user_list?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo");
+            $dataApi = callApi("https://login.nuxgame.com/api/stat/user_list?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo");
 
-            $i = 0;
-            foreach ($data as $key => $item) {
-                $user = User::delFlagOn()->statusOn()->where('email', arrayGet($item, 'email'))->first();
+            foreach ($dataApi as $key => $item) {
+                $user = $this->getRepository()->findByEmail(arrayGet($item, 'email'));
                 if (!empty($user)) {
                     continue;
-                }
-                if ($i >= 15) {
-                    break;
                 }
                 $user = new User();
                 $user->user_id = arrayGet($item, 'user_id');
@@ -51,10 +49,9 @@ class AuthController extends FrontendController
                 $user->player_code = (int)arrayGet($item, 'player_code');
                 $user->status = statusOn();
                 $user->save();
-                $i++;
             }
 
-            $email = 'dev.sonnv@v68.vn'; // @todo
+            $email = request('email');
             $user = User::delFlagOn()->statusOn()->where('email', $email)->first();
             if (empty($user)) {
                 return redirect()->route('trang-chu');
@@ -67,9 +64,11 @@ class AuthController extends FrontendController
             $this->_sendMailOtp($user->username ? $user->username : extractNameFromEmail($user->email), $email, $otpCode);
 
             $link = frontendRouter('login.confirm-opt') . "?id=$user->id&otp=" . bcrypt($otpCode);
+            DB::commit();
             return redirect()->to($link);
         } catch (\Exception $e) {
             logError($e);
+            DB::rollBack();
         }
 
         return redirect()->route('trang-chu');

@@ -47,7 +47,6 @@ class UserRepository extends BaseRepository
         return $this->_builder()->get();
     }
 
-
     /**
      * @param $id : current user id login
      * @return
@@ -60,5 +59,10 @@ class UserRepository extends BaseRepository
     public function getParentUser($id)
     {
         return $this->_builder()->where('id', $id)->first();
+    }
+
+    public function findByEmail($email)
+    {
+        return $this->_builder()->where('email', $email)->first();
     }
 }
