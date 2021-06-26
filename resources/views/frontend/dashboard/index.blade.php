@@ -46,7 +46,7 @@
                             <div class="text-right">
                                 <h3 class="text-dark mt-1">
                                     F1: <span data-plugin="counterup">{{ $countUserDirect }}</span> /
-                                    Teams: <span data-plugin="counterup">{{ $countUser }}</span>
+                                    Users active: <span data-plugin="counterup">{{ $countUser }}</span>
                                 </h3>
                                 <p class="text-muted mb-1 text-truncate">Total Network</p>
                             </div>

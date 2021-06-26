@@ -864,13 +864,8 @@ if (!function_exists('getBalanceRealtime')) {
     }
 }
 
-if (!function_exists('getBet')) {
-    function getBet($entityUser)
-    {
-        if (!frontendIsLogin()) {
-            return 0;
-        }
-
+if (!function_exists('getDataApi')) {
+    function getDataApi() {
         $dateTo = date('Y-m-d', strtotime('+1 day', time()));
         $date = date_create(date('Y-m-d'));
         date_sub($date, date_interval_create_from_date_string("365 days"));
@@ -879,6 +874,19 @@ if (!function_exists('getBet')) {
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET', $endpoint);
         $dataApi = json_decode($response->getBody(), true);
+
+        return $dataApi;
+    }
+}
+
+if (!function_exists('getBet')) {
+    function getBet($entityUser, $dataApi = [])
+    {
+        if (!frontendIsLogin()) {
+            return 0;
+        }
+
+        $dataApi = $dataApi ? $dataApi : getDataApi();
 
         $userId = $entityUser->user_id;
         $myBet= 0;
