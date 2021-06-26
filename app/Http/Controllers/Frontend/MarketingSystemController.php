@@ -27,11 +27,11 @@ class MarketingSystemController extends FrontendController
         $isNotRoot = false;
         $f1 = [];
 
-        $root = User::delFlagOn()->statuson()->where('user_id', frontendCurrentUser()->user_id)->first();
+        $root = User::delFlagOn()->statusOn()->where('user_id', frontendCurrentUser()->user_id)->first();
 
         if (!is_null($userId)) {
             $isNotRoot = true;
-            $f1 = User::delFlagOn()->statuson()->where('user_id', $userId)->first();
+            $f1 = User::delFlagOn()->statusOn()->where('user_id', $userId)->first();
             $fn = User::with('children')->delFlagOn()->statusOn()->where('player_code', $userId)->get();
             $countFn = User::delFlagOn()->statusOn()->where('player_code', $userId)->count();
         } else {

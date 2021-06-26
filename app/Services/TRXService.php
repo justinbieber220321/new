@@ -19,9 +19,6 @@ class TRXService
         }
         $this->tron->setAddress(env('TRX_ADDRESS_WITHDRAW'));
         $this->tron->setPrivateKey(env('TRX_PRIMARY_KEY'));
-
-        // $this->tron->setAddress('TF7xisb3HicJEGTBKjj2gXeSbC2MULWiy7');
-        // $this->tron->setPrivateKey('964973eb6f3aa9b837e2e8101f470fce25424f508479e1cbfeb5b1832811cf8a');
     }
 
     public function getBalanceUSDT()

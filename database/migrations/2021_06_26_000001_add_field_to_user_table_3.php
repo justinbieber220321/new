@@ -16,6 +16,8 @@ class AddFieldToUserTable3 extends Migration
         Schema::table('user', function (Blueprint $table) {
             $table->decimal('number_bet_old_2', 15, 2)->default(0)->after('address');
             $table->decimal('number_bet_old', 15, 2)->default(0)->after('address');
+            $table->decimal('team_bet_old_2', 15, 2)->default(0)->after('address');
+            $table->decimal('team_bet_old', 15, 2)->default(0)->after('address');
         });
     }
 
@@ -29,6 +31,8 @@ class AddFieldToUserTable3 extends Migration
         Schema::table('user', function($table) {
             $table->dropColumn('number_bet_old');
             $table->dropColumn('number_bet_old_2');
+            $table->dropColumn('team_bet_old_2');
+            $table->dropColumn('team_bet_old');
         });
     }
 }

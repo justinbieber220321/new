@@ -79,8 +79,15 @@ class AdminController extends FrontendController
                 $user->number_bet_old_2 = $user->number_bet_old;
                 $user->number_bet_old = arrayGet($item, 'turnover');
                 $user->save();
-
             }
+
+            $listUsers =  User::delFlagOn()->statusOn()->get();
+            foreach ($listUsers as $item) {
+                $item->team_bet_old_2 = $item->team_bet_old;
+                $item->team_bet_old = getTeamBet($item);
+                $item->save();
+            }
+
             DB::commit();
             return backSystemSuccess();
         } catch (\Exception $e) {
