@@ -974,3 +974,10 @@ if (!function_exists('getInfoBet')) {
     }
 }
 
+if (!function_exists('renderNumber')) {
+    function renderNumber($n1, $n2 = 0)
+    {
+        return formatPriceCurrency((int)$n1 - (int)$n2);
+    }
+}
+

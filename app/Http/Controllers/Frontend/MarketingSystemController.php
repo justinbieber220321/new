@@ -35,6 +35,7 @@ class MarketingSystemController extends FrontendController
             $fn = User::with('children')->delFlagOn()->statusOn()->where('player_code', $userId)->get();
             $countFn = User::delFlagOn()->statusOn()->where('player_code', $userId)->count();
         } else {
+            // user dang login
             $fn = User::with('children')->delFlagOn()->statusOn()->where('player_code', frontendCurrentUser()->user_id)->get();
             $countFn = User::delFlagOn()->statusOn()->where('player_code', frontendCurrentUser()->user_id)->count();
         }

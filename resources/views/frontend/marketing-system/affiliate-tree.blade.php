@@ -69,8 +69,8 @@
                                     {{ frontendCurrentUser()->username ? frontendCurrentUser()->username : frontendCurrentUser()->email  }}
                                 </a>
                             </span>
-                            <span>My bet: {{ getMyBet() }} USDT </span>
-                            <span>Team bet: {{ getTeamBet() }} USDT</span>
+                            <span>My bet: {{ renderNumber(getMyBet(), frontendCurrentUser()->number_bet_old) }} USDT </span>
+                            <span>Team bet: {{ renderNumber(getTeamBet(), frontendCurrentUser()->team_bet_old) }} USDT</span>
                         </p>
                     </div>
 
@@ -86,17 +86,19 @@
                         <div class="affiliate-item mt-3">
                             <p class="item d-inline-block">
                                 <span>
-                                    <a href="">
+                                    <a href="{{ frontendRouter('affiliate-tree', ['userId' => $f1->user_id])}}">
                                         {{ $f1->username ? $f1->username : $f1->email }}
                                     </a>
                                 </span>
-                                <span>My bet: {{ formatPriceCurrency(getMyBet($f1)) }} USDT </span>
-                                <span>Team bet: {{ formatPriceCurrency(getTeamBet($f1)) }} USDT</span>
+
+                                <span>My bet: {{ renderNumber(getMyBet($f1), $f1->number_bet_old) }} USDT </span>
+                                <span>Team bet: {{ renderNumber(getTeamBet($f1), $f1->team_bet_old ) }} USDT</span>
+
                                 @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
-                                    <span>My win: {{ formatPriceCurrency(arrayGet(getInfoBet($f1), 'myWin')) }} USDT </span>
-                                    <span>Team win: {{ formatPriceCurrency(arrayGet(getInfoBet($f1), 'teamWin')) }} USDT </span>
-                                    <span>My ggr: {{ formatPriceCurrency(arrayGet(getInfoBet($f1), 'myGgr')) }} USDT </span>
-                                    <span>Team ggr: {{ formatPriceCurrency(arrayGet(getInfoBet($f1), 'teamGgr')) }} USDT </span>
+                                    <span>My win: {{ renderNumber(arrayGet(getInfoBet($f1), 'myWin')) }} USDT </span>
+                                    <span>Team win: {{ renderNumber(arrayGet(getInfoBet($f1), 'teamWin')) }} USDT </span>
+                                    <span>My ggr: {{ renderNumber(arrayGet(getInfoBet($f1), 'myGgr')) }} USDT </span>
+                                    <span>Team ggr: {{ renderNumber(arrayGet(getInfoBet($f1), 'teamGgr')) }} USDT </span>
                                 @endif
                             </p>
                         </div>
@@ -108,20 +110,22 @@
                                 <p class="itemF1">
                                     <span>
                                         @if (count($item->children) > 0)
-                                            <a href="{{ frontendRouter('affiliate-tree', ['userId' => $item->id])  }}">
+                                            <a href="{{ frontendRouter('affiliate-tree', ['userId' => $item->user_id])  }}" class="text-danger">
                                                 {{ $item->username ? $item->username : $item->email }}</a>
                                         @else
                                             <a href="javascript:void(0)">
                                                 {{ $item->username ? $item->username : $item->email }}</a>
                                         @endif
                                     </span>
-                                    <span>My bet: {{ formatPriceCurrency(getMyBet($item)) }} USDT</span>
-                                    <span>Team bet: {{ formatPriceCurrency(getTeamBet($item)) }} USDT</span>
+
+                                    <span>My bet: {{ renderNumber(getMyBet($item), $item->number_bet_old) }} USDT</span>
+                                    <span>Team bet: {{ renderNumber(getTeamBet($item), $item->team_bet_old) }} USDT</span>
+
                                     @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
-                                        <span>My win: {{ formatPriceCurrency(arrayGet(getInfoBet($item), 'myWin')) }} USDT </span>
-                                        <span>Team win: {{ formatPriceCurrency(arrayGet(getInfoBet($item), 'teamWin')) }} USDT </span>
-                                        <span>My ggr: {{ formatPriceCurrency(arrayGet(getInfoBet($item), 'myGgr')) }} USDT </span>
-                                        <span>Team ggr: {{ formatPriceCurrency(arrayGet(getInfoBet($item), 'teamGgr')) }} USDT </span>
+                                        <span>My win: {{ renderNumber(arrayGet(getInfoBet($item), 'myWin')) }} USDT </span>
+                                        <span>Team win: {{ renderNumber(arrayGet(getInfoBet($item), 'teamWin')) }} USDT </span>
+                                        <span>My ggr: {{ renderNumber(arrayGet(getInfoBet($item), 'myGgr')) }} USDT </span>
+                                        <span>Team ggr: {{ renderNumber(arrayGet(getInfoBet($item), 'teamGgr')) }} USDT </span>
                                     @endif
                                 </p>
                             @endforeach
