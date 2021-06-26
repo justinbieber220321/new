@@ -84,7 +84,7 @@ class AdminController extends FrontendController
             $listUsers =  User::delFlagOn()->statusOn()->get();
             foreach ($listUsers as $item) {
                 $item->team_bet_old_2 = $item->team_bet_old;
-                $item->team_bet_old = getTeamBet($item);
+                $item->team_bet_old = arrayGet(getBet($item), 'totalTeamBet') + $item->team_bet_old;
                 $item->save();
             }
 

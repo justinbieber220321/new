@@ -68,6 +68,8 @@
                 </div>
             </div>
 
+            @php $infoBet = getBet(frontendCurrentUser()) @endphp
+
             <div class="col-md-6 ">
                 <div class="widget-rounded-circle card-box">
                     <div class="row">
@@ -78,7 +80,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ getMyBet() }}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'myBet') }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">My bet</p>
                             </div>
                         </div>
@@ -96,7 +98,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ getTeamBet() }}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'totalTeamBet') - frontendCurrentUser()->team_bet_old }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">Team bet</p>
                             </div>
                         </div>

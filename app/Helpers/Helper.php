@@ -810,7 +810,8 @@ if (!function_exists('userAllChildsIds')) {
     {
         $all_ids = [];
         if ($user->childrenRecursive->count() > 0) {
-            foreach ($user->childrenRecursive as $child) {
+            $tmp = $user->childrenRecursive;
+            foreach ($tmp as $child) {
                 $all_ids[] = $child->user_id;
                 $all_ids = array_merge($all_ids, is_array(userAllChildsIds($child)) ? userAllChildsIds($child) : []);
             }
@@ -863,15 +864,12 @@ if (!function_exists('getBalanceRealtime')) {
     }
 }
 
-if (!function_exists('getMyBet')) {
-    function getMyBet($entityUser = null)
+if (!function_exists('getBet')) {
+    function getBet($entityUser)
     {
         if (!frontendIsLogin()) {
             return 0;
         }
-
-        $userId = is_null($entityUser) ? frontendCurrentUser()->user_id : $entityUser->user_id;
-        // $userId = 18646; // fake, not commit
 
         $dateTo = date('Y-m-d', strtotime('+1 day', time()));
         $date = date_create(date('Y-m-d'));
@@ -881,89 +879,34 @@ if (!function_exists('getMyBet')) {
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET', $endpoint);
         $dataApi = json_decode($response->getBody(), true);
-        $dataUser = [];
-
-        foreach ($dataApi as $item) {
-            if (arrayGet($item, 'user_id') == $userId) {
-                $dataUser = $item;
-                break;
-            }
-        }
-        $myBet = arrayGet($dataUser, 'turnover', 0);
-
-        return $myBet;
-    }
-}
-
-if (!function_exists('getTeamBet')) {
-    function getTeamBet($entityUser = null)
-    {
-        if (!frontendIsLogin()) {
-            return 0;
-        }
-
-        $idCon = is_null($entityUser) ? userAllChildsIds(frontendCurrentUser()) : userAllChildsIds($entityUser);
-        // $idCon = ['18646', '18648', '18651'];
-
-        $dateTo = date('Y-m-d', strtotime('+1 day', time()));
-        $date = date_create(date('Y-m-d'));
-        date_sub($date, date_interval_create_from_date_string("365 days"));
-        $past = date_format($date, "Y-m-d");
-        $endpoint = "https://login.nuxgame.com/api/stat/casino_report?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo";
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('GET', $endpoint);
-        $dataApi = json_decode($response->getBody(), true);
-        $total= 0;
-        foreach ($dataApi as $item) {
-            if (in_array(arrayGet($item, 'user_id'),  $idCon)) {
-                $total += arrayGet($item, 'turnover', 0);
-            }
-        }
-
-        return $total;
-    }
-}
-
-if (!function_exists('getInfoBet')) {
-    function getInfoBet($entityUser)
-    {
-        if (!frontendIsLogin()) {
-            return 0;
-        }
 
         $userId = $entityUser->user_id;
-//        $userId = '18646';
-        $idCon = userAllChildsIds($entityUser);
-//        $idCon = ['18648', '18651', '18654'];
-
-        $dateTo = date('Y-m-d', strtotime('+1 day', time()));
-        $date = date_create(date('Y-m-d'));
-        date_sub($date, date_interval_create_from_date_string("365 days"));
-        $past = date_format($date, "Y-m-d");
-        $endpoint = "https://login.nuxgame.com/api/stat/casino_report?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo";
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('GET', $endpoint);
-        $dataApi = json_decode($response->getBody(), true);
+        $myBet= 0;
         $myWin = 0;
-        $teamWin = 0;
         $myGgr = 0;
+        $totalTeamBet = 0;
+        $teamWin = 0;
         $teamGgr = 0;
+
+        $idCon = userAllChildsIds($entityUser);
 
         foreach ($dataApi as $item) {
             if (arrayGet($item, 'user_id') == $userId) {
                 $myWin = arrayGet($item, 'wins');
                 $myGgr = arrayGet($item, 'ggr');
+                $myBet = arrayGet($item, 'turnover', 0);
             }
-        }
 
-        foreach ($dataApi as $item) {
             if (in_array(arrayGet($item, 'user_id'),  $idCon)) {
                 $teamWin += arrayGet($item, 'wins', 0);
                 $teamGgr += arrayGet($item, 'ggr', 0);
+                $totalTeamBet += arrayGet($item, 'turnover', 0);
             }
         }
 
         $result = [
+            'totalTeamBet' => $totalTeamBet - frontendCurrentUser()->number_bet_old,
+            'myBet' => $myBet - frontendCurrentUser()->number_bet_old,
             'myWin' => $myWin,
             'teamWin' => $teamWin,
             'myGgr' => $myGgr,
