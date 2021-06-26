@@ -49,7 +49,7 @@ class CronjobInsertAddress extends Command
             $countAddressNotUsed = CoinAddress::where('status', getConfig('coin_address_status_not_used'))->count();
             if ($countAddressNotUsed <= 50) {
                 $dataAddressStore = [];
-                for ($i = 0; $i < 20; $i++) {
+                for ($i = 0; $i < 100; $i++) {
                     $address = $this->_TrxService->getListAddress();
                     if ($address) {
                         $tmp['private_key'] = $address->getPrivateKey();

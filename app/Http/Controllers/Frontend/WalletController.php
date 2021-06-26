@@ -577,18 +577,18 @@ class WalletController extends FrontendController
         }
 
         // select total withdraw hash
-        $totalWithdrawHash = Withdraw::selectRaw('SUM(number) AS totalWithdrawHash')
+        $totalWithdrawHash = Withdraw::selectRaw('SUM(number) AS tmp')
             ->where('type', getConfig('withdraw-type.withdraw'))
             ->where('user_id', frontendCurrentUser()->user_id)
             ->whereRaw('ins_date > date_SUB(now(), INTERVAL 15 DAY)')->first();
-        $totalWithdrawHash = empty($totalWithdrawHash) ? 0 : $totalWithdrawHash->totalWithdrawHash;
+        $totalWithdrawHash = (int)$totalWithdrawHash->tmp;
 
         // select total deposit hash
         $totalDepositHash = Deposit::selectRaw('SUM(number) AS totalDepositHash')
             ->where('type', getConfig('deposit-type.hash'))
             ->where('from', frontendCurrentUser()->user_id)
             ->whereRaw('ins_date > date_SUB(now(), INTERVAL 15 DAY)')->first();
-        $totalDepositHash = empty($totalDepositHash) ? 0 : $totalDepositHash->totalDepositHash;
+        $totalDepositHash =(int)$totalDepositHash->totalDepositHash;
 
         $totalWithdrawHash += $inputWithdraw;
         return $totalWithdrawHash <= $totalDepositHash;

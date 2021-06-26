@@ -3,25 +3,26 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Frontend\Base\FrontendController;
+use App\Model\Entities\User;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends FrontendController
 {
+    public function __construct()
+    {
+        if (frontendCurrentUser() && frontendCurrentUser()->user_id != 13608) {
+            return backSystemError();
+        }
+    }
+
     public function setting()
     {
-        if (frontendCurrentUser()->user_id != 13608) {
-            return redirect()->route(frontendRouterName('home'));
-        }
-
         return view('frontend.admin-setting.index');
     }
 
     public function postSetting()
     {
-        if (frontendCurrentUser()->user_id != 13608) {
-            return backSystemError();
-        }
-
         try {
             $params = request()->all();
 
@@ -49,16 +50,42 @@ class AdminController extends FrontendController
 
     public function deleteCache()
     {
-        if (frontendCurrentUser()->user_id != 13608) {
-            return backSystemError();
-        }
-
         try {
             $this->_deleteCache();
 
             return redirect()->back()->with('notification_success', transMessage('success'));
         } catch (\Exception $exception) {
             logError($exception);
+        }
+
+        return backSystemError();
+    }
+
+    public function rewardSystem()
+    {
+        DB::beginTransaction();
+        try {
+            $dateTo = date('Y-m-d', strtotime('+1 day', time()));
+            $date = date_create(date('Y-m-d'));
+            date_sub($date, date_interval_create_from_date_string("365 days"));
+            $past = date_format($date, "Y-m-d");
+            $dataApi = callApi("https://login.nuxgame.com/api/stat/casino_report?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo");
+
+            foreach ($dataApi as $item) {
+                $user = User::delFlagOn()->statusOn()->where('user_id', arrayGet($item, 'user_id'))->first();
+                if (empty($user)) {
+                    continue;
+                }
+                $user->number_bet_old_2 = $user->number_bet_old;
+                $user->number_bet_old = arrayGet($item, 'turnover');
+                $user->save();
+
+            }
+            DB::commit();
+            return backSystemSuccess();
+        } catch (\Exception $e) {
+            logError($e);
+            DB::rollBack();
         }
 
         return backSystemError();

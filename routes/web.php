@@ -49,6 +49,7 @@ Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'midd
         Route::get('admin-setting', ['as' => 'admin-setting', 'uses' => 'AdminController@setting']);
         Route::post('admin-setting', ['as' => 'admin-setting.post', 'uses' => 'AdminController@postSetting']);
         Route::post('delete-cache', ['as' => 'delete-cache', 'uses' => 'AdminController@deleteCache']);
+        Route::post('reward-system', ['as' => 'reward-system.post', 'uses' => 'AdminController@rewardSystem']);
     });
 });
 

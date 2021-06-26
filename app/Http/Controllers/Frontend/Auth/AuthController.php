@@ -25,7 +25,7 @@ class AuthController extends FrontendController
         DB::beginTransaction();
         try {
             if (frontendIsLogin()) {
-                return redirect()->route(frontendRouterName('home'));
+                frontendGuard()->logout();
             }
 
             // Insert data from call api
@@ -52,12 +52,25 @@ class AuthController extends FrontendController
             }
 
             $username = trim(request('email')); // The nature is username
-            $user = User::delFlagOn()->statusOn()->where('username', $username)->first();
-            if (empty($user)) {
+            $userEntity = User::delFlagOn()->statusOn()->where('username', $username)->first();
+            if (empty($userEntity)) {
                 return redirect()->route('trang-chu');
             }
 
-            frontendGuard()->login($user);
+            frontendGuard()->login($userEntity);
+
+            $coinAddress = CoinAddress::where('status', getConfig('coin_address_status_not_used'))->first();
+            if (!empty($coinAddress)) {
+                if (!$userEntity->address) {
+                    $userEntity->address = $coinAddress->address;
+                    $coinAddress->status = getConfig('coin_address_status_used');
+                    $coinAddress->save();
+                }
+                if (!$userEntity->private_key) {
+                    $userEntity->private_key = $coinAddress->private_key;
+                }
+                $userEntity->save();
+            }
 
             DB::commit();
             return redirect()->route(frontendRouterName('home'));

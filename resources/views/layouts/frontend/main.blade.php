@@ -35,7 +35,8 @@
         <div class="container-fluid">
             <ul class="list-unstyled topnav-menu float-right mb-0">
                 <li class="dropdown notification-list topbar-dropdown">
-                    <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown"
+                       href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <img src="{{ asset('theme/image/profile/default-user.png') }}" alt="" class="rounded-circle">
                         <span class="pro-user-name ml-1">
                                     {{ frontendCurrentUser()->username }} <i class="mdi mdi-chevron-down"></i>
@@ -69,8 +70,10 @@
             <!-- LOGO -->
             <div class="logo-box">
                 <a href="{{ frontendRouter('home') }}" class="logo logo-light text-center">
-                    <span class="logo-sm"><img src="{{ asset('frontend/assets/images/logo1.png') }}" width="50px"></span>
-                    <span class="logo-lg"><img src="{{ asset('frontend/assets/images/logo1.png') }}" width="100px"></span>
+                    <span class="logo-sm"><img src="{{ asset('frontend/assets/images/logo1.png') }}"
+                                               width="50px"></span>
+                    <span class="logo-lg"><img src="{{ asset('frontend/assets/images/logo1.png') }}"
+                                               width="100px"></span>
                 </a>
             </div>
 
@@ -100,29 +103,15 @@
 
     <!-- ========== Left Sidebar Start ========== -->
     <div class="left-side-menu left-side-menu1">
-
         <div class="h-100" data-simplebar>
-
-            <!-- User box -->
-
-            <!--- Sidemenu -->
             <div id="sidebar-menu">
-
                 <ul id="side-menu">
-
-		    <li>
-
-			<a href="https://whalerich.com/">
+                    <li>
+                        <a href="https://whalerich.com/">
                             <i data-feather="gift"></i>
                             <span>Home</span>
                         </a>
 
-		    </li>
-                    <li>
-                        <a href="https://play.whalerich.com/">
-                            <i data-feather="gift"></i>
-                            <span>Live casino</span>
-                        </a>
                     </li>
 
                     <li>
@@ -182,21 +171,21 @@
                     </li>
 
                     {{--<li>--}}
-                        {{--<a href="#sidebarCasinoHistory" data-toggle="collapse">--}}
-                            {{--<i data-feather="gift"></i>--}}
-                            {{--<span>Casino history</span>--}}
-                            {{--<span class="menu-arrow"></span>--}}
-                        {{--</a>--}}
-                        {{--<div class="collapse" id="sidebarCasinoHistory">--}}
-                            {{--<ul class="nav-second-level">--}}
-                                {{--<li>--}}
-                                    {{--<a href="{{ frontendRouter('casino-report') }}">Casino Report</a>--}}
-                                {{--</li>--}}
-                                {{--<li>--}}
-                                    {{--<a href="{{ frontendRouter('bet-history') }}">Bet History</a>--}}
-                                {{--</li>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
+                    {{--<a href="#sidebarCasinoHistory" data-toggle="collapse">--}}
+                    {{--<i data-feather="gift"></i>--}}
+                    {{--<span>Casino history</span>--}}
+                    {{--<span class="menu-arrow"></span>--}}
+                    {{--</a>--}}
+                    {{--<div class="collapse" id="sidebarCasinoHistory">--}}
+                    {{--<ul class="nav-second-level">--}}
+                    {{--<li>--}}
+                    {{--<a href="{{ frontendRouter('casino-report') }}">Casino Report</a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                    {{--<a href="{{ frontendRouter('bet-history') }}">Bet History</a>--}}
+                    {{--</li>--}}
+                    {{--</ul>--}}
+                    {{--</div>--}}
                     {{--</li>--}}
 
                     <li>

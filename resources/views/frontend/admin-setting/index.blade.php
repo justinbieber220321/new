@@ -19,12 +19,28 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <small>Please delete cache to reload data <a href="#modal_confirm_delete--cache"
-                                                                     class="btn-danger btn btn-xs modal_confirm_delete rounded"
-                                                                     data-toggle="modal"
-                            >
+                        <small>
+                            <form action="{{ frontendRouter('reward-system.post') }}" method="post">
+                                @csrf
+                                <button type="submit" href="" class="btn-danger btn btn-xs modal_confirm_delete rounded">
+                                    Reward system
+                                </button>
+                            </form>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <small>Please delete cache to reload data
+                            <a href="#modal_confirm_delete--cache" class="btn-danger btn btn-xs modal_confirm_delete rounded" data-toggle="modal">
                                 Delete cache
-                            </a></small>
+                            </a>
+                        </small>
                     </div>
                 </div>
             </div>

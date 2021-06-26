@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Number (USDT) *</label>
-                                        <input type="number" class="form-control" name="number" value="{{ old('number') }}" required>
+                                        <input type="number" class="form-control" name="number" min="1" value="{{ old('number') }}" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Message *</label>
