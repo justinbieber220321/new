@@ -51,21 +51,28 @@ class AuthController extends FrontendController
                 $user->save();
             }
 
-            $email = request('email');
-            $user = User::delFlagOn()->statusOn()->where('email', $email)->first();
+            $username = trim(request('email')); // The nature is username
+            $user = User::delFlagOn()->statusOn()->where('username', $username)->first();
             if (empty($user)) {
                 return redirect()->route('trang-chu');
             }
 
+            frontendGuard()->login($user);
+
+            DB::commit();
+            return redirect()->route(frontendRouterName('home'));
+
+            /* Task send OTP code when login
             $otpCode = genOtp();
             $user->code_otp = $otpCode;
             $user->save();
 
-            $this->_sendMailOtp($user->username ? $user->username : extractNameFromEmail($user->email), $email, $otpCode);
+            $this->_sendMailOtp($username, $user->email, $otpCode);
 
             DB::commit();
             $link = frontendRouter('login.confirm-opt') . "?id=$user->id&otp=" . bcrypt($otpCode);
             return redirect()->to($link);
+            */
         } catch (\Exception $e) {
             logError($e);
             DB::rollBack();

@@ -48,7 +48,7 @@ class FrontendController extends BaseFrontendController
 
     public function showTrangChu()
     {
-        return redirect()->to('https://whalerich.com/'); // to push git
+        return redirect()->to('https://whalerich.com/');
     }
 
     public function showTrangAffiliate()
