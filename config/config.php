@@ -110,7 +110,7 @@ return [
 
     'coin-default' => 'USDT',
 
-    'user_id-admin' => 13608, // user.user_id
+    'user_id-admin' => 19455, // user.user_id
     'max-day-withdraw' => 1500,
     'withdraw-type' => [
         'transfer' => 1,
