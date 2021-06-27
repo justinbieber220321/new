@@ -34,12 +34,12 @@
             <div class="header-menu js-header-menu sm"><span></span><span></span><span></span></div>
             <nav class="header-navigation js-navigation">
                 <ul class="list-navbar">
-                    @if (frontendIsLogin())
+                    <li class="navbar-item"><a class="navbar-link" href="https://whalerich.com/">HOME</a></li>
+                @if (frontendIsLogin())
                         <li class="navbar-item"><a class="navbar-link" href="https://insurrance.whalerich.com/policy/">POLICY</a></li>
                         <li class="navbar-item"><a class="navbar-link" href="{{ frontendRouter('home') }}">DASHBOARD</a></li>
                     @endif
                     <li class="navbar-item"><a class="navbar-link" href="{{ route('affiliate') }}">AFFILIATE</a></li>
-                        <li class="navbar-item is-submit"><a class="navbar-link" href="https://play.whalerich.com/registration">SIGN IN/SIGN UP</a></li>
                 </ul>
                 <div class="header-overlay js-overlay sm"></div>
             </nav>
