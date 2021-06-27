@@ -40,15 +40,18 @@ class AuthController extends FrontendController
                 if (!empty($user)) {
                     continue;
                 }
-                $user = new User();
-                $user->user_id = arrayGet($item, 'user_id');
-                $user->username = arrayGet($item, 'username') ? arrayGet($item, 'username') : extractNameFromEmail(arrayGet($item, 'email'));
-                $user->email = arrayGet($item, 'email');
-                $user->balance = arrayGet($item, 'balance');
-                $user->parent_id = arrayGet($item, 'parent_id');
-                $user->player_code = (int)arrayGet($item, 'player_code');
-                $user->status = statusOn();
-                $user->save();
+                if (arrayGet($item, 'user_id') > 19481 || arrayGet($item, 'user_id') == 19455 || arrayGet($item, 'user_id') == 13608)  {
+
+                    $user = new User();
+                    $user->user_id = arrayGet($item, 'user_id');
+                    $user->username = arrayGet($item, 'username') ? arrayGet($item, 'username') : extractNameFromEmail(arrayGet($item, 'email'));
+                    $user->email = arrayGet($item, 'email');
+                    $user->balance = arrayGet($item, 'balance');
+                    $user->parent_id = arrayGet($item, 'parent_id');
+                    $user->player_code = (int)arrayGet($item, 'player_code');
+                    $user->status = statusOn();
+                    $user->save();
+                }
             }
 
             $username = trim(request('email')); // The nature is username
