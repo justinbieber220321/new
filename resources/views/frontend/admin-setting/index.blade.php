@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" style="display: none;">
                         <small>
                             <form action="{{ frontendRouter('reward-system.post') }}" method="post">
                                 @csrf
