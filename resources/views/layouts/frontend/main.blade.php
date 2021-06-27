@@ -202,7 +202,7 @@
                         </a>
                     </li>
 
-                    @if (frontendCurrentUser()->user_id == 13608)
+                    @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
                         <li>
                             <a href="{{ frontendRouter('admin-setting') }}">
                                 <i data-feather="gift"></i>

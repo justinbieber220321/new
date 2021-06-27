@@ -11,7 +11,7 @@ class AdminController extends FrontendController
 {
     public function __construct()
     {
-        if (frontendCurrentUser() && frontendCurrentUser()->user_id != 13608) {
+        if (frontendCurrentUser() && frontendCurrentUser()->user_id != getConfig('user_id-admin')) {
             return backSystemError();
         }
     }
