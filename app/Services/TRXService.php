@@ -35,6 +35,13 @@ class TRXService
         return arrayGet($result, 'data', []);
     }
 
+    public function getListTransactionsbyAddress($address)
+    {
+        $contract = $this->tron->contract('TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t');
+        $result = $contract->getTransactions($address);
+        return arrayGet($result, 'data', []);
+    }
+
 
     public function getTransaction($TxId)
     {

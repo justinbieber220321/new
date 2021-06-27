@@ -33,46 +33,38 @@ class WalletController extends FrontendController
     public function postCheckDeposit()
     {
         try {
-            $listTransaction = $this->_trxService->getListTransactions();
+            $listTransactions = $this->_trxService->getListTransactionsbyAddress(frontendCurrentUser()->address);
             $userId = frontendCurrentUser()->user_id; // = user id dang login thi moi cong them vao bang deposit
             $currency = getConfig('coin-default');
 
-            $listTransaction2 = [];
-            foreach ($listTransaction as $tran) {
+            $listTransactionNew = [];
+            foreach ($listTransactions as $tran) {
                 $tranId = arrayGet($tran, 'transaction_id');
                 $depositEntity = Deposit::delFlagOn()->where('message', $tranId)->first();
                 if ($depositEntity) {
                     continue;
                 }
-                array_push($listTransaction2, $tran);
+                array_push($listTransactionNew, $tran);
             }
 
-            $listTransaction3 = [];
-            foreach ($listTransaction2 as $tran2) {
-                $hash2 = arrayGet($tran2, 'transaction_id');
-                $result2 = callApi("https://apilist.tronscan.org/api/transaction-info?hash=$hash2");
-                if ($userId != arrayGet($result2, 'data')) {
-                    continue;
-                }
-                array_push($listTransaction3, $tran2);
-            }
+//            dd($listTransactionNew);
 
-            if (empty($listTransaction) || empty($listTransaction2) || empty($listTransaction3)) {
+            if (empty($listTransactions) || empty($listTransactionNew)) {
                 DB::rollBack();
                 return redirect()->back()->with('notification_error', 'No transaction exists');
             }
 
             $depositTypeHash = getConfig('deposit-type.hash', 3);
-            foreach ($listTransaction3 as $tran3) {
+            foreach ($listTransactionNew as $trann) {
                 DB::beginTransaction();
-                $amount = arrayGet($tran3, 'value') / 1000000;
+                $amount = arrayGet($trann, 'value') / 1000000;
                 try {
                     // insert db
                     $deposit = new Deposit();
                     $deposit->user_id = $userId;
                     $deposit->from = $userId;
                     $deposit->currency = $currency;
-                    $deposit->message = arrayGet($tran3, 'transaction_id');
+                    $deposit->message = arrayGet($trann, 'transaction_id');
                     $deposit->number = $amount;
                     $deposit->type = $depositTypeHash;
                     $deposit->save();
@@ -96,9 +88,7 @@ class WalletController extends FrontendController
         } catch (\Exception $e) {
             logError($e);
         }
-
         return backSystemError();
-
     }
 
     public function walletTransfer()
@@ -332,7 +322,7 @@ class WalletController extends FrontendController
 
             // validate max withdraw on day
             $typeHash = getConfig('withdraw-type.withdraw');
-            $raw = "SELECT SUM(`number`) as totalWithdraw FROM `withdraw` WHERE user_id = $userId and type = $typeHash 
+            $raw = "SELECT SUM(`number`) as totalWithdraw FROM `withdraw` WHERE user_id = $userId and type = $typeHash
                     and ins_date <= now() and ins_date > date_SUB(now(), INTERVAL 24 HOUR)";
 
             $totalWithdraw = DB::select($raw);
@@ -372,7 +362,7 @@ class WalletController extends FrontendController
         } catch (\Exception $e) {
             logError($e);
         }
-        
+
         return backSystemError();
     }
 
@@ -425,7 +415,7 @@ class WalletController extends FrontendController
 
             // validate max withdraw on day
             $typeHash = getConfig('withdraw-type.withdraw');
-            $raw = "SELECT SUM(`number`) as totalWithdraw FROM `withdraw` WHERE user_id = $userId and type = $typeHash 
+            $raw = "SELECT SUM(`number`) as totalWithdraw FROM `withdraw` WHERE user_id = $userId and type = $typeHash
                     and ins_date <= now() and ins_date > date_SUB(now(), INTERVAL 24 HOUR)";
 
             $totalWithdraw = DB::select($raw);

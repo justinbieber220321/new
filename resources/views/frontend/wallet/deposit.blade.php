@@ -35,9 +35,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 class="header-title">Deposit Now</h1>
-
                         <div class="row mt-3">
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="padding-top: 20px">
                                 <div class="form-group">
                                     <label>Please transfer USDT TRC 20</label>
                                     <div class="d-flex">
@@ -45,6 +44,9 @@
                                         <button class="btn btn-crown btn-xs" onclick="copyToClipboard()">Copy!</button>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                {!! QrCode::size(150)->generate(frontendCurrentUser()->address); !!}
                             </div>
                         </div>
                     </div>
@@ -56,11 +58,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="header-title">Check Deposit</h1>
-
-                        @include('layouts.frontend.structures._notification')
-                        @include('layouts.frontend.structures._error_validate')
-
+                        <h1 class="header-title">Request to check new deposit transaction</h1>
                         <div class="row mt-3">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -72,6 +70,12 @@
                                 </div>
                             </div>
                         </div>
+                        @include('layouts.frontend.structures._notification')
+                        @include('layouts.frontend.structures._error_validate')
+                    </div>
+                    <div class="card-body">
+                        <h1 class="header-title">View deposit history</h1>
+                        <a href="{{  frontendRouter('wallet-history') }}">here</a>
                     </div>
                 </div>
             </div>
