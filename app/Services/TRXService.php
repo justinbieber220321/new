@@ -74,4 +74,48 @@ class TRXService
     {
         return $this->tron->generateAddress();
     }
+
+    public function getBalanceByA($address, $private){
+
+        $fullNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
+        $solidityNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
+        $eventServer = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
+
+        try {
+            $trn = new \IEXBase\TronAPI\Tron($fullNode, $solidityNode, $eventServer);
+        } catch (\IEXBase\TronAPI\Exception\TronException $e) {
+            exit($e->getMessage());
+        }
+        $trn->setAddress($address);
+        $trn->setPrivateKey($private);
+        $contract = $trn->contract('TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t');
+        return $contract->balanceOf();
+
+    }
+
+    public function sendToDEP($address, $private){
+
+        $fullNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
+        $solidityNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
+        $eventServer = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
+
+        try {
+            $trn = new \IEXBase\TronAPI\Tron($fullNode, $solidityNode, $eventServer);
+        } catch (\IEXBase\TronAPI\Exception\TronException $e) {
+            exit($e->getMessage());
+        }
+        $trn->setAddress($address);
+        $trn->setPrivateKey($private);
+        $contract = $trn->contract('TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t');
+        $balance = $contract->balanceOf();
+        $contracts = $trn->contract('TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t');
+        $r = $contracts->transfer(env('TRX_ADDRESS_DEPOSIT'), $balance, null);
+    }
+
+    public function feeTRX($address){
+        return $this->tron->send( $address, 8);
+    }
+
+
 }
+

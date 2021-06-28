@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('insert-address')->everyTenMinutes();
         $schedule->command('deposit')->everyMinute();
+        $schedule->command('CRL')->everyMinute();
     }
 
     /**
