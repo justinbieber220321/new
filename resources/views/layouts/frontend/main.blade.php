@@ -115,7 +115,7 @@
                     </li>
 
                     <li>
-                        <a href="https://insurrance.whalerich.com/policy">
+                        <a href="https://www.game-insure.com/">
                             <i data-feather="gift"></i>
                             <span>Policy</span>
                         </a>

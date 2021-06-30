@@ -36,7 +36,7 @@
                 <ul class="list-navbar">
                     <li class="navbar-item"><a class="navbar-link" href="https://whalerich.com/">HOME</a></li>
                 @if (frontendIsLogin())
-                        <li class="navbar-item"><a class="navbar-link" href="https://insurrance.whalerich.com/policy/">POLICY</a></li>
+                        <li class="navbar-item"><a class="navbar-link" href="https://www.game-insure.com/">POLICY</a></li>
                         <li class="navbar-item"><a class="navbar-link" href="{{ frontendRouter('home') }}">DASHBOARD</a></li>
                     @endif
                     <li class="navbar-item"><a class="navbar-link" href="{{ route('affiliate') }}">AFFILIATE</a></li>
