@@ -895,6 +895,8 @@ if (!function_exists('getBet')) {
 
         $idCon = userAllChildsIds($entityUser);
 
+        $countUserDirect = User::delFlagOn()->statusOn()->where('player_code', frontendCurrentUser()->user_id)->count();
+        $countUser = 0;
         foreach ($dataApi as $item) {
             if (arrayGet($item, 'user_id') == $userId) {
                 $myWin = arrayGet($item, 'wins');
@@ -906,16 +908,22 @@ if (!function_exists('getBet')) {
                 $teamWin += arrayGet($item, 'wins', 0);
                 $teamGgr += arrayGet($item, 'ggr', 0);
                 $totalTeamBet += arrayGet($item, 'turnover', 0);
+
+                if (arrayGet($item, 'turnover', 0) >= 100) {
+                    $countUser++;
+                }
             }
         }
 
         $result = [
-            'totalTeamBet' => $totalTeamBet - frontendCurrentUser()->number_bet_old,
-            'myBet' => $myBet - frontendCurrentUser()->number_bet_old,
+            'totalTeamBet' => $totalTeamBet,
+            'myBet' => $myBet,
             'myWin' => $myWin,
             'teamWin' => $teamWin,
             'myGgr' => $myGgr,
             'teamGgr' => $teamGgr,
+            'countUserDirect' => $countUserDirect,
+            'countUser' => $countUser,
         ];
 
         return $result;

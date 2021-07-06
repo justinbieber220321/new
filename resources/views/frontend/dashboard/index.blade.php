@@ -45,8 +45,8 @@
                         <div class="col-6">
                             <div class="text-right">
                                 <h3 class="text-dark mt-1">
-                                    F1: <span data-plugin="counterup">{{ $countUserDirect }}</span> /
-                                    Users active: <span data-plugin="counterup">{{ $countUser }}</span>
+                                    F1: <span data-plugin="counterup">{{ arrayGet($infoBet, 'countUserDirect') }}</span> /
+                                    Users active: <span data-plugin="counterup">{{ arrayGet($infoBet, 'countUser') }}</span>
                                 </h3>
                                 <p class="text-muted mb-1 text-truncate">Total Network</p>
                             </div>
@@ -55,7 +55,7 @@
                 </div> <!-- end widget-rounded-circle-->
             </div> <!-- end col-->
 
-            @php $infoBet = getBet(frontendCurrentUser()) @endphp
+
 
             <div class="col-md-6 ">
                 <div class="widget-rounded-circle card-box">

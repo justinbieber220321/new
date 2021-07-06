@@ -9,25 +9,9 @@ class DashboardController extends FrontendController
 {
     public function index()
     {
-        $user = frontendCurrentUser();
-
-//        $countUserDirect = User::delFlagOn()->statusOn()->where('player_code', $user->user_id)->count();
-  //      $countUserTmp = userAllChildsIds($user);
-
-//        $listUserActive = User::delFlagOn()->statusOn()->whereIn('user_id', $countUserTmp)->get();
-
-  //      $countUser = 0;
-    //    $dataApi = getDataApi();
-      //  foreach ($listUserActive as $item) {
-        //    $getBet = arrayGet(getBet($item, $dataApi), 'myBet') - $item->number_bet_old;
-          //  if ($getBet >= 100) {
-            //    $countUser++;
-           // }
-       // }
-
+        $infoBet = getBet(frontendCurrentUser());
         $viewData = [
-            'countUserDirect' => 0,
-            'countUser' => 0
+            'infoBet' => $infoBet
         ];
 
         return view('frontend.dashboard.index', $viewData);
