@@ -38,14 +38,13 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1">$<span
-                                            data-plugin="counterup">{{ getBalanceRealtime() }}</span></h3>
+                                <h3 class="text-dark mt-1">$<span data-plugin="counterup">{{ getBalanceRealtime() }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">Balance</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </div> <!-- end row-->
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
 
             <div class="col-md-6 ">
                 <div class="widget-rounded-circle card-box">
@@ -58,17 +57,15 @@
                         <div class="col-6">
                             <div class="text-right">
                                 <h3 class="text-dark mt-1">
-                                    F1: <span data-plugin="counterup">{{ $countUserDirect }}</span> /
-                                    Teams: <span data-plugin="counterup">{{ $countUser }}</span>
+                                    F1: <span data-plugin="counterup">{{ arrayGet($infoBet, 'countUserDirect') }}</span> /
+                                    Users active: <span data-plugin="counterup">{{ arrayGet($infoBet, 'countUser') }}</span>
                                 </h3>
                                 <p class="text-muted mb-1 text-truncate">Total Network</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            @php $infoBet = getBet(frontendCurrentUser()) @endphp
+                    </div> <!-- end row-->
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
 
             <div class="col-md-6 ">
                 <div class="widget-rounded-circle card-box">
@@ -84,9 +81,9 @@
                                 <p class="text-muted mb-1 text-truncate">My bet</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </div> <!-- end row-->
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
 
             <div class="col-md-6 ">
                 <div class="widget-rounded-circle card-box">
@@ -98,14 +95,33 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'totalTeamBet') - frontendCurrentUser()->team_bet_old }}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'totalTeamBet') }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">Team bet</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </div> <!-- end row-->
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
+
+            <div class="col-md-6 ">
+                <div class="widget-rounded-circle card-box">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="avatar-lg rounded-circle bg-soft-warning border-warning border">
+                                <i class="fe-eye font-22 avatar-title text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-right">
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $level }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">My Level</p>
+                            </div>
+                        </div>
+                    </div> <!-- end row-->
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
         </div>
+
     </div>
 
 @endsection

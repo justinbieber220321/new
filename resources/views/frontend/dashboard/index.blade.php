@@ -55,8 +55,6 @@
                 </div> <!-- end widget-rounded-circle-->
             </div> <!-- end col-->
 
-
-
             <div class="col-md-6 ">
                 <div class="widget-rounded-circle card-box">
                     <div class="row">
@@ -87,6 +85,24 @@
                             <div class="text-right">
                                 <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'totalTeamBet') }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">Team bet</p>
+                            </div>
+                        </div>
+                    </div> <!-- end row-->
+                </div> <!-- end widget-rounded-circle-->
+            </div> <!-- end col-->
+
+            <div class="col-md-6 ">
+                <div class="widget-rounded-circle card-box">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="avatar-lg rounded-circle bg-soft-warning border-warning border">
+                                <i class="fe-eye font-22 avatar-title text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-right">
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $level }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">My Level</p>
                             </div>
                         </div>
                     </div> <!-- end row-->

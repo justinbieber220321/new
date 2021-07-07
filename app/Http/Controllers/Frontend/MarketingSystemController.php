@@ -9,26 +9,42 @@ class MarketingSystemController extends FrontendController
 {
     public function referrals()
     {
-        $user = frontendCurrentUser();
+        $infoBet = getBet(frontendCurrentUser());
 
-        $countUserDirect = User::delFlagOn()->statusOn()->where('player_code', $user->user_id)->count();
+        $lv = 0;
+        $myBet = arrayGet($infoBet, 'myBet');
+        $teamBet = arrayGet($infoBet, 'totalTeamBet');
+        $countF1Bet500 = arrayGet($infoBet, 'countF1Bet500');
 
-        $countUserTmp = userAllChildsIds($user);
 
-        $listUserActive = User::delFlagOn()->statusOn()->whereIn('user_id', $countUserTmp)->get();
-
-        $countUser = 0;
-        $dataApi = getDataApi();
-        foreach ($listUserActive as $item) {
-            $getBet = arrayGet(getBet($item, $dataApi), 'myBet') - $item->number_bet_old;
-            if ($getBet >= 100) {
-                $countUser++;
-            }
+        if ($myBet >= 1000 && $teamBet >= 50000){
+            $lv = 1;
+        }
+        if ($myBet >= 2000 && $teamBet >= 150000){
+            $lv = 2;
         }
 
+        if ($myBet >= 3000 && $teamBet >= 350000 && $countF1Bet500 >= 6){
+            $lv = 3;
+        }
+        if ($myBet >= 5000 && $teamBet >= 1200000 && $countF1Bet500 >= 9){
+            $lv = 4;
+        }
+        if ($myBet >= 10000 && $teamBet >= 3000000 && $countF1Bet500 >=15){
+            $lv = 5;
+        }
+
+        if (in_array(frontendCurrentUser()->user_id, getConfig('level5'))){
+            $lv = 5;
+        }
+
+        $user = frontendCurrentUser();
+        $user->floor = $lv;
+        $user->save();
+
         $viewData = [
-            'countUserDirect' => $countUserDirect,
-            'countUser' => $countUser
+            'infoBet' => $infoBet,
+            'level' => $lv,
         ];
 
         return view('frontend.marketing-system.referral', $viewData);

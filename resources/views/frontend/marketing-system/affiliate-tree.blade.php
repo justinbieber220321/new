@@ -94,8 +94,8 @@
 
                                 @php $betF1 = getBet(frontendCurrentUser()); @endphp
 
-                                <span>My bet: {{ renderNumber(arrayGet($betF1, 'myBet'), $f1->number_bet_old) }} USDT </span>
-                                <span>Team bet: {{ renderNumber(arrayGet($betF1, 'totalTeamBet'), $f1->team_bet_old ) }} USDT</span>
+                                <span>My bet: {{ renderNumber(arrayGet($betF1, 'myBet')) }} USDT </span>
+                                <span>Team bet: {{ renderNumber(arrayGet($betF1, 'totalTeamBet')) }} USDT</span>
 
                                 @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
                                     @php $infoBetF1 = getBet($f1) @endphp
@@ -125,8 +125,8 @@
 
                                     @php $infoBet = getBet($item) @endphp
 
-                                    <span>My bet: {{ renderNumber(arrayGet($infoBet, 'myBet'), $item->number_bet_old) }} USDT</span>
-                                    <span>Team bet: {{ renderNumber(arrayGet($infoBet, 'totalTeamBet'), $item->team_bet_old) }} USDT</span>
+                                    <span>My bet: {{ renderNumber(arrayGet($infoBet, 'myBet')) }} USDT</span>
+                                    <span>Team bet: {{ renderNumber(arrayGet($infoBet, 'totalTeamBet')) }} USDT</span>
 
                                     @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
                                         <span>My win: {{ renderNumber(arrayGet($infoBet, 'myWin')) }} USDT </span>

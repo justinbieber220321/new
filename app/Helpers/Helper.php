@@ -895,8 +895,13 @@ if (!function_exists('getBet')) {
 
         $idCon = userAllChildsIds($entityUser);
 
-        $countUserDirect = User::delFlagOn()->statusOn()->where('player_code', frontendCurrentUser()->user_id)->count();
+        $countUserDirect = \App\Model\Entities\User::delFlagOn()->statusOn()->where('player_code', frontendCurrentUser()->user_id)->count();
+
+        $userIdDirect = \App\Model\Entities\User::delFlagOn()->statusOn()->where('player_code', frontendCurrentUser()->user_id)->pluck('user_id')->toArray();
+
+        $countF1Bet500 = 0;
         $countUser = 0;
+
         foreach ($dataApi as $item) {
             if (arrayGet($item, 'user_id') == $userId) {
                 $myWin = arrayGet($item, 'wins');
@@ -913,6 +918,10 @@ if (!function_exists('getBet')) {
                     $countUser++;
                 }
             }
+
+            if (in_array(arrayGet($item, 'user_id'),  $userIdDirect) && arrayGet($item, 'turnover') >= 500) {
+                $countF1Bet500++;
+            }
         }
 
         $result = [
@@ -924,6 +933,7 @@ if (!function_exists('getBet')) {
             'teamGgr' => $teamGgr,
             'countUserDirect' => $countUserDirect,
             'countUser' => $countUser,
+            'countF1Bet500' => $countF1Bet500,
         ];
 
         return $result;
