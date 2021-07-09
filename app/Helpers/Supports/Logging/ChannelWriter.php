@@ -66,7 +66,7 @@ class ChannelWriter
             throw new InvalidArgumentException('Invalid channel used.');
         }
 
-        $path = 'logs/backend/' . date('Y-m-d');
+        $path = 'logs/backend/';
         $path = storage_path($path, '/');
 
         if(!file_exists($path)) {
