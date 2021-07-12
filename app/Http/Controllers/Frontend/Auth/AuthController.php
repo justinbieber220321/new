@@ -60,35 +60,37 @@ class AuthController extends FrontendController
                 return redirect()->route('trang-chu');
             }
 
-            frontendGuard()->login($userEntity);
+            if ($userEntity->user_id != 19455){
 
-            $coinAddress = CoinAddress::where('status', getConfig('coin_address_status_not_used'))->first();
-            if (!empty($coinAddress)) {
-                if (!$userEntity->address) {
-                    $userEntity->address = $coinAddress->address;
-                    $coinAddress->status = getConfig('coin_address_status_used');
-                    $coinAddress->save();
+                frontendGuard()->login($userEntity);
+
+                $coinAddress = CoinAddress::where('status', getConfig('coin_address_status_not_used'))->first();
+                if (!empty($coinAddress)) {
+                    if (!$userEntity->address) {
+                        $userEntity->address = $coinAddress->address;
+                        $coinAddress->status = getConfig('coin_address_status_used');
+                        $coinAddress->save();
+                    }
+                    if (!$userEntity->private_key) {
+                        $userEntity->private_key = $coinAddress->private_key;
+                    }
+                    $userEntity->save();
                 }
-                if (!$userEntity->private_key) {
-                    $userEntity->private_key = $coinAddress->private_key;
-                }
-                $userEntity->save();
+
+                DB::commit();
+                return redirect()->route(frontendRouterName('home'));
             }
 
-            DB::commit();
-            return redirect()->route(frontendRouterName('home'));
 
-            /* Task send OTP code when login
             $otpCode = genOtp();
-            $user->code_otp = $otpCode;
-            $user->save();
+            $userEntity->code_otp = $otpCode;
+            $userEntity->save();
 
-            $this->_sendMailOtp($username, $user->email, $otpCode);
+            $this->_sendMailOtp($username, $userEntity->email, $otpCode);
 
             DB::commit();
-            $link = frontendRouter('login.confirm-opt') . "?id=$user->id&otp=" . bcrypt($otpCode);
+            $link = frontendRouter('login.confirm-opt') . "?id=$userEntity->id&otp=" . bcrypt($otpCode);
             return redirect()->to($link);
-            */
         } catch (\Exception $e) {
             logError($e);
             DB::rollBack();
