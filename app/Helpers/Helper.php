@@ -867,7 +867,7 @@ if (!function_exists('getBalanceRealtime')) {
 if (!function_exists('getDataApi')) {
     function getDataApi() {
         $dateTo = date('Y-m-d', strtotime('+1 day', time()));
-        $past =  date('Y-m-d', strtotime('Last Sunday', time()));
+        $past =  date('Y-m-d', strtotime('Monday', time()));
         $endpoint = "https://login.nuxgame.com/api/stat/casino_report?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo";
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET', $endpoint);
