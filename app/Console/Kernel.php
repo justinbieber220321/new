@@ -24,9 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('insert-address')->everyTenMinutes();
-        $schedule->command('deposit')->everyMinute();
-        $schedule->command('CRL')->everyMinute();
+       // $schedule->command('insert-address')->everyTenMinutes();
+       // $schedule->command('deposit')->everyMinute();
+       // $schedule->command('CRL')->everyMinute();
     }
 
     /**

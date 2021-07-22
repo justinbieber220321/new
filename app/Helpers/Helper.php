@@ -867,8 +867,8 @@ if (!function_exists('getBalanceRealtime')) {
 if (!function_exists('getDataApi')) {
     function getDataApi() {
         $dateTo = date('Y-m-d', strtotime('+1 day', time()));
-        $past =  date('Y-m-d', strtotime('Monday', time()));
-        $endpoint = "https://login.nuxgame.com/api/stat/casino_report?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo";
+        $past =  date('Y-m-d', strtotime('Last Monday', time()));
+        $endpoint = "https://login.nuxgame.com/api/stat/casino_report?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=2021-07-19&date_to=$dateTo";
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET', $endpoint);
         $dataApi = json_decode($response->getBody(), true);
@@ -886,7 +886,7 @@ if (!function_exists('getBet')) {
         $dataApi = $dataApi ? $dataApi : getDataApi();
 
         $userId = $entityUser->user_id;
-        $myBet= 0;
+        $myBet = 0;
         $myWin = 0;
         $myGgr = 0;
         $totalTeamBet = 0;
