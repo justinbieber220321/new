@@ -50,7 +50,6 @@ class AuthController extends FrontendController
             // Login with OTP
             $otpCode = genOtp();
             $userEntity->code_otp = $otpCode;
-            $userEntity->status = userStatusActive();
             $userEntity->save();
             $this->_sendMailOtp($username, $userEntity->email, $otpCode);
             DB::commit();
@@ -121,7 +120,6 @@ class AuthController extends FrontendController
     public function showFormLoginConfirmOtp()
     {
         $matchThese = [
-            'status' => statusOn(),
             'del_flag' => delFlagOn(),
             'id' => request('id')
         ];
@@ -150,7 +148,7 @@ class AuthController extends FrontendController
             $id = request('user_id');
             $otp = request('code_otp');
 
-            $user = User::delFlagOn()->statusOn()->where('id', $id)->where('code_otp', $otp)->first();
+            $user = User::delFlagOn()->where('id', $id)->where('code_otp', $otp)->first();
             if (empty($user)) {
                 return redirect()->back()->withInput(request()->all())->withErrors(transMessage('code_otp_invalid'));
             }
@@ -170,6 +168,7 @@ class AuthController extends FrontendController
             }
 
             $user->code_otp = '';
+            $user->status = userStatusActive();
             $user->save();
             DB::commit();
 

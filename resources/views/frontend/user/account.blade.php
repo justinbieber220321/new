@@ -21,22 +21,22 @@
                     <h4 class="font-13 text-uppercase">About Me :</h4>
 
                     <p class="text-muted mb-2 font-13">
-                        <strong>UserID :</strong> <span class="ml-2">{{ $user->user_id }}</span></p>
+                        <strong>UserID:</strong> <span class="ml-2">{{ $user->user_id }}</span></p>
 
                     <p class="text-muted mb-2 font-13">
-                        <strong>UserName :</strong> <span class="ml-2">{{ $user->username ? $user->username : extractNameFromEmail($user->email) }}</span></p>
+                        <strong>UserName:</strong> <span class="ml-2">{{ $user->username ? $user->username : extractNameFromEmail($user->email) }}</span></p>
 
                     <p class="text-muted mb-2 font-13">
-                        <strong>Email :</strong> <span class="ml-2">{{ $user->email }}</span></p>
+                        <strong>Email:</strong> <span class="ml-2">{{ $user->email }}</span></p>
 
                     <p class="text-muted mb-2 font-13">
-                        <strong>Balance :</strong> <span class="ml-2">{{ formatPriceCurrency( getBalanceRealtime() ) }}</span></p>
+                        <strong>Balance:</strong> <span class="ml-2">{{ formatPriceCurrency( getBalanceRealtime() ) }}</span></p>
 
                     <p class="text-muted mb-2 font-13">
-                        <strong>Parent User Id :</strong> <span class="ml-2">{{ $user->parent_id }}</span></p>
+                        <strong>Parent User Id:</strong> <span class="ml-2">{{ $user->parent_id }}</span></p>
 
                     <p class="text-muted mb-2 font-13">
-                        <strong>Player Code :</strong> <span class="ml-2">{{ $user->player_code }}</span></p>
+                        <strong>Player Code:</strong> <span class="ml-2">{{ $user->player_code }}</span></p>
                 </div>
             </div>
         </div>
