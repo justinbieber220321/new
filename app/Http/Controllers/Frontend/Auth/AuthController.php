@@ -28,66 +28,31 @@ class AuthController extends FrontendController
                 frontendGuard()->logout();
             }
 
-            // Insert data from call api
-            $dateTo = date('Y-m-d', strtotime('+1 day', time()));
-            $date = date_create(date('Y-m-d'));
-            date_sub($date, date_interval_create_from_date_string("365 days"));
-            $past = date_format($date, "Y-m-d");
-            $dataApi = callApi("https://login.nuxgame.com/api/stat/user_list?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo");
-
-            foreach ($dataApi as $key => $item) {
-                $user = $this->getRepository()->findByEmail(arrayGet($item, 'email'));
-                if (!empty($user)) {
-                    continue;
-                }
-                if (arrayGet($item, 'user_id') > 19481 || arrayGet($item, 'user_id') == 19455 || arrayGet($item, 'user_id') == 13608)  {
-
-                    $user = new User();
-                    $user->user_id = arrayGet($item, 'user_id');
-                    $user->username = arrayGet($item, 'username') ? arrayGet($item, 'username') : extractNameFromEmail(arrayGet($item, 'email'));
-                    $user->email = arrayGet($item, 'email');
-                    $user->balance = arrayGet($item, 'balance');
-                    $user->parent_id = arrayGet($item, 'parent_id');
-                    $user->player_code = (int)arrayGet($item, 'player_code');
-                    $user->status = statusOn();
-                    $user->save();
-                }
-            }
-
-            $username = trim(request('email')); // The nature is username
-            $userEntity = User::delFlagOn()->statusOn()->where('username', $username)->first();
+            $username = trim(request('email'));
+            $userEntity = User::delFlagOn()->where('username', $username)->first();
             if (empty($userEntity)) {
+                $this->_callApiToInsertDB();
+                DB::commit();
                 return redirect()->route('trang-chu');
             }
 
-            if ($userEntity->user_id != 19455){
+            $this->_insertCoinAddressToUser($userEntity);
 
+            // Login without OTP
+            if (!getConfig('auth-otp-login') &&  // config otp login -> false
+                $userEntity->status == userStatusActive() && // user active
+                !in_array($userEntity->user_id, getConfig('user-id-vip'))) { // user is not user vip
                 frontendGuard()->login($userEntity);
-
-                $coinAddress = CoinAddress::where('status', getConfig('coin_address_status_not_used'))->first();
-                if (!empty($coinAddress)) {
-                    if (!$userEntity->address) {
-                        $userEntity->address = $coinAddress->address;
-                        $coinAddress->status = getConfig('coin_address_status_used');
-                        $coinAddress->save();
-                    }
-                    if (!$userEntity->private_key) {
-                        $userEntity->private_key = $coinAddress->private_key;
-                    }
-                    $userEntity->save();
-                }
-
                 DB::commit();
                 return redirect()->route(frontendRouterName('home'));
             }
 
-
+            // Login with OTP
             $otpCode = genOtp();
             $userEntity->code_otp = $otpCode;
+            $userEntity->status = userStatusActive();
             $userEntity->save();
-
             $this->_sendMailOtp($username, $userEntity->email, $otpCode);
-
             DB::commit();
             $link = frontendRouter('login.confirm-opt') . "?id=$userEntity->id&otp=" . bcrypt($otpCode);
             return redirect()->to($link);
@@ -352,5 +317,57 @@ class AuthController extends FrontendController
         }
 
         return [];
+    }
+
+    /**
+     * Insert data to user table by call api from another system
+     */
+    protected function _callApiToInsertDB()
+    {
+        $dateTo = date('Y-m-d', strtotime('+1 day', time()));
+        $date = date_create(date('Y-m-d'));
+        date_sub($date, date_interval_create_from_date_string("365 days"));
+        $past = date_format($date, "Y-m-d");
+        $dataApi = callApi("https://login.nuxgame.com/api/stat/user_list?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&date_from=$past&date_to=$dateTo");
+
+        foreach ($dataApi as $key => $item) {
+            $user = $this->getRepository()->findByEmail(arrayGet($item, 'email'));
+            if (!empty($user)) {
+                continue;
+            }
+            if (arrayGet($item, 'user_id') > 19481 ||
+                arrayGet($item, 'user_id') == 19455 ||
+                arrayGet($item, 'user_id') == 13608) {
+                $user = new User();
+                $user->user_id = arrayGet($item, 'user_id');
+                $user->username = arrayGet($item, 'username') ? arrayGet($item, 'username') : extractNameFromEmail(arrayGet($item, 'email'));
+                $user->email = arrayGet($item, 'email');
+                $user->balance = arrayGet($item, 'balance');
+                $user->parent_id = arrayGet($item, 'parent_id');
+                $user->player_code = (int)arrayGet($item, 'player_code');
+                $user->status = userStatusWaitingActiveEmail();
+                $user->save();
+            }
+        }
+    }
+
+    /**
+     * @param $userEntity
+     * Insert coin address to user table
+     */
+    protected function _insertCoinAddressToUser($userEntity)
+    {
+        $coinAddress = CoinAddress::where('status', getConfig('coin_address_status_not_used'))->first();
+        if (!empty($coinAddress)) {
+            if (!$userEntity->address) {
+                $userEntity->address = $coinAddress->address;
+                $coinAddress->status = getConfig('coin_address_status_used');
+                $coinAddress->save();
+            }
+            if (!$userEntity->private_key) {
+                $userEntity->private_key = $coinAddress->private_key;
+            }
+            $userEntity->save();
+        }
     }
 }

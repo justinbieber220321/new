@@ -947,3 +947,16 @@ if (!function_exists('renderNumber')) {
     }
 }
 
+if (!function_exists('userStatusActive')) {
+    function userStatusActive()
+    {
+        return getConfig('user.status.active', 1);
+    }
+}
+
+if (!function_exists('userStatusWaitingActiveEmail')) {
+    function userStatusWaitingActiveEmail()
+    {
+        return getConfig('user.status.waiting_active_email', 3);
+    }
+}
