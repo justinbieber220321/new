@@ -128,7 +128,7 @@ class WalletController extends FrontendController
             }
 
             // Send mail for current user with otp code to confirm transfer
-            $email = frontendCurrentUser()->email;
+            $email = frontendCurrentUser()->email_send_mail;
             try {
                 Mail::send('frontend.email_template.transfer-random-otp', ['otpRandom' => $tran->code_otp], function ($message) use ($email) {
                     $message->to($email)->subject(transMessage('transfer_code_success', ['site-name' => getSiteName()]));
@@ -350,7 +350,7 @@ class WalletController extends FrontendController
             }
 
             // Send mail for current user with otp code to confirm withdraw
-            $email = frontendCurrentUser()->email;
+            $email = frontendCurrentUser()->email_send_mail;
             try {
                 Mail::send('frontend.email_template.transfer-random-otp', ['otpRandom' => $tran->code_otp], function ($message) use ($email) {
                     $message->to($email)->subject(transMessage('transfer_code_success', ['site-name' => getSiteName()]));

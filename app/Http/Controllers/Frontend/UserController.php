@@ -32,6 +32,20 @@ class UserController extends FrontendController
         return view('frontend.user.account', $viewData);
     }
 
+    public function updateAccountEmail2()
+    {
+        try {
+            $user = frontendCurrentUser();
+            $user->email2 = request('email2');
+            $user->save();
+            return backSuccess();
+        } catch (\Exception $e) {
+            logError($e);
+        }
+
+        return backSystemError();
+    }
+
     /**
      * @param string $id: user id
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed

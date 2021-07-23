@@ -32,6 +32,11 @@ class User extends AuthTmp
     {
         return $this->children()->with('childrenRecursive');
     }
+
+    public function getEmailSendMailAttribute()
+    {
+        return $this->attributes['email2'] ? $this->attributes['email2'] : $this->attributes['email'];
+    }
 }
 
 

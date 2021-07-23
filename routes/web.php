@@ -23,6 +23,7 @@ Route::group(['prefix'=>'/', 'as'=>'frontend.', 'namespace' => 'Frontend', 'midd
         Route::get('account', ['as' => 'account', 'uses' => 'UserController@account']);
         Route::get('account/update', ['as' => 'account.update.get', 'uses' => 'UserController@getUpdateAccount']);
         Route::post('account/update', ['as' => 'account.update.post', 'uses' => 'UserController@updateAccount']);
+        Route::post('account/update-email2', ['as' => 'account.update-email2', 'uses' => 'UserController@updateAccountEmail2']);
 
         Route::get('deposit', ['as' => 'deposit', 'uses' => 'WalletController@requestDeposit']);
         Route::post('deposit', ['as' => 'check-deposit.post', 'uses' => 'WalletController@postCheckDeposit']);
