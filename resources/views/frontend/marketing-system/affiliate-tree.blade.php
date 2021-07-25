@@ -70,9 +70,11 @@
                                 </a>
                             </span>
                             @php $bet = getBet(frontendCurrentUser()); @endphp
-                            <span>My bet: {{ renderNumber(arrayGet($bet, 'myBet')) }} USDT </span>
-                            <span>Team bet: {{ renderNumber(arrayGet($bet, 'totalTeamBet')) }} USDT</span>
                             <span>Level: {{ arrayGet($bet, 'level') }}</span>
+                            <span>Reward: {{ arrayGet($bet, 'reward') }}</span>
+                            <span>Matching: {{ arrayGet($bet, 'matching') }}</span>
+                            <span>My volume: {{ renderNumber(arrayGet($bet, 'myBet')) }} USDT </span>
+                            <span>Team volume: {{ renderNumber(arrayGet($bet, 'totalTeamBet')) }} USDT</span>
                         </p>
                     </div>
 
@@ -95,9 +97,12 @@
 
                                 @php $betF1 = getBet(frontendCurrentUser()); @endphp
 
-                                <span>My bet: {{ renderNumber(arrayGet($betF1, 'myBet')) }} USDT </span>
-                                <span>Team bet: {{ renderNumber(arrayGet($betF1, 'totalTeamBet')) }} USDT</span>
+
                                 <span>Level: {{ arrayGet($betF1, 'level') }}</span>
+                                <span>Reward: {{ arrayGet($betF1, 'reward') }}</span>
+                                <span>Matching: {{ arrayGet($betF1, 'matching') }}</span>
+                                <span>My volume: {{ renderNumber(arrayGet($betF1, 'myBet')) }} USDT </span>
+                                <span>Team volume: {{ renderNumber(arrayGet($betF1, 'totalTeamBet')) }} USDT</span>
 
                                 @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
                                     @php $infoBetF1 = getBet($f1) @endphp
@@ -127,9 +132,12 @@
 
                                     @php $infoBet = getBet($item) @endphp
 
-                                    <span>My bet: {{ renderNumber(arrayGet($infoBet, 'myBet')) }} USDT</span>
-                                    <span>Team bet: {{ renderNumber(arrayGet($infoBet, 'totalTeamBet')) }} USDT</span>
+
                                     <span>Level: {{ arrayGet($infoBet, 'level') }}</span>
+                                    <span>Reward: {{ arrayGet($infoBet, 'reward') }}</span>
+                                    <span>Matching: {{ arrayGet($infoBet, 'matching') }}</span>
+                                    <span>My volume: {{ renderNumber(arrayGet($infoBet, 'myBet')) }} USDT</span>
+                                    <span>Team volume: {{ renderNumber(arrayGet($infoBet, 'totalTeamBet')) }} USDT</span>
 
                                     @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
                                         <span>My win: {{ renderNumber(arrayGet($infoBet, 'myWin')) }} USDT </span>

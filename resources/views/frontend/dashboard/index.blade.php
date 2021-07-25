@@ -2,6 +2,9 @@
 
 @section('content')
 
+    <script>
+        alert('The system is in the process of being upgraded. So the commission will be calculated at 0:00 on Tuesday in +0 time zone. Players can track level, volume, and commissions in the marketing tree');
+    </script>
     <div class="container-fluid">
 
         <div class="row">
@@ -45,8 +48,8 @@
                         <div class="col-6">
                             <div class="text-right">
                                 <h3 class="text-dark mt-1">
-                                    F1: <span data-plugin="counterup">{{ arrayGet($infoBet, 'countUserDirect') }}</span> /
-                                    Users active: <span data-plugin="counterup">{{ arrayGet($infoBet, 'countUser') }}</span>
+                                    F1: <span data-plugin="counterup">{{ arrayGet($infoBet, 'countUserDirect') }}</span>
+{{--                                    / Users active: <span data-plugin="counterup">{{ arrayGet($infoBet, 'countUser') }}</span>--}}
                                 </h3>
                                 <p class="text-muted mb-1 text-truncate">Total Network</p>
                             </div>
@@ -66,7 +69,7 @@
                         <div class="col-6">
                             <div class="text-right">
                                 <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'myBet') }}</span></h3>
-                                <p class="text-muted mb-1 text-truncate">My bet</p>
+                                <p class="text-muted mb-1 text-truncate">My volume</p>
                             </div>
                         </div>
                     </div> <!-- end row-->
@@ -84,7 +87,7 @@
                         <div class="col-6">
                             <div class="text-right">
                                 <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'totalTeamBet') }}</span></h3>
-                                <p class="text-muted mb-1 text-truncate">Team bet</p>
+                                <p class="text-muted mb-1 text-truncate">Team volume</p>
                             </div>
                         </div>
                     </div> <!-- end row-->

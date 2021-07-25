@@ -30,7 +30,7 @@
 
     @stack('styles')
 </head>
-<body>
+<body  stype="padding-bottom: 0px !important" >
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>

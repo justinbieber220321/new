@@ -52,13 +52,13 @@
         <div class="row mt-2">
             <div class="col-4">
                 <div class="card-box">
-                    My bet: {{ formatPriceCurrency($myBet) }} USDT
+                    My volume: {{ formatPriceCurrency($myBet) }} USDT
                 </div>
             </div>
 
             <div class="col-4">
                 <div class="card-box">
-                    Team bet: {{ formatPriceCurrency($myBetTeam) }} USDT
+                    Team volume: {{ formatPriceCurrency($myBetTeam) }} USDT
                 </div>
             </div>
 
