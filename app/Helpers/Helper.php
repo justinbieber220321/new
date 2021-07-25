@@ -3,6 +3,7 @@
 use App\Contracts\Facades\ChannelLog;
 use App\Helpers\Supports\Url;
 use App\Model\Entities\Deposit;
+use App\Model\Entities\UserMetadata;
 use App\Model\Entities\Withdraw;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -883,56 +884,27 @@ if (!function_exists('getBet')) {
             return 0;
         }
 
-        $dataApi = $dataApi ? $dataApi : getDataApi();
-
         $userId = $entityUser->user_id;
-        $myBet = 0;
-        $myWin = 0;
-        $myGgr = 0;
-        $totalTeamBet = 0;
-        $teamWin = 0;
-        $teamGgr = 0;
-
-        $idCon = userAllChildsIds($entityUser);
-
-        $countUserDirect = \App\Model\Entities\User::delFlagOn()->statusOn()->where('player_code', frontendCurrentUser()->user_id)->count();
-
-        $userIdDirect = \App\Model\Entities\User::delFlagOn()->statusOn()->where('player_code', frontendCurrentUser()->user_id)->pluck('user_id')->toArray();
-
-        $countF1Bet500 = 0;
-        $countUser = 0;
-
-        foreach ($dataApi as $item) {
-            if (arrayGet($item, 'user_id') == $userId) {
-                $myWin = arrayGet($item, 'wins');
-                $myGgr = arrayGet($item, 'ggr');
-                $myBet = arrayGet($item, 'turnover', 0);
-            }
-
-            if (in_array(arrayGet($item, 'user_id'),  $idCon)) {
-                $teamWin += arrayGet($item, 'wins', 0);
-                $teamGgr += arrayGet($item, 'ggr', 0);
-                $totalTeamBet += arrayGet($item, 'turnover', 0);
-
-                if (arrayGet($item, 'turnover', 0) >= 100) {
-                    $countUser++;
-                }
-            }
-
-            if (in_array(arrayGet($item, 'user_id'),  $userIdDirect) && arrayGet($item, 'turnover') >= 500) {
-                $countF1Bet500++;
-            }
+        $userMetaDataEntity = UserMetadata::where('user_id', $userId)->first();
+        if (empty($userMetaDataEntity)) {
+            return [];
         }
 
+        $countUserDirect = UserMetadata::where('player_code', frontendCurrentUser()->user_id)->count(); // 100 200
+
+        $countF1Bet500 = UserMetadata::where('player_code', frontendCurrentUser()->user_id)
+            ->where('turnover', '>=', 500)->count(); // 100 200
+
         $result = [
-            'totalTeamBet' => $totalTeamBet,
-            'myBet' => $myBet,
-            'myWin' => $myWin,
-            'teamWin' => $teamWin,
-            'myGgr' => $myGgr,
-            'teamGgr' => $teamGgr,
+            'myBet' => $userMetaDataEntity->turnover,
+            'totalTeamBet' => $userMetaDataEntity->team_turnover,
+            'myGgr' => $userMetaDataEntity->ggr,
+            'teamGgr' => $userMetaDataEntity->team_ggr,
+            'level' => $userMetaDataEntity->level,
+            'reward' => $userMetaDataEntity->reward,
+            'teamReward' => $userMetaDataEntity->team_reward,
+            'matching' => $userMetaDataEntity->matching,
             'countUserDirect' => $countUserDirect,
-            'countUser' => $countUser,
             'countF1Bet500' => $countF1Bet500,
         ];
 
