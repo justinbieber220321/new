@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('insert-address')->everyTenMinutes();
-        $schedule->command('insert-to-user-list')->everyTenMinutes();
+        $schedule->command('insert-to-user-list')->everyMinute();
         $schedule->command('CRL')->everyMinute();
     }
 

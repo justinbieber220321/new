@@ -126,7 +126,7 @@ return [
     'withdraw_type_default' => 1,
 
     'auth-otp-login' => false,
-    'user-id-vip' => [], // user.user_id
+    'user-id-vip' => [19455], // user.user_id
 
     'fee-withdraw' => 1.8,
     'coin_address_status_used' => 1,

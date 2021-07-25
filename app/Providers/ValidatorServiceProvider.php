@@ -56,7 +56,7 @@ class ValidatorServiceProvider   extends ServiceProvider
         $this->app['validator']->extend('number_withdrawal', function ($attribute, $value, $parameters) {
             $number = (int)arrayGet($parameters, '0');
             $balance = getBalanceRealtime();
-            return $balance >= $number * (100 + 1.5) / 100 && $number >= 1;
+            return $balance >= $number * (100 + 1.8) / 100 && $number >= 1;
         });
     }
 }
