@@ -99,8 +99,8 @@
 
 
                                 <span>Level: {{ arrayGet($betF1, 'level') }}</span>
-                                <span>Reward: {{ arrayGet($betF1, 'reward') }}</span>
-                                <span>Matching: {{ arrayGet($betF1, 'matching') }}</span>
+                                <span>Estimate reward: {{ arrayGet($betF1, 'reward') }}</span>
+                                <span>Estimate matching: {{ arrayGet($betF1, 'matching') }}</span>
                                 <span>My volume: {{ renderNumber(arrayGet($betF1, 'myBet')) }} USDT </span>
                                 <span>Team volume: {{ renderNumber(arrayGet($betF1, 'totalTeamBet')) }} USDT</span>
 
@@ -132,14 +132,12 @@
 
 
                                     <span>Level: {{ arrayGet($infoBet, 'level') }}</span>
-                                    <span>Reward: {{ arrayGet($infoBet, 'reward') }}</span>
-                                    <span>Matching: {{ arrayGet($infoBet, 'matching') }}</span>
+                                    <span>Estimate reward : {{ arrayGet($infoBet, 'reward') }}</span>
+                                    <span>Estimate matching: {{ arrayGet($infoBet, 'matching') }}</span>
                                     <span>My volume: {{ renderNumber(arrayGet($infoBet, 'myBet')) }} USDT</span>
                                     <span>Team volume: {{ renderNumber(arrayGet($infoBet, 'totalTeamBet')) }} USDT</span>
 
                                     @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
-                                        <span>My win: {{ renderNumber(arrayGet($infoBet, 'myWin')) }} USDT </span>
-                                        <span>Team win: {{ renderNumber(arrayGet($infoBet, 'teamWin')) }} USDT </span>
                                         <span>My ggr: {{ renderNumber(arrayGet($infoBet, 'myGgr')) }} USDT </span>
                                         <span>Team ggr: {{ renderNumber(arrayGet($infoBet, 'teamGgr')) }} USDT </span>
                                     @endif

@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <script>
-        alert('The system is in the process of being upgraded. So the commission will be calculated at 0:00 on Tuesday in +0 time zone. Players can track level, volume, and commissions in the marketing tree');
-    </script>
+{{--    <script>--}}
+{{--        alert('The system is in the process of being upgraded. So the commission will be calculated at 0:00 on Tuesday in +0 time zone. Players can track level, volume, and commissions in the marketing tree');--}}
+{{--    </script>--}}
     <div class="container-fluid">
 
         <div class="row">
