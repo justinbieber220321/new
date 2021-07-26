@@ -95,7 +95,7 @@
                                     </a>
                                 </span>
 
-                                @php $betF1 = getBet(frontendCurrentUser()); @endphp
+                                @php $betF1 = getBet($f1); @endphp
 
 
                                 <span>Level: {{ arrayGet($betF1, 'level') }}</span>
@@ -107,9 +107,7 @@
                                 @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
                                     @php $infoBetF1 = getBet($f1) @endphp
 
-                                    <span>My win: {{ renderNumber(arrayGet($infoBetF1, 'myWin')) }} USDT </span>
-                                    <span>Team win: {{ renderNumber(arrayGet($infoBetF1, 'teamWin')) }} USDT </span>
-                                    <span>My ggr: {{ renderNumber(arrayGet($infoBetF1, 'myGgr')) }} USDT </span>
+                                   <span>My ggr: {{ renderNumber(arrayGet($infoBetF1, 'myGgr')) }} USDT </span>
                                     <span>Team ggr: {{ renderNumber(arrayGet($infoBetF1, 'teamGgr')) }} USDT </span>
                                 @endif
                             </p>
