@@ -75,6 +75,17 @@
                             <span>Matching: {{ arrayGet($bet, 'matching') }}</span>
                             <span>My volume: {{ renderNumber(arrayGet($bet, 'myBet')) }} USDT </span>
                             <span>Team volume: {{ renderNumber(arrayGet($bet, 'totalTeamBet')) }} USDT</span>
+
+                            @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
+
+                                <span>ggr: {{ arrayGet($bet, 'myGgr') }} USDT </span>
+                                <span>Team ggr: {{ arrayGet($bet, 'teamGgr') }} USDT </span>
+                                <span>wins: {{ arrayGet($bet, 'myBet') - arrayGet($bet, 'myGgr') }} USDT </span>
+                                <span>Team wins: {{ arrayGet($bet, 'totalTeamBet') - arrayGet($bet, 'teamGgr') }} USDT </span>
+
+                            @endif
+
+
                         </p>
                     </div>
 
@@ -107,8 +118,11 @@
                                 @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
                                     @php $infoBetF1 = getBet($f1) @endphp
 
-                                   <span>My ggr: {{ renderNumber(arrayGet($infoBetF1, 'myGgr')) }} USDT </span>
-                                    <span>Team ggr: {{ renderNumber(arrayGet($infoBetF1, 'teamGgr')) }} USDT </span>
+                                    <span>ggr: {{ arrayGet($infoBetF1, 'myGgr') }} USDT </span>
+                                    <span>Team ggr: {{ arrayGet($infoBetF1, 'teamGgr') }} USDT </span>
+                                    <span>wins: {{ arrayGet($infoBetF1, 'myBet') - arrayGet($infoBetF1, 'myGgr') }} USDT </span>
+                                    <span>Team wins: {{ arrayGet($infoBetF1, 'totalTeamBet') - arrayGet($infoBetF1, 'teamGgr') }} USDT </span>
+
                                 @endif
                             </p>
                         </div>
@@ -138,8 +152,10 @@
                                     <span>Team volume: {{ renderNumber(arrayGet($infoBet, 'totalTeamBet')) }} USDT</span>
 
                                     @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
-                                        <span>My ggr: {{ renderNumber(arrayGet($infoBet, 'myGgr')) }} USDT </span>
-                                        <span>Team ggr: {{ renderNumber(arrayGet($infoBet, 'teamGgr')) }} USDT </span>
+                                        <span>ggr: {{ arrayGet($infoBet, 'myGgr') }} USDT </span>
+                                        <span>Team ggr: {{ arrayGet($infoBet, 'teamGgr') }} USDT </span>
+                                        <span>wins: {{ arrayGet($infoBet, 'myBet') - arrayGet($infoBet, 'myGgr') }} USDT </span>
+                                        <span>Team wins: {{ arrayGet($infoBet, 'totalTeamBet') - arrayGet($infoBet, 'teamGgr') }} USDT </span>
                                     @endif
                                 </p>
                             @endforeach

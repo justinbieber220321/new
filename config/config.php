@@ -128,7 +128,7 @@ return [
     'auth-otp-login' => false,
     'user-id-vip' => [19455], // user.user_id
 
-    'fee-withdraw' => 1.8,
+    'fee-withdraw' => 1.5,
     'coin_address_status_used' => 1,
     'coin_address_status_not_used' => 2,
     'level5' => [19972, 19506, 19512, 19557, 19538, 19773, 19564, 19455, 19565, 20938, 21337]

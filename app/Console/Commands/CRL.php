@@ -53,19 +53,29 @@ class CRL extends Command
                 if ($user->address == null || $user->private_key==null){
                     continue;
                 }
-                $balance = $this->_TrxService->getBalanceByA($user->address, $user->private_key);
-                if ($balance > 1){
-                    $this->_TrxService->feeTRX($user->address);
+                try {
+                    $balance = $this->_TrxService->getBalanceByA($user->address, $user->private_key);
+                    if ($balance > 1){
+                        $this->_TrxService->feeTRX($user->address);
+                    }
+
+                } catch(\Exception $e){
+
                 }
+
             }
             sleep(60);
             foreach ($users as $user){
                 if ($user->address == null || $user->private_key==null){
                     continue;
                 }
-                $balance = $this->_TrxService->getBalanceByA($user->address, $user->private_key);
-                if ($balance > 1){
-                    $this->_TrxService->sendToDEP($user->address, $user->private_key);
+                try {
+                    $balance = $this->_TrxService->getBalanceByA($user->address, $user->private_key);
+                    if ($balance > 1){
+                        $this->_TrxService->sendToDEP($user->address, $user->private_key);
+                    }
+                } catch(\Exception $e){
+
                 }
             }
 
