@@ -48,8 +48,8 @@
                         <div class="col-6">
                             <div class="text-right">
                                 <h3 class="text-dark mt-1">
-                                    F1: <span data-plugin="counterup">{{ arrayGet($infoBet, 'countUserDirect') }}</span>
-{{--                                    / Users active: <span data-plugin="counterup">{{ arrayGet($infoBet, 'countUser') }}</span>--}}
+                                    F1 Active: <span data-plugin="counterup">{{ arrayGet($infoBet, 'f1_active') }}</span>
+                                    / Users active: <span data-plugin="counterup">{{ arrayGet($infoBet, 'user_active') }}</span>
                                 </h3>
                                 <p class="text-muted mb-1 text-truncate">Total Network</p>
                             </div>

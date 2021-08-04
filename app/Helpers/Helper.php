@@ -890,22 +890,22 @@ if (!function_exists('getBet')) {
             return [];
         }
 
-        $countUserDirect = UserMetadata::where('player_code', frontendCurrentUser()->user_id)->count(); // 100 200
-
-        $countF1Bet500 = UserMetadata::where('player_code', frontendCurrentUser()->user_id)
-            ->where('turnover', '>=', 500)->count(); // 100 200
+        $f1Active = UserMetadata::where('player_code', frontendCurrentUser()->user_id)
+            ->where('turnover', '>=', 100)->count(); // 100 200
 
         $result = [
-            'myBet' => $userMetaDataEntity->turnover,
-            'totalTeamBet' => $userMetaDataEntity->team_turnover,
-            'myGgr' => $userMetaDataEntity->ggr,
-            'teamGgr' => $userMetaDataEntity->team_ggr,
+            'turnover' => $userMetaDataEntity->turnover,
+            'team_turnover' => $userMetaDataEntity->team_turnover,
+            'ggr' => $userMetaDataEntity->ggr,
+            'team_ggr' => $userMetaDataEntity->team_ggr,
             'level' => $userMetaDataEntity->level,
             'reward' => $userMetaDataEntity->reward,
             'teamReward' => $userMetaDataEntity->team_reward,
             'matching' => $userMetaDataEntity->matching,
-            'countUserDirect' => $countUserDirect,
-            'countF1Bet500' => $countF1Bet500,
+            'wins' => $userMetaDataEntity->wins,
+            'team_wins' => $userMetaDataEntity->team_wins,
+            'f1_active' => $f1Active,
+            'user_active' => $userMetaDataEntity->user_active,
         ];
 
         return $result;
