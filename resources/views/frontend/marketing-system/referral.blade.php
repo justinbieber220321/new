@@ -77,7 +77,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'myBet') }}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'turnover') }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">My volume</p>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-right">
-                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'totalTeamBet') }}</span></h3>
+                                <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ arrayGet($infoBet, 'team_turnover') }}</span></h3>
                                 <p class="text-muted mb-1 text-truncate">Team volume</p>
                             </div>
                         </div>
