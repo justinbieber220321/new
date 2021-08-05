@@ -43,12 +43,11 @@ class WalletController extends FrontendController
                 $depositEntity = Deposit::delFlagOn()->where('message', $tranId)->first();
                 if ($depositEntity) {
                     continue;
-		}
+		        }
 
-		if (arrayGet($tran, 'to') != frontendCurrentUser()->address){
+	        	if (arrayGet($tran, 'to') != frontendCurrentUser()->address){
                     continue;
                 }
-
                 array_push($listTransactionNew, $tran);
             }
 
