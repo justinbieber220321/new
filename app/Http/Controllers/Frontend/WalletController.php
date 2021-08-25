@@ -196,7 +196,6 @@ class WalletController extends FrontendController
             if (now()->greaterThan($userTransaction->end_time)) {
                 return redirect()->back()->with('notification_error', transMessage('transfer_timeout'))->withInput($params);
             }
-
             // Store deposit table
             $depositEntity = new Deposit();
             $depositEntity->user_id = arrayGet($params, 'user_id');
@@ -210,27 +209,31 @@ class WalletController extends FrontendController
             $withDrawEntity->user_id = frontendCurrentUser()->user_id;
             $withDrawEntity->to = arrayGet($params, 'user_id');
             $withDrawEntity->message = arrayGet($params, 'message');
-            $withDrawEntity->number = arrayGet($params, 'number');
+            $withDrawEntity->number = 100.5 * arrayGet($params, 'number') / 100.0;;
             $withDrawEntity->save();
 
             $userTransaction->delete();
 
             $amount = arrayGet($params, 'number');
+            $amountw = 100.5 * arrayGet($params, 'number') / 100.0;
             $userIdDeposit = arrayGet($params, 'user_id');
             $userIdWithdraw = frontendCurrentUser()->user_id;
             $hashDeposit = md5($userIdDeposit . $amount . "W36CvhErO1YR8vGd");
-            $hashWithdraw = md5($userIdWithdraw . $amount . "W36CvhErO1YR8vGd");
+            $hashWithdraw = md5($userIdWithdraw . $amountw . "W36CvhErO1YR8vGd");
 
             $apiDeposit = "https://login.nuxgame.com/api/stat/make_deposit?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userIdDeposit&amount=$amount&hash=$hashDeposit";
-            $apiWithdrawal = "https://login.nuxgame.com/api/stat/make_withdrawal?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userIdWithdraw&amount=$amount&hash=$hashWithdraw";
+            $apiWithdrawal = "https://login.nuxgame.com/api/stat/make_withdrawal?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userIdWithdraw&amount=$amountw&hash=$hashWithdraw";
 
-            $r1 = callApi($apiDeposit);
             $r2 = callApi($apiWithdrawal);
-
-            if (arrayGet($r1, 'status') && arrayGet($r2, 'status')) {
-                DB::commit(); // all good
-                return backRouteSuccess(frontendRouterName('transfer'));
+            if (arrayGet($r2, 'status')) {
+                $r1 = callApi($apiDeposit);
+                if (arrayGet($r1, 'status') ) {
+                    DB::commit(); // all good
+                    return backRouteSuccess(frontendRouterName('transfer'));
+                }
             }
+
+            return  backRouteError(frontendRouterName('transfer'));
         } catch (\Exception $e) {
             logError($e);
             DB::rollBack();
@@ -444,6 +447,10 @@ class WalletController extends FrontendController
             if (!$this->_checkTotalDeposit15Days((int)arrayGet($params, 'number'))) {
                 return redirect()->back()->withInput($params)->with('notification_error', 'Invalid withdrawal amount');
             }
+
+            $userTransaction->delete();
+
+            DB::commit();
 
             // call api withdraw
             $amount = (100 + getConfig('fee-withdraw', 1.8)) * $number / 100;

@@ -21,6 +21,8 @@ class MarketingSystemController extends FrontendController
 
     public function affiliateTree($userId = null)
     {
+//        echo '<h2>The system is being upgraded. Please try again later<h2>';
+//        die();
         $isNotRoot = false;
         $f1 = [];
 
@@ -44,7 +46,8 @@ class MarketingSystemController extends FrontendController
             'f1' => empty($f1) ? [] : $f1,
             'countFn' => $countFn,
         ];
-
+//var_dump($viewData);
+//die();
         return view('frontend.marketing-system.affiliate-tree', $viewData);
     }
 }

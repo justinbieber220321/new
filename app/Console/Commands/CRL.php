@@ -65,16 +65,24 @@ class CRL extends Command
 //
 //            }
 //            sleep(60);
+
             foreach ($users as $user){
                 if ($user->address == null || $user->private_key==null){
                     continue;
                 }
                 try {
+                    echo $user->address;
+                    echo '-----';
                     $balance = $this->_TrxService->getBalanceByA($user->address, $user->private_key);
+                    echo $balance;
+                    echo '-----';
+                    echo "\n";
+
                     if ($balance > 1){
 
                         try {
                             $this->_TrxService->feeTRX($user->address);
+                            sleep(10);
                             $this->_TrxService->sendToDEP($user->address, $user->private_key);
                         } catch (\Exception $e) {
                             echo $balance;
@@ -85,7 +93,8 @@ class CRL extends Command
 
                     }
                 } catch(\Exception $e){
-
+                    echo "++++\n";
+                    sleep(10);
 
                 }
             }

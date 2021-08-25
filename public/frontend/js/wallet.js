@@ -15,7 +15,7 @@ var WalletController = {
 
             let number = Number(this.value);
 
-            $('#fee').text(number * 1.5 / 100);
+            $('#fee').text(number * 1.0 / 100);
         });
     }
 };

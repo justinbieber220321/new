@@ -6,7 +6,10 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
-
+//echo ("<script LANGUAGE='JavaScript'>
+//    window.alert('The system is updating. The system is back up at 10am london.');
+//    window.location.href='https://whalerich.com/';
+//    </script>");
 define('LARAVEL_START', microtime(true));
 
 /*

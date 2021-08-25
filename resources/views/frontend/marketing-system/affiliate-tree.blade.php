@@ -73,17 +73,8 @@
                             <span>Level: {{ arrayGet($bet, 'level') }}</span>
                             <span>Reward: {{ arrayGet($bet, 'reward') }}</span>
                             <span>Matching: {{ arrayGet($bet, 'matching') }}</span>
-                            <span>My volume: {{ renderNumber(arrayGet($bet, 'turnover')) }} USDT </span>
-                            <span>Team volume: {{ renderNumber(arrayGet($bet, 'team_turnover')) }} USDT</span>
-
-                            @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
-
-                                <span>ggr: {{ arrayGet($bet, 'ggr') }} USDT </span>
-                                <span>Team ggr: {{ arrayGet($bet, 'team_ggr') }} USDT </span>
-                                <span>wins: {{ arrayGet($bet, 'wins') }} USDT </span>
-                                <span>Team wins: {{ arrayGet($bet, 'team_wins')}} USDT </span>
-
-                            @endif
+                            <span>My volume: {{ arrayGet($bet, 'turnover') }} USDT </span>
+                            <span>Team volume: {{ arrayGet($bet, 'team_turnover') }} USDT</span>
 
 
                         </p>
@@ -112,18 +103,9 @@
                                 <span>Level: {{ arrayGet($betF1, 'level') }}</span>
                                 <span>Estimate reward: {{ arrayGet($betF1, 'reward') }}</span>
                                 <span>Estimate matching: {{ arrayGet($betF1, 'matching') }}</span>
-                                <span>My volume: {{ renderNumber(arrayGet($betF1, 'turnover')) }} USDT </span>
-                                <span>Team volume: {{ renderNumber(arrayGet($betF1, 'team_turnover')) }} USDT</span>
+                                <span>My volume: {{ arrayGet($betF1, 'turnover') }} USDT </span>
+                                <span>Team volume: {{ arrayGet($betF1, 'team_turnover') }} USDT</span>
 
-                                @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
-                                    @php $infoBetF1 = getBet($f1) @endphp
-
-                                    <span>ggr: {{ arrayGet($infoBetF1, 'ggr') }} USDT </span>
-                                    <span>Team ggr: {{ arrayGet($infoBetF1, 'team_ggr') }} USDT </span>
-                                    <span>wins: {{ arrayGet($infoBetF1, 'wins')}} USDT </span>
-                                    <span>Team wins: {{ arrayGet($infoBetF1, 'team_wins') }} USDT </span>
-
-                                @endif
                             </p>
                         </div>
                     @endif
@@ -148,15 +130,10 @@
                                     <span>Level: {{ arrayGet($infoBet, 'level') }}</span>
                                     <span>Estimate reward : {{ arrayGet($infoBet, 'reward') }}</span>
                                     <span>Estimate matching: {{ arrayGet($infoBet, 'matching') }}</span>
-                                    <span>My volume: {{ renderNumber(arrayGet($infoBet, 'turnover')) }} USDT</span>
-                                    <span>Team volume: {{ renderNumber(arrayGet($infoBet, 'team_turnover')) }} USDT</span>
+                                    <span>My volume: {{ arrayGet($infoBet, 'turnover') }} USDT</span>
+                                    <span>Team volume: {{ arrayGet($infoBet, 'team_turnover') }} USDT</span>
 
-                                    @if (frontendCurrentUser()->user_id == getConfig('user_id-admin'))
-                                        <span>ggr: {{ arrayGet($infoBet, 'ggr') }} USDT </span>
-                                        <span>Team ggr: {{ arrayGet($infoBet, 'team_ggr') }} USDT </span>
-                                        <span>wins: {{ arrayGet($infoBet, 'wins')}} USDT </span>
-                                        <span>Team wins: {{ arrayGet($infoBet, 'team_ggr')}} USDT </span>
-                                    @endif
+
                                 </p>
                             @endforeach
                         </div>
@@ -165,5 +142,6 @@
             </div>
         </div>
     </div>
+
 
 @endsection
