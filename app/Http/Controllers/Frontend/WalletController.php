@@ -406,6 +406,12 @@ class WalletController extends FrontendController
                 return redirect()->back()->with('notification_error', 'No transaction exists')->withInput($params);
             }
 
+            // check code otp
+            if (request('random_str_otp') != $userTransaction->code_otp) {
+                return redirect()->back()->with('notification_error', transMessage('transfer_failed_with_error_code_otp'))->withInput($params);
+            }
+
+
             /** @var \App\Validators\UserValidator $validator */
             $validator = $this->getRepository()->getValidator();
             $isValid = $validator->frontendValidateWithdrawal($params);
@@ -434,10 +440,6 @@ class WalletController extends FrontendController
                 }
             }
 
-            // check code otp
-            if (request('random_str_otp') != $userTransaction->code_otp) {
-                return redirect()->back()->with('notification_error', transMessage('transfer_failed_with_error_code_otp'))->withInput($params);
-            }
 
             // check time for otp code
             if (now()->greaterThan($userTransaction->end_time)) {
@@ -453,7 +455,7 @@ class WalletController extends FrontendController
             DB::commit();
 
             // call api withdraw
-            $amount = (100 + getConfig('fee-withdraw', 1.8)) * $number / 100;
+            $amount = (100.0 + getConfig('fee-withdraw', 1.8)) * $number / 100.0;
             $hash = md5($userId . $amount . "W36CvhErO1YR8vGd");
 
             $apiWithdrawal = "https://login.nuxgame.com/api/stat/make_withdrawal?company_id=a37c5f23-7181-44cb-9702-35886ef7b696&user_id=$userId&amount=$amount&hash=$hash";
